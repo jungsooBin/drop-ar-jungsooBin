@@ -41,35 +41,6 @@ export default class CameraView extends React.Component {
     this.findColor = this.findColor.bind(this);
   }
 
-  // componentWillMount() {
-  //   this._val = { x: 0, y: 0 };
-  //   this.state.pan.addListener(value => (this._val = value));
-
-  //   this.panResponder = PanResponder.create({
-  //     onStartShouldSetPanResponder: (e, gesture) => true,
-  //     onPanResponderGrant: (e, gesture) => {
-  //       this.state.pan.setOffset({
-  //         x: this._val.x,
-  //         y: this._val.y,
-  //       });
-  //       this.state.pan.setValue({ x: 0, y: 0 });
-  //     },
-  //     onPanResponderMove: Animated.event([
-  //       null,
-  //       { dx: this.state.pan.x, dy: this.state.pan.y },
-  //     ]),
-  //   });
-  // }
-
-  // handleDrop = () => {
-  //   console.log('PRessed');
-  //   const geometry = new THREE.BoxGeometry(0.07, 0.07, 0.07);
-  //   const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-  //   const thingToDrop = new THREE.Mesh(geometry, customMaterial);
-  //   const newItem = dropItem(thingToDrop, this.camera.position);
-  //   this.scene.add(newItem);
-  // };
-
   async componentWillMount() {
     Permissions.askAsync(Permissions.CAMERA_ROLL);
     Permissions.askAsync(Permissions.CAMERA);
@@ -161,7 +132,7 @@ export default class CameraView extends React.Component {
       try {
         let count = 0;
         const newArt = await axios.post(
-          'http://172.16.21.129:8080/api/art/add',
+          'http://localhost:8080/api/art/add',
           {
             location: locationToSave,
             artPiece: this.scene.toJSON(),
