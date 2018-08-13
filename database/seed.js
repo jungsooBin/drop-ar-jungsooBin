@@ -8,7 +8,7 @@ newUsers = [];
 
 const seed = () =>
   Promise.all(newUsers.map(user => users.create(user))).then(() =>
-    Promise.all(newArt.map(post => oPosts.create(post)))
+    Promise.all(newArt.map(art => arts.create(art)))
   );
 
 const main = () => {
