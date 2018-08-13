@@ -46,10 +46,11 @@ class ArtPostForm extends Component {
   }
 
   render(){
+    const {navigation} = this.props
     const {checked} = this.state
     return (
       <View style={styles.container}>
-      <Text h1 style={styles.heading}>Sign Up</Text>
+      <Text h1 style={styles.heading}>ArtForm</Text>
         <FormLabel>First Name</FormLabel>
         <FormInput value={this.state.firstName} onChangeText={firstName => this.setState({firstName})}/>
 
@@ -68,6 +69,7 @@ class ArtPostForm extends Component {
         <CheckBox title='Terms and Conditions' checked={this.state.checked} onPress={() => this.setState(
           {checked: !checked})} />
         <Button onPress={this.handleSubmit}>Submit</Button>
+        <Button onPress={() => navigation.goBack()}>Back</Button>
       </View>
     )
   }
@@ -87,4 +89,4 @@ const styles = {
   }
 };
 
-export default ArtPostForm
+export default ArtPostForm;

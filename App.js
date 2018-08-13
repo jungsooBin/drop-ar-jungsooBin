@@ -11,6 +11,7 @@ import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
 import FriendProfile from "./components/FriendProfile";
+import ArtPostForm from "./components/ArtPostForm";
 
 const RootNavigator = createStackNavigator({
   Main: {
@@ -64,6 +65,12 @@ const RootNavigator = createStackNavigator({
   },
   FriendProfile: {
     screen: FriendProfile,
+    navigationOptions: ({ navgiation }) => ({
+      header: null
+    })
+  },
+  ArtPostForm: {
+    screen: ArtPostForm,
     navigationOptions: ({ navgiation }) => ({
       header: null
     })

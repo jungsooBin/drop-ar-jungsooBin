@@ -1,4 +1,7 @@
+import {connect} from 'react-redux';
 import React from 'react';
+import {saveArt} from '../store/artReducer'
+
 import {
   StyleSheet,
   Text,
@@ -22,7 +25,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 console.disableYellowBox = true;
 
-export default class CameraView extends React.Component {
+class CameraViewPresentational extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -131,17 +134,15 @@ export default class CameraView extends React.Component {
       console.log('Location', locationToSave);
       try {
         let count = 0;
-        const newArt = await axios.post(
-          'http://localhost:8080/api/art/add',
-          {
-            location: locationToSave,
-            artPiece: this.scene.toJSON(),
-            description: 'Amazing art piece, love it',
-            likes: 10,
-          }
-        );
+        this.props.addArt({
+          location: locationToSave,
+          artPiece: this.scene.toJSON(),
+          description: 'Amazing art piece, love it',
+          likes: 10,
+        });
         console.log('SUCCESS');
         this.showAlert();
+        this.props.navigation.navigate(`ArtPostForm`)
       } catch (err) {
         console.log(err);
         this.showFailAlert();
@@ -176,7 +177,6 @@ export default class CameraView extends React.Component {
   render() {
     // To Use navigation prop passed in app.js
     const { navigation } = this.props;
-    console.log(navigation)
 
     return (
       <View style={{ flex: 1 }}>
@@ -238,7 +238,7 @@ export default class CameraView extends React.Component {
             raised
             rounded
             title="Next"
-            onPress={() => navigation.navigate(`ArtPostForm`)}
+            onPress={this.handleSubmit}
             buttonStyle={{
               backgroundColor: 'purple',
               opacity: 0.2,
@@ -400,3 +400,10 @@ function setModelPos(model, dropPos) {
   return item;
 }
 
+const mapDispatchToProps = (dispatch ) => { return ({
+  addArt: (artObj) => dispatch(saveArt(artObj)),
+})}
+
+const CameraView = connect(null, mapDispatchToProps)(CameraViewPresentational)
+
+export default CameraView;
