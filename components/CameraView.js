@@ -1,4 +1,7 @@
+import {connect} from 'react-redux';
 import React from 'react';
+import {saveArt} from '../store/artReducer'
+
 import {
   StyleSheet,
   Text,
@@ -22,7 +25,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 console.disableYellowBox = true;
 
-export default class CameraView extends React.Component {
+class CameraViewPresentational extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -40,35 +43,6 @@ export default class CameraView extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.findColor = this.findColor.bind(this);
   }
-
-  // componentWillMount() {
-  //   this._val = { x: 0, y: 0 };
-  //   this.state.pan.addListener(value => (this._val = value));
-
-  //   this.panResponder = PanResponder.create({
-  //     onStartShouldSetPanResponder: (e, gesture) => true,
-  //     onPanResponderGrant: (e, gesture) => {
-  //       this.state.pan.setOffset({
-  //         x: this._val.x,
-  //         y: this._val.y,
-  //       });
-  //       this.state.pan.setValue({ x: 0, y: 0 });
-  //     },
-  //     onPanResponderMove: Animated.event([
-  //       null,
-  //       { dx: this.state.pan.x, dy: this.state.pan.y },
-  //     ]),
-  //   });
-  // }
-
-  // handleDrop = () => {
-  //   console.log('PRessed');
-  //   const geometry = new THREE.BoxGeometry(0.07, 0.07, 0.07);
-  //   const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-  //   const thingToDrop = new THREE.Mesh(geometry, customMaterial);
-  //   const newItem = dropItem(thingToDrop, this.camera.position);
-  //   this.scene.add(newItem);
-  // };
 
   async componentWillMount() {
     Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -160,17 +134,15 @@ export default class CameraView extends React.Component {
       console.log('Location', locationToSave);
       try {
         let count = 0;
-        const newArt = await axios.post(
-          'http://172.16.21.129:8080/api/art/add',
-          {
-            location: locationToSave,
-            artPiece: this.scene.toJSON(),
-            description: 'Amazing art piece, love it',
-            likes: 10,
-          }
-        );
+        this.props.addArt({
+          location: locationToSave,
+          artPiece: this.scene.toJSON(),
+          description: 'Amazing art piece, love it',
+          likes: 10,
+        });
         console.log('SUCCESS');
         this.showAlert();
+        this.props.navigation.navigate(`ArtPostForm`)
       } catch (err) {
         console.log(err);
         this.showFailAlert();
@@ -203,6 +175,9 @@ export default class CameraView extends React.Component {
   };
 
   render() {
+    // To Use navigation prop passed in app.js
+    const { navigation } = this.props;
+
     return (
       <View style={{ flex: 1 }}>
         <Expo.GLView
@@ -262,7 +237,7 @@ export default class CameraView extends React.Component {
           <Button
             raised
             rounded
-            title="Save"
+            title="Next"
             onPress={this.handleSubmit}
             buttonStyle={{
               backgroundColor: 'purple',
@@ -424,3 +399,11 @@ function setModelPos(model, dropPos) {
   item.rotator = 0.02;
   return item;
 }
+
+const mapDispatchToProps = (dispatch ) => { return ({
+  addArt: (artObj) => dispatch(saveArt(artObj)),
+})}
+
+const CameraView = connect(null, mapDispatchToProps)(CameraViewPresentational)
+
+export default CameraView;

@@ -1,49 +1,15 @@
-import { createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
+import {combineReducers} from 'redux';
 
-const initialState = {
-  allArt: [],
-  singleArt: {}
-};
+import artReducer from './artReducer'
+// import userReducer from './userReducer'
 
-const GET_ALL_ART = "GET_ALL_ART";
-const GET_SINGLE_ART = "GET_SINGLE_ART";
+// `combineReducers` is not currently used, but eventually should be for modular code :D
+// When you're ready to use it, un-comment the line below!
+// import {combineReducers} from 'redux'
 
-export const getAllArt = allArt => ({
-  type: GET_ALL_ART,
-  allArt
-});
+const rootReducer = combineReducers({
+  arts: artReducer,
+  // users: userReducer, 
+})
 
-export const getSingleArt = singleArt => ({
-  type: GET_SINGLE_ART,
-  singleArt
-});
-
-// write out thunk later
-// export const fetchAllArt = () => {
-//   return 1;
-// };
-
-// write out thunk later
-// export const fetchSingleArt = () => {
-//   return 2;
-// };
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_ALL_ART:
-      return {
-        ...state,
-        allArt: action.allArt
-      };
-    case GET_SINGLE_ART:
-      return {
-        ...state,
-        singleArt: action.singleArt
-      };
-    default:
-      return state;
-  }
-};
-
-export default createStore(reducer, applyMiddleware(thunkMiddleware));
+export default rootReducer;

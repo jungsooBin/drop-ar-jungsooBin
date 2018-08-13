@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store/store";
 import Home from "./components/Home";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
@@ -10,6 +10,7 @@ import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
 import FriendProfile from "./components/FriendProfile";
+import ArtPostForm from "./components/ArtPostForm";
 
 const RootNavigator = createStackNavigator({
   Main: {
@@ -57,6 +58,12 @@ const RootNavigator = createStackNavigator({
   },
   FriendProfile: {
     screen: FriendProfile,
+    navigationOptions: ({ navgiation }) => ({
+      header: null
+    })
+  },
+  ArtPostForm: {
+    screen: ArtPostForm,
     navigationOptions: ({ navgiation }) => ({
       header: null
     })
