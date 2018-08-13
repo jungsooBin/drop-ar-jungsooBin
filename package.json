@@ -17,6 +17,7 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "jest",
+    "test-mocha": "NODE_ENV='test' mocha \"./server/**/*.spec.js\"",
     "seed": "node database/seed.js",
     "start-watch": "nodemon server/index.js --watch server --watch database --watch package.json",
     "start-dev": "cross-env NODE_ENV=development npm run start-watch",
@@ -28,6 +29,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
     "cookie-parser": "^1.4.3",
     "expo": "^27.1.1",
     "expo-graphics": "^1.0.0-alpha.2",
@@ -36,6 +38,7 @@
     "express-session": "^1.15.6",
     "hsl-to-hex": "^1.0.0",
     "lodash": "^4.17.10",
+    "mocha": "^5.2.0",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",
     "pg-native": "^3.0.0",
