@@ -1,17 +1,12 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const { User } = require('../../database')
+const Sequelize = require('sequelize');
 
 
-router.post('/', async (req, res, next) => {
+router.post('/signup', async (req, res, next) => {
   try{
-    console.log(req.body)
-    const newUser = await User.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.password
-    })
-    console.log('made it')
-    res.send(201).send(newUser)
+    const newUser = await User.create(req.body)
+    res.status(201).json(newUser)
   } catch(err) {
      next(err)
   }

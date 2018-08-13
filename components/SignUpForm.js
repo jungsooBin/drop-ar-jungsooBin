@@ -25,7 +25,7 @@ class SignUpForm extends Component {
     //Post new user in DB
     try{
       console.log("CLICKED")
-      await axios.post('http://localhost:8080/api/user', {
+      await axios.post('http://localhost:8080/api/user/signup', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email
