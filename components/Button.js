@@ -1,5 +1,5 @@
-import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 
 const Button = ({ onPress, children }) => {
   const { buttonStyle, textStyle } = styles;
@@ -13,19 +13,18 @@ const Button = ({ onPress, children }) => {
 
 const styles = {
   textStyle: {
-    alignSelf: 'center',
-    color: '#000000',
+    alignSelf: "center",
     fontSize: 16,
     paddingTop: 5,
-    paddingBottom: 5,
+    paddingBottom: 5
   },
   buttonStyle: {
     borderWidth: 1,
     width: 150,
     height: 50,
     alignItems: `center`,
-    justifyContent: `center`,
-  },
+    justifyContent: `center`
+  }
 };
 
 export default Button;

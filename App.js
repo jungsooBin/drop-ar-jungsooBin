@@ -1,35 +1,74 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import { Provider } from 'react-redux';
-import Home from './components/Home';
-import CameraView from './components/CameraView';
-import LoadArtView from './components/LoadArtView';
+import React, { Component } from "react";
+import { createStackNavigator } from "react-navigation";
+import { Provider } from "react-redux";
+import store from "./store";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import CameraView from "./components/CameraView";
+import UserProfile from "./components/UserProfile";
+import EditUserProfile from "./components/EditUserProfile";
+import ArtFeed from "./components/ArtFeed";
+import FriendProfile from "./components/FriendProfile";
 
 const RootNavigator = createStackNavigator({
   Main: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
-      title: `Graffiti AR`,
-    }),
+      title: `Graffiti AR`
+    })
+  },
+  Login: {
+    screen: Login,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
   },
   CameraView: {
     screen: CameraView,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
-  LoadArtView: {
-    screen: LoadArtView,
+  UserProfile: {
+    screen: UserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
+  EditUserProfile: {
+    screen: EditUserProfile,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  ArtFeed: {
+    screen: ArtFeed,
+    navigationOptions: ({ navgiation }) => ({
+      header: null
+    })
+  },
+  FriendProfile: {
+    screen: FriendProfile,
+    navigationOptions: ({ navgiation }) => ({
+      header: null
+    })
+  }
 });
 
 export default class App extends Component {
   render() {
-    return <RootNavigator />;
+    return (
+      <Provider store={store}>
+        <RootNavigator />
+      </Provider>
+    );
   }
 }
