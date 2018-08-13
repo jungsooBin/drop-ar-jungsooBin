@@ -13,7 +13,7 @@ const Home = ({ navigation }) => (
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate(`SignUp`)}
+        onPress={() => navigation.navigate(`SignUpForm`)}
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
@@ -28,26 +28,24 @@ const styles = {
     backgroundColor: "#ff5858"
   },
   text: {
-    position: "absolute",
-    top: 275,
+    top: "30%",
     fontWeight: "800",
-    fontSize: 40,
+    fontSize: 48,
     color: "#FFF"
   },
   buttonContainer: {
-    position: "absolute",
-    top: 475
+    top: "55%"
   },
   button: {
     backgroundColor: "#FFF",
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    color: "#ff5858"
+    width: 250
   },
   buttonText: {
     color: "#ff5858",
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "800",
     textAlign: "center"
   }
