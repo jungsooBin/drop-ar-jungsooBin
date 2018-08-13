@@ -174,6 +174,10 @@ export default class CameraView extends React.Component {
   };
 
   render() {
+    // To Use navigation prop passed in app.js
+    const { navigation } = this.props;
+    console.log(navigation)
+
     return (
       <View style={{ flex: 1 }}>
         <Expo.GLView
@@ -233,8 +237,8 @@ export default class CameraView extends React.Component {
           <Button
             raised
             rounded
-            title="Save"
-            onPress={this.handleSubmit}
+            title="Next"
+            onPress={() => navigation.navigate(`ArtPostForm`)}
             buttonStyle={{
               backgroundColor: 'purple',
               opacity: 0.2,
@@ -395,3 +399,4 @@ function setModelPos(model, dropPos) {
   item.rotator = 0.02;
   return item;
 }
+

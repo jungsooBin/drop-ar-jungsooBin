@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./store/store";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
