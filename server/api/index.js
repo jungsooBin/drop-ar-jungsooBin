@@ -8,6 +8,8 @@ const morgan = require('morgan');
 router.use(express.static(path.join(__dirname, '..', 'public')));
 
 router.use('/art', require('./art'));
+router.use('/user', require('./user'));
+
 
 
 // // For all GET requests that aren't to an API route,
