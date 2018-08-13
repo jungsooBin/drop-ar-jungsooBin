@@ -3,8 +3,7 @@ import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import Home from "./components/Home";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
+import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import CameraView from "./components/CameraView";
 import UserProfile from "./components/UserProfile";
@@ -18,17 +17,11 @@ const RootNavigator = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
-      title: `Graffiti AR`
+      title: `GraftAR`
     })
   },
-  Login: {
-    screen: Login,
-    navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  },
-  SignUp: {
-    screen: SignUp,
+  LoginForm: {
+    screen: LoginForm,
     navigationOptions: ({ navigation }) => ({
       header: null
     })
