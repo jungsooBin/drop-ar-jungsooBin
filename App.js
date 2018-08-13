@@ -5,6 +5,7 @@ import store from "./store";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import SignUpForm from "./components/SignUpForm";
 import CameraView from "./components/CameraView";
 import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
@@ -27,6 +28,12 @@ const RootNavigator = createStackNavigator({
   },
   SignUp: {
     screen: SignUp,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  SignUpForm: {
+    screen: SignUpForm,
     navigationOptions: ({ navigation }) => ({
       header: null
     })

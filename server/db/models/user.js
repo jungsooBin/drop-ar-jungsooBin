@@ -6,11 +6,11 @@ const User = db.define("user", {
   //PERSONAL INFO
   firstName: {
     type: Sequelize.STRING,
-    allowNull: true // Unsure if we can allow null
+    allowNull: false // Unsure if we can allow null
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: true // Unsure if we can allow null
+    allowNull: false // Unsure if we can allow null
   },
   email: {
     type: Sequelize.STRING,
