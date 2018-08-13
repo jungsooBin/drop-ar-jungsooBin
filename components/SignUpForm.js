@@ -3,7 +3,6 @@ import { FormLabel, FormInput, FormValidationMessage, Text, CheckBox} from 'reac
 import {View} from 'react-native'
 import Button from './Button'
 import axios from 'axios'
-import Expo from "expo";
 
 
 class SignUpForm extends Component {
@@ -15,7 +14,7 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       rePassword: '',
-      checked: false
+      terms: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -28,7 +27,9 @@ class SignUpForm extends Component {
       await axios.post('http://localhost:8080/api/user/signup', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
-        email: this.state.email
+        email: this.state.email,
+        password: this.state.email,
+        terms: this.state.terms
       })
     } catch(err){
         console.log(err)
@@ -40,13 +41,14 @@ class SignUpForm extends Component {
       email: '',
       password: '',
       rePassword: '',
-      checked: false
+      terms: false
     })
     // Some event that: [ (i) validates form, (ii) if valid info sent to backend, (iii) if not, sends err message], 
   }
 
   render(){
-    const {checked} = this.state
+    const {terms} = this.state
+
     return (
       <View style={styles.container}>
       <Text h1 style={styles.heading}>Sign Up</Text>
@@ -65,8 +67,8 @@ class SignUpForm extends Component {
         <FormLabel>Re-Enter Password</FormLabel>
         <FormInput value={this.state.rePassword} onChangeText={rePassword => this.setState({rePassword})}/>
 
-        <CheckBox title='Terms and Conditions' checked={this.state.checked} onPress={() => this.setState(
-          {checked: !checked})} />
+        <CheckBox title='Terms and Conditions' checked={this.state.terms} onPress={() => this.setState(
+          {terms: !terms})} />
         <Button onPress={this.handleSubmit}>Submit</Button>
       </View>
     )
