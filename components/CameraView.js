@@ -44,6 +44,7 @@ export default class CameraView extends React.Component {
     this.addShapeWithSize = this.addShapeWithSize.bind(this);
     this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
+    this.undo = this.undo.bind(this);
     this.takeScreenshot = this.takeScreenshot.bind(this);
   }
 
@@ -104,8 +105,12 @@ export default class CameraView extends React.Component {
         const artObj = {
           location: locationToSave,
           artPiece: artPiece,
+          title: '',
+          description: '',
+          likes: 0,
           coverPhoto: coverPhoto,
         };
+        // console.log('SUCCESS');
         this.showAlert();
         this.props.navigation.navigate(`ArtPostForm`, { artObj: artObj });
       } catch (err) {
@@ -113,6 +118,10 @@ export default class CameraView extends React.Component {
         this.showFailAlert();
       }
     }
+  }
+
+  undo() {
+    this.scene.remove(this.scene.children[this.scene.children.length - 1]);
   }
 
   showImageSave = () => {
@@ -261,10 +270,12 @@ export default class CameraView extends React.Component {
           }),
           transparent: true,
         }));
-      case 'uv':
+      case 'bricks':
         return (material = new THREE.MeshBasicMaterial({
           map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(require('../public/textures/Uv.jpg')),
+            asset: Expo.Asset.fromModule(
+              require('../public/textures/Bricks.jpg')
+            ),
           }),
           transparent: true,
         }));
@@ -301,7 +312,11 @@ export default class CameraView extends React.Component {
     const colorToUse = this.findColor();
     let material = '';
     if (this.state.texture === 'color') {
-      material = new THREE.MeshBasicMaterial({ color: colorToUse });
+      material = new THREE.MeshBasicMaterial({
+        color: colorToUse,
+        transparent: true,
+        opacity: 0.7,
+      });
     } else {
       material = await this.findCustomMaterial();
     }
@@ -346,7 +361,7 @@ export default class CameraView extends React.Component {
                   title="Shape"
                   onPress={() => this.showMenu('shape')}
                   buttonStyle={{
-                    backgroundColor: '#FF5858',
+                    backgroundColor: 'red',
                     opacity: 0.5,
                     width: 'auto',
                     height: 50,
@@ -433,8 +448,8 @@ export default class CameraView extends React.Component {
               <MenuItem onPress={() => this.setState({ texture: 'water' })}>
                 Water
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'uv' })}>
-                UV
+              <MenuItem onPress={() => this.setState({ texture: 'bricks' })}>
+                Brick
               </MenuItem>
               <MenuItem onPress={() => this.setState({ texture: 'color' })}>
                 Color
@@ -470,7 +485,7 @@ export default class CameraView extends React.Component {
               title="Undo"
               onPress={this.undo}
               buttonStyle={{
-                backgroundColor: 'Red',
+                backgroundColor: '#FF5858',
                 opacity: 0.5,
                 width: 85,
                 height: 50,
