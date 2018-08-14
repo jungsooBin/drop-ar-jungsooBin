@@ -1,6 +1,4 @@
-import {connect} from 'react-redux';
 import React from 'react';
-import {saveArt} from '../store/artReducer'
 
 import {
   StyleSheet,
@@ -25,7 +23,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 console.disableYellowBox = true;
 
-class CameraViewPresentational extends React.Component {
+class CameraView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -134,15 +132,16 @@ class CameraViewPresentational extends React.Component {
       // console.log('Location', locationToSave);
       try {
         let count = 0;
-        this.props.addArt({
+        const artObj = {
           location: locationToSave,
           artPiece: this.scene.toJSON(),
-          description: 'Amazing art piece, love it',
-          likes: 10,
-        });
+          title:'',
+          description: '',
+          likes: 0,
+        };
         // console.log('SUCCESS');
         this.showAlert();
-        this.props.navigation.navigate(`ArtPostForm`)
+        this.props.navigation.navigate(`ArtPostForm`, {artObj: artObj})
       } catch (err) {
         console.log(err);
         this.showFailAlert();
@@ -400,10 +399,5 @@ function setModelPos(model, dropPos) {
   return item;
 }
 
-const mapDispatchToProps = (dispatch ) => { return ({
-  addArt: (artObj) => dispatch(saveArt(artObj)),
-})}
-
-const CameraView = connect(null, mapDispatchToProps)(CameraViewPresentational)
-
 export default CameraView;
+

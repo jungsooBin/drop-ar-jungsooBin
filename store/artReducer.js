@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const initialState = {
   allArt: [],
-  singleArt: {}
+  singleArt: {},
 };
 
 const GET_ALL_ART = 'GET_ALL_ART';
@@ -19,15 +19,17 @@ export const getSingleArt = singleArt => ({
   singleArt
 });
 
-export const saveSingleArt = singleSavingArt => ({
+export const saveSingleArt = singleArt => ({
   type: SAVE_SINGLE_ART,
-  singleSavingArt
+  singleArt
 });
 
 
 export const saveArt = (artData) => async (dispatch) => {
   try {
-    const response = await axios.post('http://71.190.247.98/api/art/add', artData)
+    //put your exact Ip using network utility
+    const response = await axios.post('http://172.16.23.84:8080/api/art/add', artData)
+    // console.log(artData)
     return dispatch(saveSingleArt(response.data))
   } catch (error) {
     console.log(error)
@@ -50,7 +52,7 @@ const artReducer = (artState = initialState, action) => {
     case SAVE_SINGLE_ART:
       return {
         ...artState,
-        singleSavingArt: action.singleArt
+        singleArt: action.singleArt
       };
     
     default:
