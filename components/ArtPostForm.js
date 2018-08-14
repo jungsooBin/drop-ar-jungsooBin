@@ -3,26 +3,23 @@ import React, { Component } from 'react';
 import {
   FormLabel,
   FormInput,
-  FormValidationMessage,
   Text,
-  CheckBox,
 } from 'react-native-elements';
 import { View } from 'react-native';
 import Button from './Button';
-import axios from 'axios';
-import Expo from 'expo';
+
 import { saveArt } from '../store/artReducer';
 
 class ArtPostFormPresenTational extends Component {
   constructor() {
     super();
-
     this.state = {
       location: [],
       artPiece: null,
       title: '',
       description: '',
       likes: 0,
+      user:{}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -32,24 +29,12 @@ class ArtPostFormPresenTational extends Component {
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
-      description: artObj.description,
-      title: artObj.title,
-      likes: artObj.likes,
     });
   }
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    //Post new user in DB
     this.props.addArt(artData);
-
-    this.setState({
-      location: [],
-      artPiece: {},
-      description: '',
-      likes: 0,
-    });
-    // Some event that: [ (i) validates form, (ii) if valid info sent to backend, (iii) if not, sends err message],
   }
 
   render() {
@@ -67,12 +52,6 @@ class ArtPostFormPresenTational extends Component {
         />
 
         <FormLabel>Description</FormLabel>
-        <FormInput
-          value={this.state.description}
-          onChangeText={description => this.setState({ description })}
-        />
-
-        <FormLabel>Author</FormLabel>
         <FormInput
           value={this.state.description}
           onChangeText={description => this.setState({ description })}
