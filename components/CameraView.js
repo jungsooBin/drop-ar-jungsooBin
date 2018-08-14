@@ -194,6 +194,15 @@ export default class CameraView extends React.Component {
           }),
           transparent: true,
         }));
+      case 'snow':
+        return (material = new THREE.MeshBasicMaterial({
+          map: await ExpoTHREE.createTextureAsync({
+            asset: Expo.Asset.fromModule(
+              require('../public/textures/Snow.jpg')
+            ),
+          }),
+          transparent: true,
+        }));
       case 'wood':
         return (material = new THREE.MeshBasicMaterial({
           map: await ExpoTHREE.createTextureAsync({
@@ -368,6 +377,9 @@ export default class CameraView extends React.Component {
               </MenuItem>
               <MenuItem onPress={() => this.setState({ texture: 'fire' })}>
                 Fire
+              </MenuItem>
+              <MenuItem onPress={() => this.setState({ texture: 'snow' })}>
+                Snow
               </MenuItem>
               <MenuItem onPress={() => this.setState({ texture: 'leaves' })}>
                 Leaves
