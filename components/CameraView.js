@@ -346,7 +346,7 @@ export default class CameraView extends React.Component {
                   title="Shape"
                   onPress={() => this.showMenu('shape')}
                   buttonStyle={{
-                    backgroundColor: 'red',
+                    backgroundColor: '#FF5858',
                     opacity: 0.5,
                     width: 'auto',
                     height: 50,
@@ -459,6 +459,18 @@ export default class CameraView extends React.Component {
               onPress={this.handleSubmit}
               buttonStyle={{
                 backgroundColor: 'black',
+                opacity: 0.5,
+                width: 85,
+                height: 50,
+              }}
+            />
+            <Button
+              raised
+              rounded
+              title="Undo"
+              onPress={this.undo}
+              buttonStyle={{
+                backgroundColor: 'Red',
                 opacity: 0.5,
                 width: 85,
                 height: 50,
