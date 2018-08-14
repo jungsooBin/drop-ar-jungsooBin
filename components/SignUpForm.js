@@ -54,12 +54,7 @@ class SignUpForm extends Component {
       this.setState({formErrs: true})
     }
   } 
-  
-
-
-    
-    // Some event that: [ (i) validates form, (ii) if valid info sent to backend, (iii) if not, sends err message], 
-  
+   
 
   render(){
     const {terms} = this.state
