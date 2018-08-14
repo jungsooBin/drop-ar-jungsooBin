@@ -85,9 +85,7 @@ export default class CameraView extends React.Component {
         const artObj = {
           location: locationToSave,
           artPiece: artPiece,
-          title: '',
-          description: '',
-          likes: 0,
+          
         };
         // console.log('SUCCESS');
         this.showAlert();
