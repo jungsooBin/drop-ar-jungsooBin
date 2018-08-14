@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import axios from 'axios';
-import Expo, { AR } from 'expo';
+import Expo, { AR, takeSnapshotAsync } from 'expo';
 import * as THREE from 'three';
 import ExpoTHREE from 'expo-three';
 import { Button } from 'react-native-elements';
@@ -59,7 +59,25 @@ export default class CameraView extends React.Component {
     this._menu[type].show();
   };
 
-  takeScreenshot() {}
+  async takeScreenshot() {
+    let result = await takeSnapshotAsync(this._glView, {
+      format: 'jpg',
+      result: 'file',
+      quality: 1.0,
+    });
+    console.log(result);
+    const file = {
+      uri: result,
+      type: 'image/jpeg',
+    };
+    console.log(file);
+    if (file) {
+      this.showImageSave();
+      this.setState({ coverPhoto: file });
+    } else {
+      this.showFailToSave();
+    }
+  }
 
   async handleSubmit(evt) {
     navigator.geolocation.getCurrentPosition(
@@ -82,14 +100,12 @@ export default class CameraView extends React.Component {
       try {
         let count = 0;
         const artPiece = this.scene.toJSON();
+        const coverPhoto = this.state.coverPhoto;
         const artObj = {
           location: locationToSave,
           artPiece: artPiece,
-          title: '',
-          description: '',
-          likes: 0,
+          coverPhoto: coverPhoto,
         };
-        // console.log('SUCCESS');
         this.showAlert();
         this.props.navigation.navigate(`ArtPostForm`, { artObj: artObj });
       } catch (err) {
@@ -98,6 +114,30 @@ export default class CameraView extends React.Component {
       }
     }
   }
+
+  showImageSave = () => {
+    Alert.alert(
+      'Cover Photo Set!',
+      'Cool!',
+      [{ text: ':)', onPress: () => console.log('Posted') }],
+      { cancelable: false }
+    );
+  };
+
+  // Message to user when post fails
+  showFailToSave = () => {
+    Alert.alert(
+      'Failed To Add Photo!',
+      'Error!',
+      [
+        {
+          text: 'Please Try Again',
+          onPress: () => console.log('Error'),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   showAlert = () => {
     Alert.alert(
