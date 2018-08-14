@@ -16,7 +16,7 @@ class SignUpForm extends Component {
       password: '',
       rePassword: '',
       terms: false,
-      // formErrs: false
+      
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -25,7 +25,7 @@ class SignUpForm extends Component {
     event.preventDefault()
     //Post new user in DB
    
-    if(checkEachField(formValidator, this.state)){
+    if(checkEachField(formValidator, this.state).length < 1){
       try{
         console.log("CLICKED")
         await axios.post('http://localhost:8080/api/user/signup', {
@@ -45,11 +45,12 @@ class SignUpForm extends Component {
         email: '',
         password: '',
         rePassword: '',
-        terms: false
+        terms: false,
+        formErrs: false
       })
 
     } else {
-      
+      this.setState({formErrs: true})
     }
   } 
   
@@ -61,13 +62,16 @@ class SignUpForm extends Component {
 
   render(){
     const {terms} = this.state
+    const invalidEntries = checkEachField(formValidator, this.state)
+    console.log(invalidEntries)
+    
      
     return (
       <View style={styles.container}>
 
       <Text h1 style={styles.heading}>Sign Up</Text>
         <FormLabel>First Name</FormLabel>
-        <FormInput value={this.state.firstName} onChangeText={firstName => this.setState({firstName})} required={true}/>
+        <FormInput value={this.state.firstName} onChangeText={firstName => this.setState({firstName})}/>
 
         <FormLabel>Last Name</FormLabel>
         <FormInput value={this.state.lastName} onChangeText={lastName => this.setState({lastName})}/>
@@ -85,6 +89,15 @@ class SignUpForm extends Component {
           {terms: !terms})} />
 
         <Button onPress={this.handleSubmit}>Submit</Button>
+
+        {
+          !this.state.formErrs ? null : invalidEntries.map(entry => {
+            return (
+              <FormValidationMessage key={entry}>{`${entry} is required`}</FormValidationMessage>
+            )
+          }) 
+          
+        }
 
       </View>
     )
