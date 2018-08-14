@@ -19,7 +19,7 @@ class LoginForm extends React.Component {
     try {
       event.preventDefault();
       this.props.handleLogin(formData);
-      this.props.navigation.navigate("CameraView");
+      this.props.navigation.navigate("ArtFeed");
       // set user info to redux store
     } catch (error) {
       console.log(error);
@@ -37,7 +37,6 @@ class LoginForm extends React.Component {
         >
           <Icon name="arrow-back" color="#ff5858" />
         </TouchableOpacity>
-
         <Text style={styles.titleText}>GraftAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>Email</FormLabel>
