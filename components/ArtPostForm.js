@@ -5,7 +5,7 @@ import {
   FormInput,
   Text,
 } from 'react-native-elements';
-import { View } from 'react-native';
+import { View, Image} from 'react-native';
 import Button from './Button';
 
 import { saveArt } from '../store/artReducer';
@@ -19,7 +19,8 @@ class ArtPostFormPresenTational extends Component {
       title: '',
       description: '',
       likes: 0,
-      user:{}
+      user:{},
+      coverPhoto:null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -29,6 +30,7 @@ class ArtPostFormPresenTational extends Component {
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
+      coverPhoto: artObj.coverPhoto
     });
   }
 
@@ -42,6 +44,11 @@ class ArtPostFormPresenTational extends Component {
     const { checked } = this.state;
     return (
       <View style={styles.container}>
+        <Image
+          style={{width: 50, height: 50}}
+          source={this.state.coverPhoto}
+        />
+
         <Text h1 style={styles.heading}>
           ArtForm
         </Text>
