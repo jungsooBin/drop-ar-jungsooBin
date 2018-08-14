@@ -4,15 +4,12 @@ const { Art } = require('../../database/');
 
 router.post('/add', async (req, res, next) => {
   try {
-    // console.warn('working?')
+    console.log('working?')
     const CreatedArt = await Art.create(req.body);
-    if (CreatedArt) {
-      res.status(201).json(CreatedArt);
-    } else {
-      res.sendStatus(404);
-    }
+    res.json(CreatedArt)
   } catch (error) {
-    console.log(error);
+    console.log('error?')
+    // console.log(error);
     res.sendStatus(404);
   }
 });
