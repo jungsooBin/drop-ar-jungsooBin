@@ -97,7 +97,6 @@ export default class CameraView extends React.Component {
       const locationToSave = [this.state.latitude, this.state.longitude];
       // console.log('Location', locationToSave);
       try {
-        let count = 0;
         const artPiece = this.scene.toJSON();
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
@@ -612,3 +611,4 @@ function setModelPos(model, dropPos) {
   item.rotator = 0.02;
   return item;
 }
+

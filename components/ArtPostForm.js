@@ -89,6 +89,7 @@ const styles = {
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
+    
   };
 };
 
