@@ -1,10 +1,10 @@
 'use strict';
-var Sequelize = require('sequelize');
 const router = require('express').Router();
 const { Art } = require('../../database/');
 
 router.post('/add', async (req, res, next) => {
   try {
+    // console.warn('working?')
     const CreatedArt = await Art.create(req.body);
     if (CreatedArt) {
       res.status(201).json(CreatedArt);

@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const session = require('express-session');
-const express = require('express');
-const path = require('path');
-const morgan = require('morgan');
+// const session = require('express-session');
+// const express = require('express');
+// const path = require('path');
+// const morgan = require('morgan');
 
-// Static middleware
-router.use(express.static(path.join(__dirname, '..', 'public')));
+// // Static middleware
+// router.use(express.static(path.join(__dirname, '..', 'public')));
 
 router.use('/art', require('./art'));
 router.use('/user', require('./user'));

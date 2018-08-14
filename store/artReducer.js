@@ -27,7 +27,7 @@ export const saveSingleArt = singleSavingArt => ({
 
 export const saveArt = (artData) => async (dispatch) => {
   try {
-    const response = await axios.post('/api/art/add', artData)
+    const response = await axios.post('http://71.190.247.98/api/art/add', artData)
     return dispatch(saveSingleArt(response.data))
   } catch (error) {
     console.log(error)

@@ -6,7 +6,7 @@ const { db } = require('./../database');
 const PORT = process.env.PORT || 8080;
 const app = express();
 const server = app.listen(PORT, () =>
-  console.log(`Welcome to graffitiCamera ${PORT}`)
+  console.log(`Welcome to graffitiAR ${PORT}`)
 );
 
 module.exports = app;
