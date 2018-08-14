@@ -1,16 +1,33 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Icon, FormLabel, FormInput } from "react-native-elements";
+import { connect } from "react-redux";
+import axios from "axios";
 
 class LoginForm extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      user: {},
+      email: "",
+      password: ""
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange() {}
-
-  handleSubmit() {}
+  async handleSubmit(event) {
+    try {
+      const res = await axios.put(`http://71.190.247.98:1337/api/auth/login`, {
+        email: this.state.email,
+        password: this.state.password
+      });
+      this.setState({ user: res.data });
+      this.props.navigation.navigate("CameraView");
+      // set user info to redux store
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     const { navigation } = this.props;
@@ -25,16 +42,27 @@ class LoginForm extends React.Component {
         <Text style={styles.titleText}>GraftAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>Email</FormLabel>
-          <FormInput onChange={this.handleChange} />
-          {/* Figure out how to hide password */}
+          <FormInput
+            name="email"
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
+            autoCapitalize="none"
+          />
           <FormLabel>Password</FormLabel>
-          <FormInput onChange={this.handleChange} />
+          <FormInput
+            name="password"
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+            autoCapitalize="none"
+            secureTextEntry={true}
+          />
         </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            // onPress={() => navigation.navigate(`LoginForm`)}
+            onPress={() => navigation.navigate(`CameraView`)}
           >
+            {/* Replace nav to CameraView with handleSubmit */}
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
           <Text
@@ -48,6 +76,16 @@ class LoginForm extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    handleSubmit(event) {
+      const email = this.state.email;
+      const password = this.state.password;
+      dispatch(login({ email, password }));
+    }
+  };
+};
 
 const styles = {
   container: {
@@ -94,4 +132,7 @@ const styles = {
   }
 };
 
-export default LoginForm;
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginForm);
