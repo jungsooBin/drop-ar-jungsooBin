@@ -1,10 +1,10 @@
 import React, {Component} from "react"
 import { FormLabel, FormInput, FormValidationMessage, Text, CheckBox} from 'react-native-elements' 
-// import ValidationComponent from 'react-native-form-validator';
+
 import {View} from 'react-native'
 import Button from './Button'
 import axios from 'axios'
-import {formValidator, checkEachField} from '../utilities/formValidator'
+import {formValidator, checkEachField, individualizedErrMsg} from '../utilities/formValidator'
 
 class SignUpForm extends Component {
   constructor(props){
@@ -62,8 +62,8 @@ class SignUpForm extends Component {
 
   render(){
     const {terms} = this.state
-    const invalidEntries = checkEachField(formValidator, this.state)
-    console.log(invalidEntries)
+    const messages = individualizedErrMsg(checkEachField(formValidator, this.state))
+    
     
      
     return (
@@ -71,29 +71,52 @@ class SignUpForm extends Component {
 
       <Text h1 style={styles.heading}>Sign Up</Text>
         <FormLabel>First Name</FormLabel>
-        <FormInput value={this.state.firstName} onChangeText={firstName => this.setState({firstName})}/>
+        <FormInput 
+          value={this.state.firstName} 
+          onChangeText={firstName => this.setState({firstName})}
+        />
 
         <FormLabel>Last Name</FormLabel>
-        <FormInput value={this.state.lastName} onChangeText={lastName => this.setState({lastName})}/>
+        <FormInput 
+          value={this.state.lastName} 
+          onChangeText={lastName => this.setState({lastName})}
+        />
 
         <FormLabel>Email</FormLabel>
-        <FormInput value={this.state.email} onChangeText={email => this.setState({email})}/>
+        <FormInput 
+          value={this.state.email} 
+          onChangeText={email => this.setState({email})}
+        />
 
         <FormLabel>Password</FormLabel>
-        <FormInput value={this.state.password} onChangeText={password => this.setState({password})}/>
+        <FormInput 
+          value={this.state.password} 
+          onChangeText={password => this.setState({password})} 
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
 
         <FormLabel>Re-Enter Password</FormLabel>
-        <FormInput value={this.state.rePassword} onChangeText={rePassword => this.setState({rePassword})}/>
+        <FormInput 
+          value={this.state.rePassword} 
+          onChangeText={rePassword => this.setState({rePassword})}
+          autoCapitalize="none"
+          secureTextEntry={true}
+        />
 
-        <CheckBox title='Terms and Conditions' checked={this.state.terms} onPress={() => this.setState(
-          {terms: !terms})} />
+        <CheckBox 
+          title='Terms and Conditions' 
+          checked={this.state.terms} 
+          onPress={() => this.setState(
+          {terms: !terms})} 
+        />
 
         <Button onPress={this.handleSubmit}>Submit</Button>
 
         {
-          !this.state.formErrs ? null : invalidEntries.map(entry => {
+          !this.state.formErrs ? null : messages.map(entry => {
             return (
-              <FormValidationMessage key={entry}>{`${entry} is required`}</FormValidationMessage>
+              <FormValidationMessage key={entry}>{`${entry}`}</FormValidationMessage>
             )
           }) 
           
