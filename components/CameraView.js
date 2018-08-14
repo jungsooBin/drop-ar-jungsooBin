@@ -131,7 +131,7 @@ class CameraViewPresentational extends React.Component {
       this.showFailAlert();
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
-      console.log('Location', locationToSave);
+      // console.log('Location', locationToSave);
       try {
         let count = 0;
         this.props.addArt({
@@ -140,7 +140,7 @@ class CameraViewPresentational extends React.Component {
           description: 'Amazing art piece, love it',
           likes: 10,
         });
-        console.log('SUCCESS');
+        // console.log('SUCCESS');
         this.showAlert();
         this.props.navigation.navigate(`ArtPostForm`)
       } catch (err) {
