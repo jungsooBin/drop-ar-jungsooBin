@@ -24,7 +24,7 @@ class SignUpForm extends Component {
   async handleSubmit(event){
     event.preventDefault()
     //Post new user in DB
-   
+
     if(checkEachField(formValidator, this.state)){
       try{
         console.log("CLICKED")
@@ -61,7 +61,7 @@ class SignUpForm extends Component {
 
   render(){
     const {terms} = this.state
-     
+    
     return (
       <View style={styles.container}>
 
