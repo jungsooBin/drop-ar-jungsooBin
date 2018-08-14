@@ -23,6 +23,7 @@ export const getMe = () => async dispatch => {
 
 export const login = formData => async dispatch => {
   try {
+    console.log("formData", formData);
     const res = await axios.put("/auth/login", formData);
     dispatch(gotMe(user));
   } catch (error) {
