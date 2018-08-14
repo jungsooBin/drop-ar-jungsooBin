@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 
 router.post('/signup', async (req, res, next) => {
   try{
+    console.log(req.body)
     const newUser = await User.create(req.body)
     res.status(201).json(newUser)
   } catch(err) {

@@ -37,6 +37,10 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING,
   },
+  terms: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false
+  }
 });
 
 /**
