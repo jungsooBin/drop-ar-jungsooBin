@@ -45,6 +45,7 @@ export default class CameraView extends React.Component {
     this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
     this.undo = this.undo.bind(this);
+    this.undoAll = this.undoAll.bind(this);
     this.takeScreenshot = this.takeScreenshot.bind(this);
   }
 
@@ -121,6 +122,12 @@ export default class CameraView extends React.Component {
 
   undo() {
     this.scene.remove(this.scene.children[this.scene.children.length - 1]);
+  }
+
+  undoAll() {
+    while (this.scene.children.length > 0) {
+      this.undo();
+    }
   }
 
   showImageSave = () => {
@@ -485,6 +492,18 @@ export default class CameraView extends React.Component {
               onPress={this.undo}
               buttonStyle={{
                 backgroundColor: '#FF5858',
+                opacity: 0.5,
+                width: 85,
+                height: 50,
+              }}
+            />
+            <Button
+              raised
+              rounded
+              title="Clear"
+              onPress={this.undoAll}
+              buttonStyle={{
+                backgroundColor: 'purple',
                 opacity: 0.5,
                 width: 85,
                 height: 50,

@@ -14,7 +14,7 @@ import ArtPostForm from './components/ArtPostForm';
 
 const RootNavigator = createStackNavigator({
   Main: {
-    screen: CameraView,
+    screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
       title: `GraftAR`,
