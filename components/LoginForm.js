@@ -68,12 +68,6 @@ class LoginForm extends React.Component {
             {/* Replace nav to CameraView with handleSubmit */}
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate(`CameraView`)}
-          >
-            <Text style={styles.buttonText}>Go Cam (Temp)</Text>
-          </TouchableOpacity>
           <Text
             style={styles.textLink}
             onPress={() => navigation.navigate(`SignUpForm`)}
