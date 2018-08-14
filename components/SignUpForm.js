@@ -24,6 +24,7 @@ class SignUpForm extends Component {
   async handleSubmit(event){
     event.preventDefault()
     //Post new user in DB
+
    
     if(checkEachField(formValidator, this.state).length < 1){
       try{
@@ -62,6 +63,7 @@ class SignUpForm extends Component {
 
   render(){
     const {terms} = this.state
+
     const messages = individualizedErrMsg(checkEachField(formValidator, this.state))
     
     
