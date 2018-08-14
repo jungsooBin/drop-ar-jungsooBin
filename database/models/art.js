@@ -13,6 +13,9 @@ const Art = db.define('art', {
   description: {
     type: Sequelize.STRING,
   },
+  title: {
+    type: Sequelize.STRING,
+  },
   likes: {
     type: Sequelize.INTEGER,
   },
