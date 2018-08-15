@@ -39,11 +39,7 @@ export default class SingleArtView extends React.Component {
 
   async handleLoad() {
     let loader = new THREE.ObjectLoader();
-<<<<<<< HEAD
     const response = await axios.get(`http://172.16.23.84:8080/api/art/4`);
-=======
-    const response = await axios.get(`http://172.16.21.129:8080/api/art/7`);
->>>>>>> 040320954f272a90c09dd785941eaa28e86bffd7
     this.setState({
       singleArt: response.data,
     });
