@@ -30,7 +30,7 @@ export default class CameraView extends React.Component {
       latitude: null,
       longitude: null,
       shape: 'cube',
-      size: 'medium',
+      size: 'small',
       texture: 'color',
       hideButtons: false,
       coverPhoto: null,
@@ -101,6 +101,7 @@ export default class CameraView extends React.Component {
       try {
         let count = 0;
         const artPiece = this.scene.toJSON();
+        console.log('artPiece: ', artPiece);
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
           location: locationToSave,
@@ -320,8 +321,10 @@ export default class CameraView extends React.Component {
     if (this.state.texture === 'color') {
       material = new THREE.MeshBasicMaterial({
         color: colorToUse,
-        transparent: true,
-        opacity: 0.7,
+        // transparent: true,
+        specular: 0x555555,
+        opacity: 1.0,
+        shininess: 100,
       });
     } else {
       material = await this.findCustomMaterial();
@@ -464,18 +467,6 @@ export default class CameraView extends React.Component {
             <Button
               raised
               rounded
-              title="Draw"
-              onPress={this.addShapeWithSize}
-              buttonStyle={{
-                backgroundColor: 'orange',
-                opacity: 0.5,
-                width: 85,
-                height: 50,
-              }}
-            />
-            <Button
-              raised
-              rounded
               title="Next"
               onPress={this.handleSubmit}
               buttonStyle={{
@@ -539,6 +530,22 @@ export default class CameraView extends React.Component {
             />
           )}
         </View>
+        {this.state.hideButtons === true ? null : (
+          <View style={styles.draw}>
+            <Button
+              raised
+              rounded
+              title="Draw"
+              onPress={this.addShapeWithSize}
+              buttonStyle={{
+                backgroundColor: 'orange',
+                opacity: 0.5,
+                width: 85,
+                height: 50,
+              }}
+            />
+          </View>
+        )}
       </View>
     );
   }
@@ -557,6 +564,7 @@ export default class CameraView extends React.Component {
       0.01,
       1000
     );
+
     const renderer = ExpoTHREE.createRenderer({ gl });
     renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
 
@@ -565,6 +573,17 @@ export default class CameraView extends React.Component {
       renderer
     );
 
+    const geometry = new THREE.BoxGeometry(0.05, 0.05, 0.05);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const cube = new THREE.Mesh(geometry, material);
+
+    generateLighting(this.scene);
+    this.scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444));
+    var light = new THREE.DirectionalLight(0xffffff, 0.5);
+    light.position.set(1, 1, 1);
+    this.scene.add(light);
+    this.scene.add(cube);
+
     const animate = () => {
       requestAnimationFrame(animate);
       this.camera.position.setFromMatrixPosition(this.camera.matrixWorld);
@@ -572,9 +591,10 @@ export default class CameraView extends React.Component {
       cameraPos.applyMatrix4(this.camera.matrixWorld);
 
       this.graffitiObjects.forEach(art => {
+        art.castShadow = true;
         // Animates items for live movement
-        // art.rotation.x += art.rotator;
-        // art.rotation.y += art.rotator;
+        art.rotation.x += art.rotator;
+        art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);
@@ -607,6 +627,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: height - 100,
     left: width / 2 + 110,
+  },
+  draw: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: height - 100,
+    left: width / 2 - 50,
   },
   dropView: {
     justifyContent: 'center',
@@ -645,4 +672,16 @@ function setModelPos(model, dropPos) {
   item.position.z = dropPos.z;
   item.rotator = 0.02;
   return item;
+}
+
+function generateLighting(scene) {
+  const leftLight = new THREE.DirectionalLight(0xffffff);
+  const rightLight = new THREE.DirectionalLight(0xffffff);
+  const bottomLight = new THREE.DirectionalLight(0xffffff);
+  leftLight.position.set(-3, 5, 0).normalize();
+  rightLight.position.set(3, 5, 0).normalize();
+  bottomLight.position.set(0, -5, 0).normalize();
+  scene.add(leftLight);
+  scene.add(rightLight);
+  scene.add(bottomLight);
 }
