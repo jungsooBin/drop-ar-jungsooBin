@@ -8,6 +8,7 @@ import {
   PanResponder,
   Animated,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import axios from 'axios';
 import Expo, { AR, takeSnapshotAsync } from 'expo';
@@ -25,18 +26,19 @@ export default class CameraView extends React.Component {
   constructor() {
     super();
     this.state = {
-      color: null,
+      color: { h: 0, s: 0, v: 200 },
       hexColor: '#FFFFFF',
       latitude: null,
       longitude: null,
       shape: 'cube',
       size: 'small',
       texture: 'color',
-      hideButtons: false,
+      hideButtons: true,
       coverPhoto: null,
     };
     this.model = null;
     this.graffitiObjects = [];
+    this.timer = null;
     this.findColor = this.findColor.bind(this);
     this.findShape = this.findShape.bind(this);
     this.findSize = this.findSize.bind(this);
@@ -47,6 +49,11 @@ export default class CameraView extends React.Component {
     this.undo = this.undo.bind(this);
     this.undoAll = this.undoAll.bind(this);
     this.takeScreenshot = this.takeScreenshot.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+  }
+
+  stopTimer() {
+    clearTimeout(this.timer);
   }
 
   // Menu
@@ -185,6 +192,7 @@ export default class CameraView extends React.Component {
       Math.round(this.state.color.s),
       Math.round(this.state.color.v / 2)
     );
+    console.log(this.state.color);
     console.log(colorHex);
     this.setState({ colorHex: colorHex });
     return colorHex;
@@ -192,11 +200,11 @@ export default class CameraView extends React.Component {
 
   findSize() {
     if (this.state.size === 'medium') {
-      return 0.1;
+      return 0.5;
     } else if (this.state.size === 'large') {
-      return 0.15;
+      return 0.1;
     } else {
-      return 0.05;
+      return 0.025;
     }
   }
 
@@ -333,6 +341,7 @@ export default class CameraView extends React.Component {
     const newItem = setModelPos(mesh, this.camera.position);
     this.graffitiObjects.push(newItem);
     this.scene.add(newItem);
+    this.timer = setTimeout(this.addShapeWithSize, 5);
   }
 
   render() {
@@ -506,11 +515,11 @@ export default class CameraView extends React.Component {
           <Button
             raised
             rounded
-            title="Hide"
+            title="Options"
             onPress={this.hideAllButtons}
             buttonStyle={{
-              backgroundColor: 'blue',
-              opacity: 0.5,
+              backgroundColor: 'red',
+              opacity: 0.3,
               width: 'auto',
               height: 50,
             }}
@@ -522,30 +531,35 @@ export default class CameraView extends React.Component {
               title=" Photo"
               onPress={this.takeScreenshot}
               buttonStyle={{
-                backgroundColor: 'green',
-                opacity: 0.5,
+                backgroundColor: 'blue',
+                opacity: 0.3,
                 width: 'auto',
                 height: 50,
               }}
             />
           )}
         </View>
-        {this.state.hideButtons === true ? null : (
-          <View style={styles.draw}>
-            <Button
-              raised
-              rounded
-              title="Draw"
-              onPress={this.addShapeWithSize}
-              buttonStyle={{
-                backgroundColor: 'orange',
-                opacity: 0.5,
-                width: 85,
-                height: 50,
-              }}
-            />
-          </View>
-        )}
+        <View style={styles.draw}>
+          {/* <Button
+            raised
+            rounded
+            title="Draw"
+            onPress={this.addShapeWithSize}
+            buttonStyle={{
+              backgroundColor: 'black',
+              opacity: 0.2,
+              width: 100,
+              height: 50,
+            }}
+          /> */}
+          <TouchableOpacity
+            onPressIn={this.addShapeWithSize}
+            onPressOut={this.stopTimer}
+            style={styles.drawButton}
+          >
+            <Text style={styles.buttonText}> DRAW </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -576,12 +590,6 @@ export default class CameraView extends React.Component {
     const geometry = new THREE.BoxGeometry(0.05, 0.05, 0.05);
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
-
-    generateLighting(this.scene);
-    this.scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444));
-    var light = new THREE.DirectionalLight(0xffffff, 0.5);
-    light.position.set(1, 1, 1);
-    this.scene.add(light);
     this.scene.add(cube);
 
     const animate = () => {
@@ -593,8 +601,8 @@ export default class CameraView extends React.Component {
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
         // Animates items for live movement
-        art.rotation.x += art.rotator;
-        art.rotation.y += art.rotator;
+        // art.rotation.x += art.rotator;
+        // art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);
@@ -626,7 +634,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     top: height - 100,
-    left: width / 2 + 110,
+    left: width / 2 + 90,
   },
   draw: {
     justifyContent: 'center',
@@ -662,6 +670,19 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 8,
     marginRight: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+  },
+  drawButton: {
+    backgroundColor: 'black',
+    opacity: 0.4,
+    width: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
   },
 });
 
