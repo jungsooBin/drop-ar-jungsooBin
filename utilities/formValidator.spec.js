@@ -1,10 +1,9 @@
 const {expect} = require('chai')
-const {formValidator, checkEachField} = require('./formValidator')
+const {formValidator, checkEachField, individualizedErrMsg} = require('./formValidator')
 
-describe('Tests for form validator file', () => {
+describe('Tests for formValidator functions', () => {
 
   describe('formValidator function', () => {
-
     //Function Signature
     it('returns true if formValidator takes two parameters', () => {
       expect(formValidator.length).to.equal(2)
@@ -63,17 +62,15 @@ describe('Tests for form validator file', () => {
   })
 
   describe('checkEachField function', () => {
-
     it('returns an array', () => {
       expect(Array.isArray(checkEachField())).to.equal(true)
     })
   })
 
   describe('individualizedErrMsg function', () => {
-
+    let test = 
     it('returns an array', () => {
-      expect(Array.isArray(checkEachField())).to.equal(true)
+      expect(Array.isArray(individualizedErrMsg([]))).to.equal(true)
     })
-  })
-
+  }) 
 })
