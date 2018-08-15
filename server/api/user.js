@@ -13,6 +13,8 @@ router.post('/signup', async (req, res, next) => {
 
 router.get('/login', async (req, res, next) => {
   try{
+    console.log(req.body)
+
     const currentUser = await User.findOne({ where: { email: req.body.email } });
     // if (!currentUser) {
     //   res.status(401).send("Wrong username");

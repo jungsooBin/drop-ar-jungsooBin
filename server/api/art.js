@@ -22,7 +22,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/add", async (req, res, next) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const CreatedArt = await Art.create(req.body);
     res.json(CreatedArt);
   } catch (error) {
