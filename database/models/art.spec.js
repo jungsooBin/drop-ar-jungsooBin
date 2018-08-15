@@ -1,6 +1,6 @@
 const {expect} = require('chai')
-const db = require('../index')
-const Art = db.model('art')
+const db = require('../database')
+const Art = require('./art')
 const Sequelize = require('sequelize')
 
 describe('Art model', () => {

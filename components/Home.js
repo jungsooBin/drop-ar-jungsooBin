@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity, Button } from "react-native";
 
+
 const Home = ({ navigation }) => (
   <View style={styles.container}>
     <Text style={styles.text}>GraftAR</Text>
@@ -17,6 +18,7 @@ const Home = ({ navigation }) => (
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
+
     </View>
   </View>
 );
