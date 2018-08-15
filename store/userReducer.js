@@ -34,7 +34,7 @@ const userReducer = (userState = initialState, action) => {
   switch (action.type) {
     case GOT_ME:
       return {
-        ...state,
+        ...userState,
         user: action.user
       };
     default:
