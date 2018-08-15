@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -6,14 +6,14 @@ import {
   Dimensions,
   Image,
   PanResponder,
-  Animated,
-} from 'react-native';
-import axios from 'axios';
-import Expo from 'expo';
-import { AR } from 'expo';
-import * as THREE from 'three';
-import ExpoTHREE from 'expo-three';
-import { Button } from 'react-native-elements';
+  Animated
+} from "react-native";
+import axios from "axios";
+import Expo from "expo";
+import { AR } from "expo";
+import * as THREE from "three";
+import ExpoTHREE from "expo-three";
+import { Button } from "react-native-elements";
 
 console.disableYellowBox = true;
 
@@ -21,16 +21,16 @@ export default class SingleArtView extends React.Component {
   constructor() {
     super();
     this.state = {
-      singleArt: {},
+      singleArt: {}
     };
     this.handleLoad = this.handleLoad.bind(this);
   }
 
   async handleLoad() {
     let loader = new THREE.ObjectLoader();
-    const response = await axios.get(`http://172.16.21.129:8080/api/art/4`);
+    const response = await axios.get(`http://172.16.22.255:8080/api/art/2`);
     this.setState({
-      singleArt: response.data,
+      singleArt: response.data
     });
     console.log(response.data);
     const sceneJson = response.data.artPiece;
@@ -53,10 +53,10 @@ export default class SingleArtView extends React.Component {
             title="Load Scene"
             onPress={this.handleLoad}
             buttonStyle={{
-              backgroundColor: 'purple',
+              backgroundColor: "purple",
               opacity: 0.2,
               width: 85,
-              height: 85,
+              height: 85
             }}
           />
         </View>
@@ -99,14 +99,14 @@ export default class SingleArtView extends React.Component {
   };
 }
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: height - 350,
-    left: width / 2 + 100,
-  },
+    left: width / 2 + 100
+  }
 });
