@@ -24,6 +24,15 @@ export default class SingleArtView extends React.Component {
       singleArt: {}
     };
     this.handleLoad = this.handleLoad.bind(this);
+    this.loveArt = this.loveArt.bind(this);
+  }
+
+  async loveArt() {
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    var cube = new THREE.Mesh(geometry, material);
+    const newItem = setModelPos(cube, this.camera.position);
+    this.scene.add(cube);
   }
 
   async handleLoad() {
@@ -53,12 +62,24 @@ export default class SingleArtView extends React.Component {
             title="Load Scene"
             onPress={this.handleLoad}
             buttonStyle={{
-              backgroundColor: "purple",
-              opacity: 0.2,
+              backgroundColor: "green",
+              opacity: 0.5,
               width: 85,
               height: 85
             }}
           />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={this.loveArt.bind(this)}
+          >
+            <Image
+              source={{
+                uri:
+                  "https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg"
+              }}
+              style={{ width: 80, height: 80, borderRadius: 40 }}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -110,3 +131,12 @@ const styles = StyleSheet.create({
     left: width / 2 + 100
   }
 });
+
+function setModelPos(model, dropPos) {
+  const item = model.clone();
+  item.position.x = dropPos.x;
+  item.position.y = dropPos.y;
+  item.position.z = dropPos.z;
+  item.rotator = 0.02;
+  return item;
+}
