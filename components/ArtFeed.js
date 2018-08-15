@@ -49,7 +49,7 @@ const styles = {
   },
   scrollContainer: {
     flex: 1,
-    top: "4.5%"
+    top: "3.75%"
   },
   buttonContainer: {
     position: "absolute",

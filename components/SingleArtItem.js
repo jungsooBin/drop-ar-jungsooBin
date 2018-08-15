@@ -1,19 +1,13 @@
 import React from "react";
 import { Text, TouchableOpacity, View, Image, Button } from "react-native";
+import { withNavigation } from "react-navigation";
 
 const SingleArtItem = props => {
   const { navigation } = props;
   return (
     <View style={styles.container}>
-      <Button
-        title="button"
-        onPress={() =>
-          navigation.navigate(`SingleArtView`, {
-            art: props.art
-          })
-        }
-      />
       <TouchableOpacity
+        style={styles.artImage}
         onPress={() =>
           navigation.navigate(`SingleArtView`, {
             art: props.art
@@ -34,34 +28,23 @@ const SingleArtItem = props => {
 const styles = {
   container: {
     flexDirection: "row",
-    width: "100%",
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#FFF",
-    marginTop: 5,
-    borderRadius: "5pt"
+    marginTop: 5
   },
-  // artImage: {
-  //   width: "40%",
-  //   height: "17.5%"
-  // },
+  artImage: {
+    width: "50%",
+    height: "80%"
+  },
   info: {
     flexDirection: "column",
-    width: "45%",
-    height: "17.5%",
-    color: "#000",
-    textAlign: "center"
-  },
-  artTitle: {
-    fontSize: "20px"
-  },
-  artLikes: {
-    fontSize: "16px"
-  },
-  artDescription: {
-    fontSize: "16px"
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    fontSize: 16
   }
 };
 
-export default SingleArtItem;
+export default withNavigation(SingleArtItem);
