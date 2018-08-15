@@ -1,6 +1,6 @@
 "use strict";
 const router = require("express").Router();
-const { Art } = require("../../database/models/art");
+const { Art } = require("../../database");
 
 router.get("/", async (req, res, next) => {
   try {

@@ -11,7 +11,8 @@ import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
 import FriendProfile from "./components/FriendProfile";
 import ArtPostForm from "./components/ArtPostForm";
-// import SingleArtView from "./components/SingleArtView";
+import SingleArtView from "./components/SingleArtView";
+import SingleArtItem from "./components/SingleArtItem";
 
 const RootNavigator = createStackNavigator({
   Main: {
@@ -53,28 +54,34 @@ const RootNavigator = createStackNavigator({
   },
   ArtFeed: {
     screen: ArtFeed,
-    navigationOptions: ({ navgiation }) => ({
+    navigationOptions: ({ navigation }) => ({
       header: null
     })
   },
   FriendProfile: {
     screen: FriendProfile,
-    navigationOptions: ({ navgiation }) => ({
+    navigationOptions: ({ navigation }) => ({
       header: null
     })
   },
   ArtPostForm: {
     screen: ArtPostForm,
-    navigationOptions: ({ navgiation }) => ({
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  SingleArtView: {
+    screen: SingleArtView,
+    navigationOptions: ({ navigation }) => ({
+      header: null
+    })
+  },
+  SingleArtItem: {
+    screen: SingleArtItem,
+    navigationOptions: ({ navigation }) => ({
       header: null
     })
   }
-  // SingleArtView: {
-  //   screen: SingleArtView,
-  //   navigationOptions: ({ navigation }) => ({
-  //     header: null
-  //   })
-  // }
 });
 
 export default class App extends Component {

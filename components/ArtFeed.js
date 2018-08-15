@@ -13,9 +13,9 @@ class ArtFeed extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.scrollContainer}>
           {!this.props.allArt ? (
-            <Text>Null</Text>
+            <Text>:(</Text>
           ) : (
             this.props.allArt.map(art => {
               return <SingleArtItem key={art.id} art={art} />;
@@ -45,8 +45,12 @@ const styles = {
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
     backgroundColor: "#ff5858"
+  },
+  scrollContainer: {
+    flex: 1,
+    top: "4.5%"
   },
   buttonContainer: {
     position: "absolute",
@@ -57,7 +61,6 @@ const styles = {
   button: {
     backgroundColor: "#FFF",
     padding: 10,
-    margin: 1,
     width: "50%"
   },
   buttonText: {
@@ -70,7 +73,7 @@ const styles = {
 
 const mapStateToProps = state => {
   return {
-    allArt: state.allArt
+    allArt: state.arts.allArt
   };
 };
 
