@@ -1,6 +1,6 @@
 const {expect} = require('chai')
-const db = require('../index')
-const User = db.model('user')
+const db = require('../database')
+const User = require('./user')
 const Sequelize = require('sequelize')
 
 describe('User model', () => {
@@ -16,6 +16,7 @@ describe('User model', () => {
         firstName: "Graf",
         lastName: "Fiti",
         email: "arGraffiti@email.com",
+        terms: true
       })
     })
     
@@ -41,6 +42,10 @@ describe('User model', () => {
 
     it('returns true if email is a string', () => {
       expect(user.email).to.be.a('string')
+    })
+
+    it('returns true if terms is a boolean', () => {
+      expect(user.terms).to.be.a('boolean')
     })
   })
 })

@@ -2,7 +2,6 @@ import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Icon, FormLabel, FormInput } from "react-native-elements";
 import { connect } from "react-redux";
-import axios from "axios";
 import { login } from "../store/userReducer";
 
 class LoginForm extends React.Component {

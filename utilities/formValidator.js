@@ -26,23 +26,21 @@ const checkEachField = (validatorFunc, obj) => {
 
 const individualizedErrMsg = (errorsArray) => {
   let messages = []
-
   const messageObj = {
     firstName: 'First name is required.',
     lastName: 'Last name is required.',
     email: 'A valid email is required.', 
     password: 'Password must be at least eight characters.',
-    rePassword: 'This field does not match password.',
-    terms: 'Please accept our terms and conditions'
+    rePassword: 'Re-entered password does not match password.',
+    terms: 'Please accept our terms and conditions.'
   }
-
   for (let i = 0; i < errorsArray.length; i++){
     messages.push(messageObj[errorsArray[i]])
   }
   return messages
 }
 
-export {
+module.exports = {
   formValidator,
   checkEachField,
   individualizedErrMsg

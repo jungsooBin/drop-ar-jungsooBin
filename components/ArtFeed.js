@@ -1,22 +1,26 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Text, View, ScrollView, TouchableOpacity } from "react-native";
-import Button from "./Button";
 import SingleArtItem from "./SingleArtItem";
-import { fetchAllArt } from "../store";
+import { fetchAllArt } from "../store/artReducer";
 
-export default class ArtFeed extends Component {
-  // componentDidMount() {
-  //   this.props.fetchAllArt();
-  // }
+class ArtFeed extends Component {
+  componentDidMount() {
+    this.props.fetchAllArt();
+  }
+
   render() {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView>
-          {/* {this.props.allArt.map(art => {
-            return <SingleArtItem key={art.id} />;
-          })} */}
+          {!this.props.allArt ? (
+            <Text>Null</Text>
+          ) : (
+            this.props.allArt.map(art => {
+              return <SingleArtItem key={art.id} art={art} />;
+            })
+          )}
         </ScrollView>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -53,7 +57,7 @@ const styles = {
   button: {
     backgroundColor: "#FFF",
     padding: 10,
-    margin: 0,
+    margin: 1,
     width: "50%"
   },
   buttonText: {
@@ -64,19 +68,19 @@ const styles = {
   }
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     allArt: state.allArt
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    allArt: state.allArt
+  };
+};
 
-// const mapDispatchToProps = dispatch => ({
-//   fetchAllArt: () => {
-//     dispatch(fetchAllArt());
-//   }
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchAllArt: () => {
+    dispatch(fetchAllArt());
+  }
+});
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(ArtFeed);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ArtFeed);
