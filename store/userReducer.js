@@ -23,8 +23,9 @@ export const getMe = () => async dispatch => {
 
 export const login = formData => async dispatch => {
   try {
-    const currentUser = await axios.get("http://172.16.23.84:8080/api/user/login", formData);
-    dispatch(loginWithoutGoogle(currentUser));
+    const res = await axios.get("http://172.16.23.84:8080/api/user/login", formData);
+    // const currentUser = res.da
+    dispatch(loginWithoutGoogle(res));
   } catch (error) {
     console.log(error);
   }

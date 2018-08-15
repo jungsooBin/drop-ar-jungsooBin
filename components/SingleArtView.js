@@ -41,7 +41,7 @@ export default class SingleArtView extends React.Component {
     this.setState({
       singleArt: response.data
     });
-    console.log(response.data);
+    // console.log(response.data);
     const sceneJson = response.data.artPiece;
     const artToLoad = loader.parse(sceneJson);
     this.scene.add(artToLoad);
