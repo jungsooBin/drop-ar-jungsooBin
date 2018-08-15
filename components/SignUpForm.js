@@ -29,7 +29,7 @@ class SignUpForm extends Component {
     if(checkEachField(formValidator, this.state).length < 1){
       try{
         console.log("CLICKED")
-        await axios.post('http://localhost:8080/api/user/signup', {
+        await axios.post('http://172.16.23.84:8080/api/user/signup', {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email,

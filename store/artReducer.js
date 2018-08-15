@@ -28,7 +28,7 @@ export const saveSingleArt = singleArt => ({
 export const saveArt = (artData) => async (dispatch) => {
   try {
     //put your exact Ip using network utility
-    const response = await axios.post('http://172.16.26.186:8080/api/art/add', artData)
+    const response = await axios.post('http://172.16.23.84:8080/api/art/add', artData)
     // console.log(artData)
     return dispatch(saveSingleArt(response.data))
   } catch (error) {
