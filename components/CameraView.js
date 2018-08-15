@@ -106,7 +106,6 @@ export default class CameraView extends React.Component {
       const locationToSave = [this.state.latitude, this.state.longitude];
       // console.log('Location', locationToSave);
       try {
-        let count = 0;
         const artPiece = this.scene.toJSON();
         console.log('artPiece: ', artPiece);
         const coverPhoto = this.state.coverPhoto;
@@ -695,6 +694,7 @@ function setModelPos(model, dropPos) {
   return item;
 }
 
+<<<<<<< HEAD
 function generateLighting(scene) {
   const leftLight = new THREE.DirectionalLight(0xffffff);
   const rightLight = new THREE.DirectionalLight(0xffffff);
@@ -706,3 +706,5 @@ function generateLighting(scene) {
   scene.add(rightLight);
   scene.add(bottomLight);
 }
+=======
+>>>>>>> origin

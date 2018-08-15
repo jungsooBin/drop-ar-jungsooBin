@@ -23,7 +23,6 @@ export const getMe = () => async dispatch => {
 
 export const login = formData => async dispatch => {
   try {
-    console.log("formData", formData);
     const res = await axios.put("/auth/login", formData);
     dispatch(gotMe(user));
   } catch (error) {
@@ -35,7 +34,7 @@ const userReducer = (userState = initialState, action) => {
   switch (action.type) {
     case GOT_ME:
       return {
-        ...state,
+        ...userState,
         user: action.user
       };
     default:
