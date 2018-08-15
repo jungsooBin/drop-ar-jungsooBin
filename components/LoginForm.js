@@ -3,26 +3,23 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { Icon, FormLabel, FormInput } from "react-native-elements";
 import { connect } from "react-redux";
 import axios from "axios";
+import { login } from "../store/userReducer";
 
 class LoginForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      user: {},
       email: "",
       password: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event, formData) {
     try {
-      const res = await axios.put(`http://71.190.247.98:1337/api/auth/login`, {
-        email: this.state.email,
-        password: this.state.password
-      });
-      this.setState({ user: res.data });
-      this.props.navigation.navigate("CameraView");
+      event.preventDefault();
+      this.props.handleLogin(formData);
+      this.props.navigation.navigate("ArtFeed");
       // set user info to redux store
     } catch (error) {
       console.log(error);
@@ -31,7 +28,7 @@ class LoginForm extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    
+
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -40,9 +37,6 @@ class LoginForm extends React.Component {
         >
           <Icon name="arrow-back" color="#ff5858" />
         </TouchableOpacity>
-
-        
-        
         <Text style={styles.titleText}>GraftAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>Email</FormLabel>
@@ -64,9 +58,8 @@ class LoginForm extends React.Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => navigation.navigate(`CameraView`)}
+            onPress={event => this.handleSubmit(event, this.state)}
           >
-            {/* Replace nav to CameraView with handleSubmit */}
             <Text style={styles.buttonText}>Log In</Text>
           </TouchableOpacity>
           <Text
@@ -83,10 +76,8 @@ class LoginForm extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleSubmit(event) {
-      const email = this.state.email;
-      const password = this.state.password;
-      dispatch(login({ email, password }));
+    handleLogin: formData => {
+      return dispatch(login(formData));
     }
   };
 };

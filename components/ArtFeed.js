@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Text, View, ScrollView } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity } from "react-native";
 import Button from "./Button";
 import SingleArtItem from "./SingleArtItem";
 import { fetchAllArt } from "../store";
@@ -13,13 +13,25 @@ export default class ArtFeed extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Text>Explore</Text>
         <ScrollView>
           {/* {this.props.allArt.map(art => {
-          return <SingleArtItem key={art.id} />;
-        })} */}
+            return <SingleArtItem key={art.id} />;
+          })} */}
         </ScrollView>
-        <Button onPress={() => navigation.goBack()}>Back</Button>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate(`CameraView`)}
+          >
+            <Text style={styles.buttonText}>Camera</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate(`UserProfile`)}
+          >
+            <Text style={styles.buttonText}>Profile</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -30,7 +42,25 @@ const styles = {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFF"
+    backgroundColor: "#ff5858"
+  },
+  buttonContainer: {
+    position: "absolute",
+    flexDirection: "row",
+    bottom: "0%",
+    height: "7.5%"
+  },
+  button: {
+    backgroundColor: "#FFF",
+    padding: 10,
+    margin: 0,
+    width: "50%"
+  },
+  buttonText: {
+    color: "#ff5858",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center"
   }
 };
 
