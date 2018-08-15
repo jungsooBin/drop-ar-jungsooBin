@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { Text, View, ScrollView, TouchableHighlight } from "react-native";
 import SingleArtItem from "./SingleArtItem";
 import { fetchAllArt } from "../store/artReducer";
 
@@ -14,27 +14,25 @@ class ArtFeed extends Component {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
-          {!this.props.allArt ? (
-            <Text>:(</Text>
-          ) : (
-            this.props.allArt.map(art => {
-              return <SingleArtItem key={art.id} art={art} />;
-            })
-          )}
+          {this.props.allArt.map(art => (
+            <SingleArtItem key={art.id} art={art} />
+          ))}
         </ScrollView>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+          <TouchableHighlight
             style={styles.button}
+            underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`CameraView`)}
           >
             <Text style={styles.buttonText}>Camera</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </TouchableHighlight>
+          <TouchableHighlight
             style={styles.button}
+            underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`UserProfile`)}
           >
             <Text style={styles.buttonText}>Profile</Text>
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
       </View>
     );
@@ -48,7 +46,6 @@ const styles = {
     backgroundColor: "#ff5858"
   },
   scrollContainer: {
-    flex: 1,
     top: "3.75%"
   },
   buttonContainer: {
@@ -58,12 +55,12 @@ const styles = {
     height: "7.5%"
   },
   button: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#ff5858",
     padding: 10,
     width: "50%"
   },
   buttonText: {
-    color: "#ff5858",
+    color: "#FFF",
     fontSize: 24,
     fontWeight: "800",
     textAlign: "center"

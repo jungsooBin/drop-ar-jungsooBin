@@ -35,7 +35,7 @@ const styles = {
   },
   artImage: {
     width: "50%",
-    height: "80%"
+    height: "40%"
   },
   info: {
     flexDirection: "column",
