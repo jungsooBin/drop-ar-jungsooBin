@@ -8,24 +8,17 @@ const LOGIN_ME = "LOGIN_ME";
 
 const loginWithoutGoogle = user => ({
   type: LOGIN_ME,
-  user
+  user: user
 });
 
-export const getMe = () => async dispatch => {
-  try {
-    const res = await axios.get("/auth/me");
-    const user = res.data;
-    dispatch(gotMe(user));
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 
 export const login = formData => async dispatch => {
   try {
-    const res = await axios.get("http://172.16.23.84:8080/api/user/login", formData);
-    // const currentUser = res.da
-    dispatch(loginWithoutGoogle(res));
+    console.log('formData',formData)
+    const res = await axios.put("http://172.16.23.84:8080/api/user/login", formData);
+    const user = res.data;
+    dispatch(loginWithoutGoogle(user));
   } catch (error) {
     console.log(error);
   }

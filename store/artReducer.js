@@ -1,5 +1,4 @@
 import axios from "axios";
-import NetworkInfo from 'react-native-network-info'
 
 const initialState = {
   allArt: [],
