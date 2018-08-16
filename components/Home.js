@@ -1,54 +1,21 @@
 import React, {Component} from "react";
-import { Text, View, Image, TouchableOpacity, Button } from "react-native";
-// import {loginWithFacebook} from '../firebase/firebaseSetup'
-// other shit
+import { Text, View, TouchableOpacity} from "react-native";
 import * as firebase from 'firebase';
 import firebaseConfig from '../secrets.js'
 import processFBData from '../utilities/getDataFromFB'
-import axios from 'axios'
-import domain from "../domain.js";
-import { signup } from '../store/userReducer';
+import { signup, setCurrentUser } from '../store/userReducer';
 import {connect} from 'react-redux'
+import axios from "axios";
+import domain from "../domain.js";
 
-// const Home = ({ navigation }) => (
-
-//   <View style={styles.container}>
-//     <Text style={styles.text}>GraftAR</Text>
-//     <View style={styles.buttonContainer}>
-//       <TouchableOpacity
-//         style={styles.button}
-//         onPress={() => navigation.navigate(`LoginForm`)}
-        
-//       >
-//         <Text style={styles.buttonText}>Log In </Text>
-        
-//       </TouchableOpacity>
-
-//       <TouchableOpacity
-//         style={styles.button}
-//         onPress={() => navigation.navigate('SignUpForm')}
-//       >
-//         <Text style={styles.buttonText}>Sign Up</Text>
-//       </TouchableOpacity>
-
-//       <TouchableOpacity
-//         style={styles.button}
-//         onPress={() => loginWithFacebook()}
-//       >
-//         <Text style={styles.buttonText}>Sign Up with Facebook</Text>
-//       </TouchableOpacity>
-
-//     </View>
-//   </View>
-// );
-
-
+//Globals
 firebase.initializeApp(firebaseConfig);
 let newUser
+
+//Component
 class Home extends Component{ 
   constructor(){
     super()
-    
   }
   
   async componentDidMount(){
@@ -60,10 +27,6 @@ class Home extends Component{
     })    
   }
 
-// async sendToDB(user){
-//    await axios.post(`${domain}/api/user/signup`, user);
-// }
-
   async loginWithFacebook() {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
       "2112247582376014",
@@ -71,8 +34,17 @@ class Home extends Component{
     );
     
     if (type === 'success') {
+      //
+      const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
+
+      if (!doesUserExist.data.length ){
+        await this.props.handleSignUp(newUser)
+      } else {
+        await this.props.setCurrentUser(newUser)
+      }
+      
+      
       // Build Firebase credential with the Facebook access token.
-      await this.props.handleSignUp(newUser)
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
       // Sign in with credential from the Facebook user.
             firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => {
@@ -156,6 +128,9 @@ const mapDispatchToProps = dispatch => {
     handleSignUp: formData => {
       return dispatch(signup(formData));
     },
+    setCurrentUser: formData => {
+      return dispatch(setCurrentUser(formData))
+    }
   };
 };
 

@@ -1,6 +1,22 @@
 const router = require('express').Router();
 const { User } = require('../../database');
 
+
+
+router.get('/:email', async (req, res, next) => {
+  try{
+    console.log('REQBODY',req.params.email)
+    const userExists = await User.findAll({where: {
+      email: req.params.email
+    }})
+    res.status(200).send(userExists)
+  } catch(err){
+      next(err)
+  }
+})
+
+
+
 router.post('/signup', async (req, res, next) => {
   try {
     const newUser = await User.create(req.body);
@@ -27,8 +43,9 @@ router.post('/signup', async (req, res, next) => {
 //   }
 // });
 
+
 router.put('/login', async (req, res, next) => {
-  console.log('req.login',req.login)
+  // console.log('req.login',req.login)
   try {
     const currentUser = await User.findOne({
       where: { email: req.body.email },
