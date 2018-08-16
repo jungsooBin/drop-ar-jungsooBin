@@ -44,7 +44,6 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    fontSize: 16,
   },
 };
 

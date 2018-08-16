@@ -1,14 +1,24 @@
-import React, {Component} from "react"
-import { FormLabel, FormInput, FormValidationMessage, Text, CheckBox} from 'react-native-elements' 
+import React, { Component } from 'react';
+import {
+  FormLabel,
+  FormInput,
+  FormValidationMessage,
+  Text,
+  CheckBox,
+} from 'react-native-elements';
 
-import {View} from 'react-native'
-import Button from './Button'
-import axios from 'axios'
-import {formValidator, checkEachField, individualizedErrMsg} from '../utilities/formValidator'
+import { View } from 'react-native';
+import Button from './Button';
+import axios from 'axios';
+import {
+  formValidator,
+  checkEachField,
+  individualizedErrMsg,
+} from '../utilities/formValidator';
 
 class SignUpForm extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       firstName: '',
       lastName: '',
@@ -16,31 +26,28 @@ class SignUpForm extends Component {
       password: '',
       rePassword: '',
       terms: false,
-      
-    }
-    this.handleSubmit = this.handleSubmit.bind(this)
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit(event){
-    event.preventDefault()
+  async handleSubmit(event) {
+    event.preventDefault();
     //Post new user in DB
 
-   
-    if(checkEachField(formValidator, this.state).length < 1){
-      try{
-        console.log("CLICKED")
-        await axios.post('http://172.16.23.84:8080/api/user/signup', {
+    if (checkEachField(formValidator, this.state).length < 1) {
+      try {
+        await axios.post('http://172.16.21.129:8080/api/user/signup', {
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email,
           password: this.state.password,
-          terms: this.state.terms
-        })
+          terms: this.state.terms,
+        });
         this.props.navigation.navigate(`ArtFeed`);
-      } catch(err){
-          console.log(err)
+      } catch (err) {
+        console.log(err);
       }
-  
+
       this.setState({
         firstName: '',
         lastName: '',
@@ -48,87 +55,82 @@ class SignUpForm extends Component {
         password: '',
         rePassword: '',
         terms: false,
-        formErrs: false
-      })
-
+        formErrs: false,
+      });
     } else {
-      this.setState({formErrs: true})
+      this.setState({ formErrs: true });
     }
-  } 
-   
+  }
 
-  render(){
-
+  render() {
     const { navigation } = this.props;
 
-    const {terms} = this.state
+    const { terms } = this.state;
 
-    const messages = individualizedErrMsg(checkEachField(formValidator, this.state))
-    
-    
-     
+    const messages = individualizedErrMsg(
+      checkEachField(formValidator, this.state)
+    );
+
     return (
       <View style={styles.container}>
-
-      <Text h1 style={styles.heading}>Sign Up</Text>
+        <Text h1 style={styles.heading}>
+          Sign Up
+        </Text>
         <FormLabel>First Name</FormLabel>
-        <FormInput 
-          value={this.state.firstName} 
-          onChangeText={firstName => this.setState({firstName})}
+        <FormInput
+          value={this.state.firstName}
+          onChangeText={firstName => this.setState({ firstName })}
         />
 
         <FormLabel>Last Name</FormLabel>
-        <FormInput 
-          value={this.state.lastName} 
-          onChangeText={lastName => this.setState({lastName})}
+        <FormInput
+          value={this.state.lastName}
+          onChangeText={lastName => this.setState({ lastName })}
         />
 
         <FormLabel>Email</FormLabel>
-        <FormInput 
-          value={this.state.email} 
-          onChangeText={email => this.setState({email})}
+        <FormInput
+          value={this.state.email}
+          onChangeText={email => this.setState({ email })}
         />
 
         <FormLabel>Password</FormLabel>
-        <FormInput 
-          value={this.state.password} 
-          onChangeText={password => this.setState({password})} 
+        <FormInput
+          value={this.state.password}
+          onChangeText={password => this.setState({ password })}
           autoCapitalize="none"
           secureTextEntry={true}
         />
 
         <FormLabel>Re-Enter Password</FormLabel>
-        <FormInput 
-          value={this.state.rePassword} 
-          onChangeText={rePassword => this.setState({rePassword})}
+        <FormInput
+          value={this.state.rePassword}
+          onChangeText={rePassword => this.setState({ rePassword })}
           autoCapitalize="none"
           secureTextEntry={true}
         />
 
-        <CheckBox 
-          title='Terms and Conditions' 
-          checked={this.state.terms} 
-          onPress={() => this.setState(
-          {terms: !terms})} 
+        <CheckBox
+          title="Terms and Conditions"
+          checked={this.state.terms}
+          onPress={() => this.setState({ terms: !terms })}
         />
 
         <Button onPress={this.handleSubmit}>Submit</Button>
 
-        {
-          !this.state.formErrs ? null : messages.map(entry => {
-            return (
-              <FormValidationMessage key={entry}>{`${entry}`}</FormValidationMessage>
-            )
-          }) 
-          
-        }
-
+        {!this.state.formErrs
+          ? null
+          : messages.map(entry => {
+              return (
+                <FormValidationMessage
+                  key={entry}
+                >{`${entry}`}</FormValidationMessage>
+              );
+            })}
       </View>
-    )
+    );
   }
 }
-
-
 
 //Styles
 const styles = {
@@ -140,8 +142,8 @@ const styles = {
     // top: -50
   },
   heading: {
-  top: -40
-  }
+    top: -40,
+  },
 };
 
-export default SignUpForm
+export default SignUpForm;
