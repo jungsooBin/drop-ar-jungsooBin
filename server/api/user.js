@@ -27,7 +27,7 @@ router.put('/login', async (req, res, next) => {
   }
 });
 
-router.put('/:userId', async (req,res,next) => {
+router.put('/update', async (req,res,next) => {
   try {
     const findUser = await User.findById(req.body.id)
     const updatedUser = await findUser.update(req.body)
