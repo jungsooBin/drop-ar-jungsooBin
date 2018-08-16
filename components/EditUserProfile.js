@@ -4,8 +4,8 @@ import { Text, View } from "react-native";
 import Button from "./Button";
 
 export default class EditUserProfile extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
   }
   render() {
     const { navigation } = this.props;
@@ -20,8 +20,24 @@ export default class EditUserProfile extends Component {
 const styles = {
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFF"
-  }
+    alignItems: `center`,
+    justifyContent: `center`,
+    backgroundColor: '#ffffff',
+    // top: -50
+  },
+  heading: {
+    top: -40,
+  },
+};
+
+const mapStateToProps = state => {
+  return {
+    user: state.users.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addArt: artObj => dispatch(saveArt(artObj)),
+  };
 };
