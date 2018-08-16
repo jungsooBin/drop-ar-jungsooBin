@@ -23,17 +23,19 @@ export default class SingleArtView extends React.Component {
     super();
     this.state = {
       singleArt: {},
+      like: false,
     };
     this.handleLoad = this.handleLoad.bind(this);
     this.loveArt = this.loveArt.bind(this);
   }
 
   async loveArt() {
-    var geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-    var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    var cube = new THREE.Mesh(geometry, material);
-    const newItem = setModelPos(cube, this.camera.position);
-    this.scene.add(cube);
+    // var geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+    // var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+    // var cube = new THREE.Mesh(geometry, material);
+    // const newItem = setModelPos(cube, this.camera.position);
+    // this.scene.add(cube);
+    this.setState({ like: !this.state.like });
   }
 
   async handleLoad() {
@@ -83,6 +85,17 @@ export default class SingleArtView extends React.Component {
             />
           </TouchableOpacity>
         </View>
+        <View style={styles.love}>
+          {this.state.like === true ? (
+            <Image
+              source={{
+                uri:
+                  'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
+              }}
+              style={{ width: 80, height: 80, borderRadius: 40 }}
+            />
+          ) : null}
+        </View>
       </View>
     );
   }
@@ -131,6 +144,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: height - 350,
     left: width / 2 + 100,
+  },
+  love: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
   },
 });
 

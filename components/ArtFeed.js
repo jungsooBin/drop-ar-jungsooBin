@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
-import SingleArtItem from "./SingleArtItem";
-import { fetchAllArt } from "../store/artReducer";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import SingleArtItem from './SingleArtItem';
+import { fetchAllArt } from '../store/artReducer';
 
 class ArtFeed extends Component {
   componentDidMount() {
@@ -11,7 +11,7 @@ class ArtFeed extends Component {
 
   render() {
     const { navigation } = this.props;
-    console.log('mapstate is working?', this.props.user)
+    console.log('mapstate is working?', this.props.user);
     // const user = navigation.getParam('user');
     // console.log('user', user)
     return (
@@ -47,43 +47,42 @@ class ArtFeed extends Component {
 const styles = {
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#ff5858"
+    alignItems: 'center',
+    backgroundColor: '#ff5858',
   },
   scrollContainer: {
-    flex: 1,
-    top: "3.75%"
+    top: '3.75%',
+    height: 200,
   },
   buttonContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    bottom: "0%",
-    height: "7.5%"
+    position: 'absolute',
+    flexDirection: 'row',
+    bottom: '0%',
+    height: '7.5%',
   },
   button: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     padding: 10,
-    width: "50%"
+    width: '50%',
   },
   buttonText: {
-    color: "#ff5858",
+    color: '#ff5858',
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
-  }
+    fontWeight: '800',
+    textAlign: 'center',
+  },
 };
 
 const mapStateToProps = state => {
   return {
     allArt: state.arts.allArt,
-    user: state.users.user
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchAllArt: () => {
     dispatch(fetchAllArt());
-  }
+  },
 });
 
 export default connect(
