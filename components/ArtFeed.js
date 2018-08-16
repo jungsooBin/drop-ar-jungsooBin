@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Text, View, ScrollView, TouchableHighlight } from "react-native";
-import SingleArtItem from "./SingleArtItem";
-import { fetchAllArt } from "../store/artReducer";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Text, View, ScrollView, TouchableHighlight } from 'react-native';
+import SingleArtItem from './SingleArtItem';
+import { fetchAllArt } from '../store/artReducer';
 
 class ArtFeed extends Component {
   componentDidMount() {
@@ -25,14 +25,14 @@ class ArtFeed extends Component {
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={"#ff5858"}
+            underlayColor={'#ff5858'}
             onPress={() => navigation.navigate(`CameraView`)}
           >
             <Text style={styles.buttonText}>Camera</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={"#ff5858"}
+            underlayColor={'#ff5858'}
             onPress={() => navigation.navigate(`UserProfile`)}
           >
             <Text style={styles.buttonText}>Profile</Text>
@@ -46,45 +46,45 @@ class ArtFeed extends Component {
 const styles = {
   container: {
     flex: 1,
-    alignItems: "center",
-    backgroundColor: "#ff5858"
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
   },
   scrollContainer: {
     flex: 0.89,
-    top: "3.75%"
+    top: '3.75%',
   },
   scrollView: {
-    flexGrow: 5
+    flexGrow: 5,
   },
   buttonContainer: {
-    position: "absolute",
-    flexDirection: "row",
-    height: "7.5%",
-    bottom: "0%"
+    position: 'absolute',
+    flexDirection: 'row',
+    height: '7.5%',
+    bottom: '0%',
   },
   button: {
-    backgroundColor: "#ff5858",
+    backgroundColor: '#ff5858',
     padding: 10,
-    width: "50%"
+    width: '50%',
   },
   buttonText: {
-    color: "#FFF",
+    color: '#FFF',
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
-  }
+    fontWeight: '800',
+    textAlign: 'center',
+  },
 };
 
 const mapStateToProps = state => {
   return {
-    allArt: state.arts.allArt
+    allArt: state.arts.allArt,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchAllArt: () => {
     dispatch(fetchAllArt());
-  }
+  },
 });
 
 export default connect(

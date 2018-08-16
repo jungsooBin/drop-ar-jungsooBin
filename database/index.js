@@ -7,6 +7,9 @@ const db = require('./database');
 Art.belongsTo(User);
 User.hasMany(Art);
 
+User.belongsToMany(Art, { through: 'likes' });
+Art.belongsToMany(User, { through: 'likes' });
+
 module.exports = {
   db,
   Art,
