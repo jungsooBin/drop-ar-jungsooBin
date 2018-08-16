@@ -36,15 +36,14 @@ const styles = {
   },
   artImage: {
     width: "50%",
-    height: "80%"
+    height: "100%"
   },
   info: {
     flexDirection: "column",
     width: "50%",
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
-    fontSize: 16
+    padding: 10
   }
 };
 

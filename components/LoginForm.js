@@ -1,15 +1,15 @@
-import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
-import { Icon, FormLabel, FormInput } from "react-native-elements";
-import { connect } from "react-redux";
-import { login } from "../store/userReducer";
+import React from 'react';
+import { Text, View, TouchableOpacity, Alert } from 'react-native';
+import { Icon, FormLabel, FormInput } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { login } from '../store/userReducer';
 
 class LoginForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: ""
+      email: '',
+      password: '',
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -17,14 +17,31 @@ class LoginForm extends React.Component {
   async handleSubmit(event, formData) {
     try {
       event.preventDefault();
-      this.props.handleLogin(formData);
-      this.props.navigation.navigate("ArtFeed");
+      await this.props.handleLogin(formData);
+      console.log('this.props.user: ', this.props.user);
+      if (this.props.user) {
+        this.props.navigation.navigate('ArtFeed');
+      } else {
+        this.showFailAlert();
+      }
       // set user info to redux store
     } catch (error) {
       console.log(error);
     }
   }
-
+  showFailAlert = () => {
+    Alert.alert(
+      'Failed To Add!',
+      'Error!',
+      [
+        {
+          text: 'Please Try Again',
+          onPress: () => console.log('Error'),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
   render() {
     const { navigation } = this.props;
 
@@ -73,11 +90,17 @@ class LoginForm extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.users.user,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     handleLogin: formData => {
       return dispatch(login(formData));
-    }
+    },
   };
 };
 
@@ -85,48 +108,48 @@ const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    backgroundColor: "#FFF"
+    backgroundColor: '#FFF',
   },
   back: {
-    top: "10%",
-    right: "40%"
+    top: '10%',
+    right: '40%',
   },
   titleText: {
-    position: "absolute",
-    top: "30%",
-    fontWeight: "800",
+    position: 'absolute',
+    top: '30%',
+    fontWeight: '800',
     fontSize: 48,
-    color: "#ff5858"
+    color: '#ff5858',
   },
   formContainer: {
-    top: "40%",
-    width: 290
+    top: '40%',
+    width: 290,
   },
   buttonContainer: {
-    top: "45%"
+    top: '45%',
   },
   button: {
-    backgroundColor: "#ff5858",
+    backgroundColor: '#ff5858',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    width: 250
+    width: 250,
   },
   buttonText: {
-    color: "#FFF",
+    color: '#FFF',
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
+    fontWeight: '800',
+    textAlign: 'center',
   },
   textLink: {
-    color: "#ff5858",
-    fontWeight: "800",
-    textAlign: "center",
-    margin: 5
-  }
+    color: '#ff5858',
+    fontWeight: '800',
+    textAlign: 'center',
+    margin: 5,
+  },
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginForm);

@@ -11,13 +11,17 @@ class ArtFeed extends Component {
 
   render() {
     const { navigation } = this.props;
+    // const user = navigation.getParam('user');
+    // console.log('user', user)
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.scrollContainer}>
-          {this.props.allArt.map(art => (
-            <SingleArtItem key={art.id} art={art} />
-          ))}
-        </ScrollView>
+        <View style={styles.scrollContainer}>
+          <ScrollView style={styles.scrollView}>
+            {this.props.allArt.map(art => (
+              <SingleArtItem key={art.id} art={art} />
+            ))}
+          </ScrollView>
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.button}
@@ -46,13 +50,17 @@ const styles = {
     backgroundColor: "#ff5858"
   },
   scrollContainer: {
+    flex: 0.89,
     top: "3.75%"
+  },
+  scrollView: {
+    flexGrow: 5
   },
   buttonContainer: {
     position: "absolute",
     flexDirection: "row",
-    bottom: "0%",
-    height: "7.5%"
+    height: "7.5%",
+    bottom: "0%"
   },
   button: {
     backgroundColor: "#ff5858",
