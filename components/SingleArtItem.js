@@ -27,6 +27,7 @@ const SingleArtItem = props => {
 
 const styles = {
   container: {
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -35,7 +36,7 @@ const styles = {
   },
   artImage: {
     width: "50%",
-    height: "40%"
+    height: "80%"
   },
   info: {
     flexDirection: "column",
