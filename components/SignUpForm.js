@@ -36,6 +36,7 @@ class SignUpForm extends Component {
           password: this.state.password,
           terms: this.state.terms
         })
+        this.props.navigation.navigate(`ArtFeed`);
       } catch(err){
           console.log(err)
       }
@@ -57,6 +58,9 @@ class SignUpForm extends Component {
    
 
   render(){
+
+    const { navigation } = this.props;
+
     const {terms} = this.state
 
     const messages = individualizedErrMsg(checkEachField(formValidator, this.state))

@@ -26,7 +26,7 @@ export const saveSingleArt = singleArt => ({
 
 export const fetchAllArt = () => async dispatch => {
   try {
-    const res = await axios.get("http://172.16.22.255:8080/api/art");
+    const res = await axios.get("http://172.16.23.84:8080/api/art");
     const allArt = res.data;
     dispatch(getAllArt(allArt));
   } catch (error) {
@@ -36,7 +36,7 @@ export const fetchAllArt = () => async dispatch => {
 
 export const fetchSingleArt = () => async dispatch => {
   try {
-    const res = await axios.get("http://172.16.22.255:8080/api/art/:id");
+    const res = await axios.get("http://172.16.23.84:8080/api/art/:id");
     const singleArt = res.data;
     dispatch(getSingleArt(singleArt));
   } catch (error) {
