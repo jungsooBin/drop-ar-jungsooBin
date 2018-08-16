@@ -45,7 +45,7 @@ const styles = {
   info: {
     flexDirection: 'column',
     width: '50%',
-    alignItems: 'center',
+    alignItems: 'left',
     justifyContent: 'center',
     padding: 10,
   },
