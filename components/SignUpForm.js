@@ -4,17 +4,17 @@ import {
   FormInput,
   FormValidationMessage,
   Text,
-  CheckBox
-} from "react-native-elements";
-
-import { View } from "react-native";
-import Button from "./Button";
-import axios from "axios";
+  CheckBox,
+} from 'react-native-elements';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
+import Button from './Button';
 import {
   formValidator,
   checkEachField,
-  individualizedErrMsg
-} from "../utilities/formValidator";
+  individualizedErrMsg,
+} from '../utilities/formValidator';
+import { signup } from '../store/userReducer';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class SignUpForm extends Component {
 
     if (checkEachField(formValidator, this.state).length < 1) {
       try {
-        await axios.post("http://172.16.22.255:8080/api/user/signup", {
+        await this.props.handleSignUp({
           firstName: this.state.firstName,
           lastName: this.state.lastName,
           email: this.state.email,
@@ -47,30 +47,16 @@ class SignUpForm extends Component {
       } catch (err) {
         console.log(err);
       }
-
-      this.setState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        rePassword: "",
-        terms: false,
-        formErrs: false
-      });
     } else {
       this.setState({ formErrs: true });
     }
   }
 
   render() {
-    const { navigation } = this.props;
-
     const { terms } = this.state;
-
     const messages = individualizedErrMsg(
       checkEachField(formValidator, this.state)
     );
-
     return (
       <View style={styles.container}>
         <Text h1 style={styles.heading}>
@@ -146,4 +132,15 @@ const styles = {
   }
 };
 
-export default SignUpForm;
+const mapDispatchToProps = dispatch => {
+  return {
+    handleSignUp: formData => {
+      return dispatch(signup(formData));
+    },
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SignUpForm);

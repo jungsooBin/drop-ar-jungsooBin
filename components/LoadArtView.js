@@ -159,7 +159,7 @@ export default class LoadArtView extends React.Component {
       console.log('Location', locationToSave);
       try {
         let count = 0;
-        const newArt = await axios.post(`http://172.16.21.129/art/add`, {
+        const newArt = await axios.post(`http://172.16.23.84/art/add`, {
           location: locationToSave,
           artPiece: this.scene.toJSON(),
           description: 'Amazing art piece, love it',
