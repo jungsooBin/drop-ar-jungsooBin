@@ -2,26 +2,27 @@
 // Tab Bar, Created, Saved, --> Link to single art view
 import { connect } from 'react-redux';
 
-import React, { Component } from "react";
-import { Text, View } from "react-native";
-import Button from "./Button";
+import React, { Component } from 'react';
+import { Text, View, Image } from 'react-native';
+import EditProfileButton from './EditProfileButton';
+import UserFeed from './UserFeed';
 
 class UserProfile extends Component {
-
-
   render() {
-
     const { navigation } = this.props;
-    console.log('mapstate is working?', this.props.user)
+    const { email, firstName, lastName, picture } = this.props.user;
     return (
       <View style={styles.container}>
-        <Text style={styles.buttonText}>
-          User Email: 
-        </Text>
-
-        <Button onPress={() => navigation.navigate(`EditUserProfile`)}>
-          Edit Profile
-        </Button>
+        <Image style={styles.thumbnailStyle} source={{ uri: picture }} />
+        <Text style={styles.textStyle}>{firstName + ' ' + lastName}</Text>
+        <Text style={styles.textStyle}>{email}</Text>
+        <EditProfileButton
+          style={styles.buttonStyle}
+          onPress={() => navigation.navigate(`EditUserProfile`)}
+        >
+          Edit
+        </EditProfileButton>
+        <UserFeed userId={this.props.user.id} />
       </View>
     );
   }
@@ -30,18 +31,39 @@ class UserProfile extends Component {
 const styles = {
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFF"
-  }
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+  },
+  thumbnailStyle: {
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    marginTop: 30,
+    marginBottom: 10,
+  },
+  buttonStyle: {
+    height: 20,
+    width: 80,
+    alignSelf: 'stretch',
+    borderRadius: 5,
+    backgroundColor: '#009a9a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 5,
+  },
+  textStyle: {
+    fontSize: 14,
+    width: '100%',
+    textAlign: 'center',
+    fontFamily: 'Helvetica Neue',
+  },
 };
 
 const mapStateToProps = state => {
   return {
     user: state.users.user,
-  }
-}
-
+  };
+};
 
 export default connect(
   mapStateToProps,
