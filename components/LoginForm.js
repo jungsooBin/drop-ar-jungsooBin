@@ -18,7 +18,6 @@ class LoginForm extends React.Component {
     try {
       event.preventDefault();
       await this.props.handleLogin(formData);
-      console.log('this.props.user: ', this.props.user);
       if (this.props.user) {
         this.props.navigation.navigate('ArtFeed');
       } else {
@@ -90,19 +89,7 @@ class LoginForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.users.user,
-  };
-};
 
-const mapDispatchToProps = dispatch => {
-  return {
-    handleLogin: formData => {
-      return dispatch(login(formData));
-    },
-  };
-};
 
 const styles = {
   container: {
@@ -148,7 +135,19 @@ const styles = {
     margin: 5,
   },
 };
+const mapStateToProps = state => {
+  return {
+    user: state.users.user,
+  };
+};
 
+const mapDispatchToProps = dispatch => {
+  return {
+    handleLogin: formData => {
+      return dispatch(login(formData));
+    },
+  };
+};
 export default connect(
   mapStateToProps,
   mapDispatchToProps

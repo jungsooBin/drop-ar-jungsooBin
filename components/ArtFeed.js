@@ -12,7 +12,7 @@ class ArtFeed extends Component {
   render() {
     const { navigation } = this.props;
     // const user = navigation.getParam('user');
-    // console.log('user', user)
+    // console.log('user', this.props.user)
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
@@ -75,6 +75,7 @@ const styles = {
 const mapStateToProps = state => {
   return {
     allArt: state.arts.allArt,
+    user: state.users.user
   };
 };
 
