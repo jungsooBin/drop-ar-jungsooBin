@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,14 +6,15 @@ import {
   Dimensions,
   Image,
   PanResponder,
-  Animated
-} from "react-native";
-import axios from "axios";
-import Expo from "expo";
-import { AR } from "expo";
-import * as THREE from "three";
-import ExpoTHREE from "expo-three";
-import { Button } from "react-native-elements";
+  Animated,
+  TouchableOpacity,
+} from 'react-native';
+import axios from 'axios';
+import Expo from 'expo';
+import { AR } from 'expo';
+import * as THREE from 'three';
+import ExpoTHREE from 'expo-three';
+import { Button } from 'react-native-elements';
 
 console.disableYellowBox = true;
 
@@ -21,14 +22,14 @@ export default class SingleArtView extends React.Component {
   constructor() {
     super();
     this.state = {
-      singleArt: {}
+      singleArt: {},
     };
     this.handleLoad = this.handleLoad.bind(this);
     this.loveArt = this.loveArt.bind(this);
   }
 
   async loveArt() {
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
     var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
     var cube = new THREE.Mesh(geometry, material);
     const newItem = setModelPos(cube, this.camera.position);
@@ -36,18 +37,19 @@ export default class SingleArtView extends React.Component {
   }
 
   async handleLoad() {
+    const { navigation } = this.props;
     let loader = new THREE.ObjectLoader();
-    const response = await axios.get(`http://172.16.23.84:8080/api/art/2`);
-    this.setState({
-      singleArt: response.data
-    });
-    // console.log(response.data);
-    const sceneJson = response.data.artPiece;
+    const artObj = navigation.getParam('art');
+    const sceneJson = artObj.artPiece;
+
     const artToLoad = loader.parse(sceneJson);
     this.scene.add(artToLoad);
   }
 
   render() {
+    const { navigation } = this.props;
+    const artObj = navigation.getParam('art');
+    console.log('artObj: ', artObj);
     return (
       <View style={{ flex: 1 }}>
         <Expo.GLView
@@ -62,10 +64,10 @@ export default class SingleArtView extends React.Component {
             title="Load Scene"
             onPress={this.handleLoad}
             buttonStyle={{
-              backgroundColor: "green",
+              backgroundColor: 'green',
               opacity: 0.5,
               width: 85,
-              height: 85
+              height: 85,
             }}
           />
           <TouchableOpacity
@@ -75,7 +77,7 @@ export default class SingleArtView extends React.Component {
             <Image
               source={{
                 uri:
-                  "https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg"
+                  'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
               }}
               style={{ width: 80, height: 80, borderRadius: 40 }}
             />
@@ -120,16 +122,16 @@ export default class SingleArtView extends React.Component {
   };
 }
 
-const { height, width } = Dimensions.get("window");
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     top: height - 350,
-    left: width / 2 + 100
-  }
+    left: width / 2 + 100,
+  },
 });
 
 function setModelPos(model, dropPos) {
