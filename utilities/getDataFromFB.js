@@ -9,6 +9,7 @@ function processFBData(user){
   userModel.firstName = user.displayName.slice(0, space)
   userModel.lastName = user.displayName.slice(space + 1)
   userModel.email = user.email ? user.email : fakeEmail
+  userModel.terms = true
 
   return userModel
 }

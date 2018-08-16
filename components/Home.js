@@ -1,6 +1,6 @@
-import React from "react";
+import React, {Component} from "react";
 import { Text, View, Image, TouchableOpacity, Button } from "react-native";
-import loginWithFacebook from '../firebase/firebaseSetup'
+import {loginWithFacebook} from '../firebase/firebaseSetup'
 
 
 const Home = ({ navigation }) => (
@@ -66,4 +66,4 @@ const styles = {
   }
 };
 
-export default Home;
+export default Home 

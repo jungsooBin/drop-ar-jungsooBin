@@ -1,15 +1,24 @@
 import * as firebase from 'firebase';
 import firebaseConfig from '../secrets.js'
-import axios from 'axios';
+import {connect} from 'react-redux'
+import axios from 'axios'
+import domain from "../domain.js";
+
 const processFBData = require('../utilities/getDataFromFB')
 
 
 firebase.initializeApp(firebaseConfig);
 
+async function sendToDB(user){
+   await axios.post(`${domain}/api/user/signup`, user);
+}
 
  firebase.auth().onAuthStateChanged((user) => {
   if (user != null) {
-    const dataToSend = processFBData(user)
+    newUser = processFBData(user)
+
+    sendToDB(newUser)
+    
   }
   // Do other things
 });
@@ -19,7 +28,6 @@ async function loginWithFacebook() {
     "2112247582376014",
     { permissions: ['public_profile', 'email'] }
   );
-  
   
   if (type === 'success') {
     // Build Firebase credential with the Facebook access token.
@@ -32,4 +40,4 @@ async function loginWithFacebook() {
   }
 }
 
-export default loginWithFacebook
+module.exports = {loginWithFacebook} 
