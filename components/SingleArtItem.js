@@ -4,7 +4,7 @@ import { withNavigation } from 'react-navigation';
 
 const SingleArtItem = props => {
   const { navigation } = props;
-  const { title, likes, description, user, coverPhoto } = props.art;
+  const { title, likes, description, coverPhoto, user } = props.art;
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -20,9 +20,11 @@ const SingleArtItem = props => {
       <View style={styles.info}>
         <Text style={styles.artTitle}>Title: {title}</Text>
         <Text style={styles.artDescription}>{description}</Text>
-        <Text style={styles.artDescription}>
-          ARtist: {user.firstName + ' ' + user.lastName}
-        </Text>
+        {user ? (
+          <Text style={styles.artDescription}>
+            ARtist: {user.firstName + ' ' + user.lastName}
+          </Text>
+        ) : null}
         <Text style={styles.artLikes}>{`Likes: ${likes}`}</Text>
       </View>
     </View>
