@@ -9,6 +9,7 @@ import {
   Animated,
   Alert,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import axios from 'axios';
 import Expo, { AR, takeSnapshotAsync } from 'expo';
@@ -342,6 +343,7 @@ export default class CameraView extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
+        <StatusBar hidden={true} />
         <Expo.GLView
           ref={ref => (this._glView = ref)}
           style={{ flex: 1 }}
