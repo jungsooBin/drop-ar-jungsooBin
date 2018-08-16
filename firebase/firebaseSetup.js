@@ -1,16 +1,15 @@
 import * as firebase from 'firebase';
 import firebaseConfig from '../secrets.js'
+import axios from 'axios';
+const processFBData = require('../utilities/getDataFromFB')
 
 
 firebase.initializeApp(firebaseConfig);
 
-firebase.auth().onAuthStateChanged((user) => {
-  console.log("TETETESTSTSETESTETETSET", user)
-  if (user != null) {
-    console.log("THIS IS USER", user)
-    console.log("We are authenticated now!");
-    return user
 
+ firebase.auth().onAuthStateChanged((user) => {
+  if (user != null) {
+    const dataToSend = processFBData(user)
   }
   // Do other things
 });
@@ -18,7 +17,7 @@ firebase.auth().onAuthStateChanged((user) => {
 async function loginWithFacebook() {
   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
     "2112247582376014",
-    { permissions: ['public_profile'] }
+    { permissions: ['public_profile', 'email'] }
   );
   
   
@@ -27,7 +26,7 @@ async function loginWithFacebook() {
     const credential = firebase.auth.FacebookAuthProvider.credential(token);
     // Sign in with credential from the Facebook user.
           firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => {
-                  
+                  console.log(error)
             // Handle Errors here.
           });
   }

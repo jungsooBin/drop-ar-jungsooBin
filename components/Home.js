@@ -1,9 +1,10 @@
-import React from "react";
+import React, {Component} from "react";
 import { Text, View, Image, TouchableOpacity, Button } from "react-native";
 import loginWithFacebook from '../firebase/firebaseSetup'
 
 
 const Home = ({ navigation }) => (
+
   <View style={styles.container}>
     <Text style={styles.text}>GraftAR</Text>
     <View style={styles.buttonContainer}>
@@ -24,7 +25,7 @@ const Home = ({ navigation }) => (
 
       <TouchableOpacity
         style={styles.button}
-        onPress={async () => await loginWithFacebook()}
+        onPress={() => loginWithFacebook()}
       >
         <Text style={styles.buttonText}>Sign Up with Facebook</Text>
       </TouchableOpacity>
@@ -32,6 +33,7 @@ const Home = ({ navigation }) => (
     </View>
   </View>
 );
+
 
 const styles = {
   container: {
