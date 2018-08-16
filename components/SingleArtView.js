@@ -51,7 +51,6 @@ export default class SingleArtView extends React.Component {
   render() {
     const { navigation } = this.props;
     const artObj = navigation.getParam('art');
-    console.log('artObj: ', artObj);
     return (
       <View style={{ flex: 1 }}>
         <Expo.GLView

@@ -74,12 +74,11 @@ export default class CameraView extends React.Component {
       result: 'file',
       quality: 1.0,
     });
-    console.log(result);
+
     const file = {
       uri: result,
       type: 'image/jpeg',
     };
-    console.log(file);
     if (file) {
       this.showImageSave();
       this.setState({ coverPhoto: file });
@@ -104,10 +103,8 @@ export default class CameraView extends React.Component {
       this.showFailAlert();
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
-      // console.log('Location', locationToSave);
       try {
         const artPiece = this.scene.toJSON();
-        console.log('artPiece: ', artPiece);
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
           location: locationToSave,
@@ -191,8 +188,6 @@ export default class CameraView extends React.Component {
       Math.round(this.state.color.s),
       Math.round(this.state.color.v / 2)
     );
-    console.log(this.state.color);
-    console.log(colorHex);
     this.setState({ colorHex: colorHex });
     return colorHex;
   }
