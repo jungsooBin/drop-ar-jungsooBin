@@ -6,16 +6,17 @@ import React, { Component } from "react";
 import { Text, View } from "react-native";
 import Button from "./Button";
 
-export default class UserProfile extends Component {
+class UserProfile extends Component {
 
 
   render() {
 
     const { navigation } = this.props;
+    console.log('mapstate is working?', this.props.user)
     return (
       <View style={styles.container}>
         <Text style={styles.buttonText}>
-          User Email:
+          User Email: 
         </Text>
 
         <Button onPress={() => navigation.navigate(`EditUserProfile`)}>
@@ -35,5 +36,14 @@ const styles = {
   }
 };
 
+const mapStateToProps = state => {
+  return {
+    user: state.users.user,
+  }
+}
 
 
+export default connect(
+  mapStateToProps,
+  null
+)(UserProfile);

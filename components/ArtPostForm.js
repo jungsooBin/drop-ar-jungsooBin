@@ -15,7 +15,7 @@ class ArtPostFormPresenTational extends Component {
       title: '',
       description: '',
       likes: 0,
-      user: {},
+      userId: 0,
       coverPhoto: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,6 +27,7 @@ class ArtPostFormPresenTational extends Component {
       location: artObj.location,
       artPiece: artObj.artPiece,
       coverPhoto: artObj.coverPhoto.uri,
+      userId: this.props.user.id
     });
   }
 
@@ -36,6 +37,7 @@ class ArtPostFormPresenTational extends Component {
   }
 
   render() {
+
     const { navigation } = this.props;
     const { checked } = this.state;
     return (
@@ -81,6 +83,11 @@ const styles = {
     top: -40,
   },
 };
+const mapStateToProps = state => {
+  return {
+    user: state.users.user
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -89,7 +96,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const ArtPostForm = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ArtPostFormPresenTational);
 

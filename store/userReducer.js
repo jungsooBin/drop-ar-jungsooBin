@@ -15,7 +15,6 @@ const loginWithoutGoogle = user => ({
 
 export const login = formData => async dispatch => {
   try {
-    console.log('formData',formData)
     const res = await axios.put("http://172.16.23.84:8080/api/user/login", formData);
     const user = res.data;
     dispatch(loginWithoutGoogle(user));

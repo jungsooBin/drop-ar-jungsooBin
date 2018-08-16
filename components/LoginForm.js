@@ -17,14 +17,26 @@ class LoginForm extends React.Component {
   async handleSubmit(event, formData) {
     try {
       event.preventDefault();
-      this.props.handleLogin(formData);
+      await this.props.handleLogin(formData)
       this.props.navigation.navigate("ArtFeed");
       // set user info to redux store
     } catch (error) {
       console.log(error);
     }
   }
-
+  showFailAlert = () => {
+    Alert.alert(
+      "Failed To Add!",
+      "Error!",
+      [
+        {
+          text: "Please Try Again",
+          onPress: () => console.log("Error")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   render() {
     const { navigation } = this.props;
 
@@ -70,6 +82,12 @@ class LoginForm extends React.Component {
         </View>
       </View>
     );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    user: state.users.user,
   }
 }
 
@@ -127,6 +145,6 @@ const styles = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(LoginForm);
