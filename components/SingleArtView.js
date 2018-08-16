@@ -43,6 +43,7 @@ export default class SingleArtView extends React.Component {
     let loader = new THREE.ObjectLoader();
     const artObj = navigation.getParam('art');
     const sceneJson = artObj.artPiece;
+
     const artToLoad = loader.parse(sceneJson);
     this.scene.add(artToLoad);
   }

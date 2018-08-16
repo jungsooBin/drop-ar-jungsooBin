@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Text, View, Image, TouchableOpacity, Button } from "react-native";
 
 
@@ -10,7 +11,8 @@ const Home = ({ navigation }) => (
         style={styles.button}
         onPress={() => navigation.navigate(`LoginForm`)}
       >
-        <Text style={styles.buttonText}>Log In</Text>
+        <Text style={styles.buttonText}>Log In </Text>
+        
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}

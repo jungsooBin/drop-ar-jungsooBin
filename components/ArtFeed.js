@@ -11,6 +11,9 @@ class ArtFeed extends Component {
 
   render() {
     const { navigation } = this.props;
+    console.log('mapstate is working?', this.props.user);
+    // const user = navigation.getParam('user');
+    // console.log('user', user)
     return (
       <View style={styles.container}>
         <ScrollView style={styles.scrollContainer}>
