@@ -50,10 +50,10 @@ export const updatingUser = (userData) => async dispatch => {
   try {
       await axios.put(`${domain}/api/user/update`, userData)
       const res = await axios.put(`${domain}/api/user/login`, {email: userData.email, password: userData.password})
-      const user = res.data
+      const user = res.data;
       dispatch(updateUser(user))
   } catch (error) {
-      next(error)
+      console.log(error);
   }
 }
 const userReducer = (userState = initialState, action) => {

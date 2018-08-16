@@ -3,76 +3,40 @@ import React, { Component } from "react";
 import {
   FormLabel,
   FormInput,
-  FormValidationMessage,
   Text,
   
 } from 'react-native-elements';
 import {  View } from "react-native";
 import Button from "./Button";
 import { connect } from 'react-redux';
-import {
-  formValidator,
-  checkEachField,
-  individualizedErrMsg,
-} from '../utilities/formValidator';
+
 import { updatingUser } from '../store/userReducer';
 
 class EditUserProfilePresentational extends Component {
   constructor() {
     super();
-    this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      terms: false
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentWillMount() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('artObj');
-    this.setState({
-      location: artObj.location,
-      artPiece: artObj.artPiece,
-      coverPhoto: artObj.coverPhoto.uri,
-      userId: this.props.user.id
-    });
+    const userData = this.props.user
+    this.setState(userData);
   }
 
-  async handleSubmit(event) {
+  async handleSubmit(event, userData) {
     event.preventDefault();
-    //Post new user in DB
-
-    if (checkEachField(formValidator, this.state).length < 1) {
-      try {
-        await this.props.handleSignUp({
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          email: this.state.email,
-          password: this.state.password,
-          terms: this.state.terms
-        });
-        this.props.navigation.navigate(`ArtFeed`);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      this.setState({ formErrs: true });
-    }
+    this.props.updateUser(userData);
   }
+  
 
   render() {
 
     const { navigation } = this.props;
-    const messages = individualizedErrMsg(
-      checkEachField(formValidator, this.state)
-    );
     return (
       <View style={styles.container}>
         <Text h1 style={styles.heading}>
-          Sign Up
+          Edit Profile
         </Text>
           <FormLabel>First Name</FormLabel>
             <FormInput
@@ -99,25 +63,8 @@ class EditUserProfilePresentational extends Component {
               autoCapitalize="none"
               secureTextEntry={true}
             />
+          <Button onPress={evt => this.handleSubmit(evt, this.state)}>Submit</Button>
 
-          <FormLabel>Re-Enter Password</FormLabel>
-            <FormInput
-              value={this.state.rePassword}
-              onChangeText={rePassword => this.setState({ rePassword })}
-              autoCapitalize="none"
-              secureTextEntry={true}
-            />
-          <Button onPress={this.handleSubmit}>Submit</Button>
-
-          {!this.state.formErrs
-              ? null
-              : messages.map(entry => {
-                  return (
-                    <FormValidationMessage
-                      key={entry}
-                    >{`${entry}`}</FormValidationMessage>
-                  );
-          })}
           <Button onPress={() => navigation.goBack()}>Back</Button>
       </View>
     );
