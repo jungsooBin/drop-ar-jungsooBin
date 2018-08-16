@@ -23,50 +23,50 @@ class Home extends Component{
      if (user != null) {
        newUser = processFBData(user)
        return newUser
-      }
-    })    
+      } 
+    })
   }
 
   async loginWithFacebook() {
+    const {navigation} = this.props
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
-      "2112247582376014",
+      process.env.FACEBOOK_APP_ID,
       { permissions: ['public_profile', 'email'] }
     );
     
     if (type === 'success') {
-      //
+      //Checks whether user exists
       const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
-
+      //If user doesn't exist, sign them up and log them in, if they do exist, log in
       if (!doesUserExist.data.length ){
-        await this.props.handleSignUp(newUser)
+        await this.props.handleSignUp(newUser)  
+        this.props.navigation.navigate('ArtFeed') 
       } else {
         await this.props.setCurrentUser(newUser)
+        this.props.navigation.navigate('ArtFeed') 
       }
-      
       
       // Build Firebase credential with the Facebook access token.
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
       // Sign in with credential from the Facebook user.
-            firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => {
-                    console.log(error)
+      firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => {
+         console.log(error)
               // Handle Errors here.
-            });
+      });
     }
   }
 
-render(){
- const {navigation} = this.props
- return (
+  render(){
+    const {navigation} = this.props
+    return (
       <View style={styles.container}>
         <Text style={styles.text}>GraftAR</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate(`LoginForm`)}
-            
           >
             <Text style={styles.buttonText}>Log In </Text>
-            
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -78,11 +78,8 @@ render(){
 
           <TouchableOpacity
             style={styles.button}
-            onPress={() => {
-              this.loginWithFacebook()
-              navigation.navigate('ArtFeed')
-            }
-          }
+            
+            onPress={ () => this.loginWithFacebook()}
           >
             <Text style={styles.buttonText}>Sign Up with Facebook</Text>
           </TouchableOpacity>
