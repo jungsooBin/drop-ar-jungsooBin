@@ -1,28 +1,35 @@
-import axios from "axios";
-import domain from "../domain.js";
+import axios from 'axios';
+import domain from '../domain.js';
 
 const initialState = {
   allArt: [],
-  singleArt: {}
+  singleArt: {},
+  userArt: [],
 };
 
-const GET_ALL_ART = "GET_ALL_ART";
-const GET_SINGLE_ART = "GET_SINGLE_ART";
-const SAVE_SINGLE_ART = "SAVE_SINGLE_ART";
+const GET_ALL_ART = 'GET_ALL_ART';
+const GET_SINGLE_ART = 'GET_SINGLE_ART';
+const SAVE_SINGLE_ART = 'SAVE_SINGLE_ART';
+const GET_USER_ART = 'GET_USER_ART';
 
 export const getAllArt = allArt => ({
   type: GET_ALL_ART,
-  allArt
+  allArt,
 });
 
 export const getSingleArt = singleArt => ({
   type: GET_SINGLE_ART,
-  singleArt
+  singleArt,
 });
 
 export const saveSingleArt = singleArt => ({
   type: SAVE_SINGLE_ART,
-  singleArt
+  singleArt,
+});
+
+export const getUserArt = userArt => ({
+  type: GET_USER_ART,
+  userArt,
 });
 
 export const fetchAllArt = () => async dispatch => {
@@ -45,6 +52,16 @@ export const fetchSingleArt = () => async dispatch => {
   }
 };
 
+export const fetchUserArt = id => async dispatch => {
+  try {
+    const res = await axios.get(`${domain}/api/art/user/${id}`);
+    const userArt = res.data;
+    dispatch(getUserArt(userArt));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const saveArt = artData => async dispatch => {
   try {
     //put your exact Ip using network utility
@@ -60,19 +77,23 @@ const artReducer = (artState = initialState, action) => {
     case GET_ALL_ART:
       return {
         ...artState,
-        allArt: action.allArt
+        allArt: action.allArt,
       };
     case GET_SINGLE_ART:
       return {
         ...artState,
-        singleArt: action.singleArt
+        singleArt: action.singleArt,
       };
     case SAVE_SINGLE_ART:
       return {
         ...artState,
-        singleArt: action.singleArt
+        singleArt: action.singleArt,
       };
-
+    case GET_USER_ART:
+      return {
+        ...artState,
+        userArt: action.userArt,
+      };
     default:
       return artState;
   }

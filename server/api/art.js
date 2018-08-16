@@ -31,4 +31,17 @@ router.post('/add', async (req, res, next) => {
   }
 });
 
+router.get('/user/:id', async (req, res, next) => {
+  try {
+    const usersArt = await Art.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    res.json(usersArt);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
