@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   FormLabel,
   FormInput,
@@ -16,17 +16,16 @@ import {
 } from '../utilities/formValidator';
 import { signup } from '../store/userReducer';
 
-
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      rePassword: '',
-      terms: false,
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      rePassword: "",
+      terms: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -42,7 +41,7 @@ class SignUpForm extends Component {
           lastName: this.state.lastName,
           email: this.state.email,
           password: this.state.password,
-          terms: this.state.terms,
+          terms: this.state.terms
         });
         this.props.navigation.navigate(`ArtFeed`);
       } catch (err) {
@@ -54,13 +53,10 @@ class SignUpForm extends Component {
   }
 
   render() {
-
     const { terms } = this.state;
-
     const messages = individualizedErrMsg(
       checkEachField(formValidator, this.state)
     );
-
     return (
       <View style={styles.container}>
         <Text h1 style={styles.heading}>
@@ -128,12 +124,12 @@ const styles = {
     flex: 1,
     alignItems: `center`,
     justifyContent: `center`,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff"
     // top: -50
   },
   heading: {
-    top: -40,
-  },
+    top: -40
+  }
 };
 
 const mapDispatchToProps = dispatch => {
