@@ -1,26 +1,34 @@
-const Sequelize = require('sequelize');
+const {
+  STRING,
+  TEXT,
+  BOOLEAN,
+  JSONB,
+  ARRAY,
+  DECIMAL,
+  INTEGER,
+} = require('sequelize');
 const db = require('../database');
 
 const Art = db.define('art', {
   artPiece: {
-    type: Sequelize.JSONB,
+    type: JSONB,
     allowNull: false,
   },
   location: {
-    type: Sequelize.ARRAY(Sequelize.DECIMAL),
+    type: ARRAY(DECIMAL),
     allowNull: false,
   },
   description: {
-    type: Sequelize.STRING,
+    type: STRING,
   },
   title: {
-    type: Sequelize.STRING,
+    type: STRING,
   },
   likes: {
-    type: Sequelize.INTEGER,
+    type: INTEGER,
   },
   coverPhoto: {
-    type: Sequelize.TEXT,
+    type: TEXT,
     defaultValue:
       'https://uploads-ssl.webflow.com/57e5747bd0ac813956df4e96/5aebae14c6d254621d81f826_placeholder.png',
   },

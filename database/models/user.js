@@ -1,25 +1,25 @@
 const crypto = require('crypto');
-const Sequelize = require('sequelize');
+const { STRING, TEXT, BOOLEAN } = require('sequelize');
 const db = require('../database');
 
 const User = db.define('user', {
   //PERSONAL INFO
   firstName: {
-    type: Sequelize.STRING,
+    type: STRING,
     allowNull: true, // Unsure if we can allow null
   },
   lastName: {
-    type: Sequelize.STRING,
+    type: STRING,
     allowNull: true, // Unsure if we can allow null
   },
   email: {
-    type: Sequelize.STRING,
+    type: STRING,
     isEmail: true,
     allowNull: false,
   },
   //SECURITY
   salt: {
-    type: Sequelize.STRING,
+    type: STRING,
     // Making `.salt` act like a function hides it when serializing to JSON.
     // This is a hack to get around Sequelize's lack of a "private" option.
     get() {
@@ -27,20 +27,22 @@ const User = db.define('user', {
     },
   },
   password: {
-    type: Sequelize.STRING,
+    type: STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
     // This is a hack to get around Sequelize's lack of a "private" option.
     get() {
       return () => this.getDataValue('password');
     },
   },
-  googleId: {
-    type: Sequelize.STRING,
-  },
   terms: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false
-  }
+    type: BOOLEAN,
+    allowNull: false,
+  },
+  picture: {
+    type: TEXT,
+    defaultValue:
+      'https://www.bonniercorp.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png',
+  },
 });
 
 /**
