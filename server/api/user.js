@@ -10,18 +10,36 @@ router.post('/signup', async (req, res, next) => {
   }
 });
 
+// router.put('/login', async (req, res, next) => {
+//   try {
+//     const user = await User.findOne({where: {email: req.body.email}})
+//     if (!user) {
+//       console.log('No such user found:', req.body.email)
+//       res.status(401).send('Wrong username and/or password')
+//     } else if (!user.correctPassword(req.body.password)) {
+//       console.log('Incorrect password for user:', req.body.email)
+//       res.status(401).send('Wrong username and/or password')
+//     } else {
+//       req.login(user, err => (err ? next(err) : res.json(user)))
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// });
+
 router.put('/login', async (req, res, next) => {
+  console.log('req.login',req.login)
   try {
     const currentUser = await User.findOne({
       where: { email: req.body.email },
     });
-    // if (!currentUser) {
-    //   res.status(401).send("Wrong username");
-    // } else if (currentUser.password !==req.body.password) {
-    //   res.status(401).send("Wrong username and/or password");
-    // } else {
+    if (currentUser === null) {
+      res.status(401).send("Wrong username");
+    } else if (!currentUser.correctPassword(req.body.password)) {
+      res.status(401).send("Wrong username and/or password");
+    } else {
     res.json(currentUser);
-    // }
+    }
   } catch (err) {
     next(err);
   }

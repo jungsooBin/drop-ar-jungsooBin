@@ -16,21 +16,20 @@ class LoginForm extends React.Component {
 
   async handleSubmit(event, formData) {
     try {
-      event.preventDefault();
       await this.props.handleLogin(formData);
-      if (this.props.user) {
-        this.props.navigation.navigate('ArtFeed');
+      if (this.props.user.response) {
+        this.showFailAlert(this.props.user.response.data);
       } else {
-        this.showFailAlert();
+        this.props.navigation.navigate('ArtFeed');
       }
       // set user info to redux store
     } catch (error) {
       console.log(error);
     }
   }
-  showFailAlert = () => {
+  showFailAlert = (message) => {
     Alert.alert(
-      'Failed To Add!',
+      message,
       'Error!',
       [
         {
