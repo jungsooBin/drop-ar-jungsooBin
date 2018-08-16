@@ -1,16 +1,23 @@
-import React from 'react';
-import { Text, View, TouchableOpacity, Alert } from 'react-native';
-import { Icon, FormLabel, FormInput } from 'react-native-elements';
-import { connect } from 'react-redux';
-import { login } from '../store/userReducer';
+import React from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  KeyboardAvoidingView
+} from "react-native";
+import { FormLabel, FormInput } from "react-native-elements";
+import { connect } from "react-redux";
+import { login } from "../store/userReducer";
 
 class LoginForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     };
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -20,37 +27,31 @@ class LoginForm extends React.Component {
       if (this.props.user.response) {
         this.showFailAlert(this.props.user.response.data);
       } else {
-        this.props.navigation.navigate('ArtFeed');
+        this.props.navigation.navigate("ArtFeed");
       }
-      // set user info to redux store
     } catch (error) {
       console.log(error);
     }
   }
-  showFailAlert = (message) => {
+  showFailAlert = message => {
     Alert.alert(
       message,
-      'Error!',
+      "Error!",
       [
         {
-          text: 'Please Try Again',
-          onPress: () => console.log('Error'),
-        },
+          text: "Please try again!",
+          onPress: () => console.log("Will do!")
+        }
       ],
       { cancelable: false }
     );
   };
+
   render() {
     const { navigation } = this.props;
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={styles.back}
-          onPress={() => navigation.goBack()}
-        >
-          <Icon name="arrow-back" color="#ff5858" />
-        </TouchableOpacity>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
         <Text style={styles.titleText}>GraftAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>Email</FormLabel>
@@ -83,60 +84,54 @@ class LoginForm extends React.Component {
             First time here? Sign up.
           </Text>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
-
-
 
 const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    backgroundColor: '#FFF',
-  },
-  back: {
-    top: '10%',
-    right: '40%',
+    backgroundColor: "#FFF"
   },
   titleText: {
-    position: 'absolute',
-    top: '30%',
-    fontWeight: '800',
+    position: "absolute",
+    top: "30%",
+    fontWeight: "800",
     fontSize: 48,
-    color: '#ff5858',
+    color: "#ff5858"
   },
   formContainer: {
-    top: '40%',
-    width: 290,
+    top: "40%",
+    width: 290
   },
   buttonContainer: {
-    top: '45%',
+    top: "45%"
   },
   button: {
-    backgroundColor: '#ff5858',
+    backgroundColor: "#ff5858",
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    width: 250,
+    width: 250
   },
   buttonText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 24,
-    fontWeight: '800',
-    textAlign: 'center',
+    fontWeight: "800",
+    textAlign: "center"
   },
   textLink: {
-    color: '#ff5858',
-    fontWeight: '800',
-    textAlign: 'center',
-    margin: 5,
-  },
+    color: "#ff5858",
+    fontWeight: "800",
+    textAlign: "center",
+    margin: 5
+  }
 };
 const mapStateToProps = state => {
   return {
-    user: state.users.user,
+    user: state.users.user
   };
 };
 
@@ -144,7 +139,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleLogin: formData => {
       return dispatch(login(formData));
-    },
+    }
   };
 };
 export default connect(
