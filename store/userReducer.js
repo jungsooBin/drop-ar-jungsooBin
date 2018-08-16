@@ -7,6 +7,7 @@ const initialState = {
 
 const LOGIN_ME = "LOGIN_ME";
 const SIGN_UP_WITHOUT_GOOGLE = "SIGN_UP_WITHOUT_GOOGLE";
+const UPDATE_USER = 'UPDATE_USER'
 
 const loginWithoutGoogle = user => ({
   type: LOGIN_ME,
@@ -15,6 +16,11 @@ const loginWithoutGoogle = user => ({
 
 const signUpWithoutGoogle = user => ({
   type: SIGN_UP_WITHOUT_GOOGLE,
+  user: user
+});
+
+const updateUser = user => ({
+  type: UPDATE_USER,
   user: user
 });
 
@@ -40,6 +46,16 @@ export const signup = formData => async dispatch => {
   }
 };
 
+export const updatingUser = (userData) => async dispatch => { 
+  try {
+      await axios.put(`${domain}/api/user/update`, userData)
+      const res = await axios.put(`${domain}/api/user/login`, {email: userData.email, password: userData.password})
+      const user = res.data
+      dispatch(updateUser(user))
+  } catch (error) {
+      next(error)
+  }
+}
 const userReducer = (userState = initialState, action) => {
   switch (action.type) {
     case LOGIN_ME:
@@ -48,6 +64,11 @@ const userReducer = (userState = initialState, action) => {
         user: action.user
       };
     case SIGN_UP_WITHOUT_GOOGLE:
+      return {
+        ...userState,
+        user: action.user
+      };
+    case UPDATE_USER:
       return {
         ...userState,
         user: action.user
