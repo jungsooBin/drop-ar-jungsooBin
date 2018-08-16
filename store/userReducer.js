@@ -1,29 +1,26 @@
-import axios from 'axios';
+import axios from "axios";
+import domain from "../domain.js";
 
 const initialState = {
-  user: {},
+  user: {}
 };
 
-const LOGIN_ME = 'LOGIN_ME';
-const SIGN_UP_WITHOUT_GOOGLE = 'SIGN_UP_WITHOUT_GOOGLE';
-
+const LOGIN_ME = "LOGIN_ME";
+const SIGN_UP_WITHOUT_GOOGLE = "SIGN_UP_WITHOUT_GOOGLE";
 
 const loginWithoutGoogle = user => ({
   type: LOGIN_ME,
-  user: user,
+  user: user
 });
 
 const signUpWithoutGoogle = user => ({
   type: SIGN_UP_WITHOUT_GOOGLE,
-  user: user,
+  user: user
 });
 
 export const login = formData => async dispatch => {
   try {
-    const res = await axios.put(
-      'http://172.16.23.84:8080/api/user/login',
-      formData
-    );
+    const res = await axios.put(`${domain}/api/user/login`, formData);
     const user = res.data;
     dispatch(loginWithoutGoogle(user));
   } catch (error) {
@@ -33,12 +30,9 @@ export const login = formData => async dispatch => {
 
 export const signup = formData => async dispatch => {
   try {
-    const res = await axios.post(
-      'http://172.16.23.84:8080/api/user/signup',
-      formData
-    );
+    const res = await axios.post(`${domain}/api/user/signup`, formData);
     const user = res.data;
-    console.log(user)
+    console.log(user);
     dispatch(signUpWithoutGoogle(user));
   } catch (error) {
     console.log(error);
@@ -50,14 +44,14 @@ const userReducer = (userState = initialState, action) => {
     case LOGIN_ME:
       return {
         ...userState,
-        user: action.user,
+        user: action.user
       };
     case SIGN_UP_WITHOUT_GOOGLE:
       return {
         ...userState,
-        user: action.user,
+        user: action.user
       };
-    
+
     default:
       return userState;
   }
