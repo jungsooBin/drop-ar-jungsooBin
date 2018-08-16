@@ -18,12 +18,12 @@ const SingleArtItem = props => {
         <Image style={styles.artImage} source={{ uri: coverPhoto }} />
       </TouchableOpacity>
       <View style={styles.info}>
-        <Text style={styles.artTitle}>{title}</Text>
-        <Text style={styles.artLikes}>{`Likes: ${likes}`}</Text>
+        <Text style={styles.artTitle}>Title: {title}</Text>
         <Text style={styles.artDescription}>{description}</Text>
         <Text style={styles.artDescription}>
-          Created by: {user.firstName + ' ' + user.lastName}
+          ARtist: {user.firstName + ' ' + user.lastName}
         </Text>
+        <Text style={styles.artLikes}>{`Likes: ${likes}`}</Text>
       </View>
     </View>
   );
