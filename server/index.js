@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // 'API' routes
 app.use('/api', require('./api'));
+app.use('/auth', require('./auth'));
 
 
 // 404 middleware

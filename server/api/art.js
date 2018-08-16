@@ -1,8 +1,8 @@
-"use strict";
-const router = require("express").Router();
-const { Art } = require("../../database/models/art");
+'use strict';
+const router = require('express').Router();
+const { Art } = require('../../database');
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const allArt = await Art.findAll();
     res.json(allArt);
@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const singleArt = await Art.findById(req.params.id);
     res.json(singleArt);
@@ -20,12 +20,12 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/add", async (req, res, next) => {
+router.post('/add', async (req, res, next) => {
   try {
     const CreatedArt = await Art.create(req.body);
     res.json(CreatedArt);
   } catch (error) {
-    res.sendStatus(404);
+    res.sendStatus(500);
   }
 });
 

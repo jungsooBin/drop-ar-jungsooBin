@@ -1,18 +1,20 @@
 import React from "react";
-import { Text, TouchableOpacity, View, Image } from "react-native";
+import { Text, TouchableOpacity, View, Image, Button } from "react-native";
+import { withNavigation } from "react-navigation";
 
 const SingleArtItem = props => {
-  const { navigation } = this.props;
+  const { navigation } = props;
   return (
     <View style={styles.container}>
       <TouchableOpacity
+        style={styles.artImage}
         onPress={() =>
           navigation.navigate(`SingleArtView`, {
             art: props.art
           })
         }
       >
-        <Image source={{ uri: props.art.coverPhoto }} />
+        <Image style={styles.artImage} source={{ uri: props.art.coverPhoto }} />
       </TouchableOpacity>
       <View style={styles.info}>
         <Text style={styles.artTitle}>{props.art.title}</Text>
@@ -25,33 +27,24 @@ const SingleArtItem = props => {
 
 const styles = {
   container: {
+    flex: 1,
     flexDirection: "row",
-    width: "90%",
-    height: "20%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#FFF"
+    backgroundColor: "#FFF",
+    marginTop: 5
   },
-  coverPhoto: {
-    width: "40%",
-    height: "17.5%"
+  artImage: {
+    width: "50%",
+    height: "100%"
   },
   info: {
     flexDirection: "column",
-    width: "45%",
-    height: "17.5%",
-    color: "#000",
-    textAlign: "center"
-  },
-  artTitle: {
-    fontSize: "20px"
-  },
-  artLikes: {
-    fontSize: "16px"
-  },
-  artDescription: {
-    fontSize: "16px"
+    width: "50%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10
   }
 };
 
-export default SingleArtItem;
+export default withNavigation(SingleArtItem);

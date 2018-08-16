@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import { Text, View, Image, TouchableOpacity, Button } from "react-native";
 import loginWithFacebook from '../firebase/firebaseSetup'
 
@@ -13,7 +13,8 @@ const Home = ({ navigation }) => (
         onPress={() => navigation.navigate(`LoginForm`)}
         
       >
-        <Text style={styles.buttonText}>Log In</Text>
+        <Text style={styles.buttonText}>Log In </Text>
+        
       </TouchableOpacity>
 
       <TouchableOpacity

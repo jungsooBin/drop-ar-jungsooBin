@@ -1,11 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import {
-  FormLabel,
-  FormInput,
-  Text,
-} from 'react-native-elements';
-import { View, Image} from 'react-native';
+import { FormLabel, FormInput, Text } from 'react-native-elements';
+import { View, Image } from 'react-native';
 import Button from './Button';
 
 import { saveArt } from '../store/artReducer';
@@ -19,8 +15,8 @@ class ArtPostFormPresenTational extends Component {
       title: '',
       description: '',
       likes: 0,
-      user:{},
-      coverPhoto:null
+      userId: 0,
+      coverPhoto: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -30,7 +26,8 @@ class ArtPostFormPresenTational extends Component {
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
-      coverPhoto: artObj.coverPhoto
+      coverPhoto: artObj.coverPhoto.uri,
+      userId: this.props.user.id
     });
   }
 
@@ -40,13 +37,14 @@ class ArtPostFormPresenTational extends Component {
   }
 
   render() {
+
     const { navigation } = this.props;
     const { checked } = this.state;
     return (
       <View style={styles.container}>
         <Image
-          style={{width: 50, height: 50}}
-          source={this.state.coverPhoto}
+          style={{ width: 50, height: 50 }}
+          source={{ uri: this.state.coverPhoto }}
         />
 
         <Text h1 style={styles.heading}>
@@ -85,16 +83,20 @@ const styles = {
     top: -40,
   },
 };
+const mapStateToProps = state => {
+  return {
+    user: state.users.user
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
-    
   };
 };
 
 const ArtPostForm = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ArtPostFormPresenTational);
 

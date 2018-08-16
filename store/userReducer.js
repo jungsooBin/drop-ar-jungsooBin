@@ -1,30 +1,45 @@
-import axios from "axios";
+import axios from 'axios';
 
 const initialState = {
-  user: {}
+  user: {},
 };
 
-const GOT_ME = "G0T_ME";
+const LOGIN_ME = 'LOGIN_ME';
+const SIGN_UP_WITHOUT_GOOGLE = 'SIGN_UP_WITHOUT_GOOGLE';
 
-const gotMe = user => ({
-  type: G0T_ME,
-  user
+
+const loginWithoutGoogle = user => ({
+  type: LOGIN_ME,
+  user: user,
 });
 
-export const getMe = () => async dispatch => {
+const signUpWithoutGoogle = user => ({
+  type: SIGN_UP_WITHOUT_GOOGLE,
+  user: user,
+});
+
+export const login = formData => async dispatch => {
   try {
-    const res = await axios.get("/auth/me");
+    const res = await axios.put(
+      'http://172.16.23.84:8080/api/user/login',
+      formData
+    );
     const user = res.data;
-    dispatch(gotMe(user));
+    dispatch(loginWithoutGoogle(user));
   } catch (error) {
     console.log(error);
   }
 };
 
-export const login = formData => async dispatch => {
+export const signup = formData => async dispatch => {
   try {
-    const res = await axios.put("/auth/login", formData);
-    dispatch(gotMe(user));
+    const res = await axios.post(
+      'http://172.16.23.84:8080/api/user/signup',
+      formData
+    );
+    const user = res.data;
+    console.log(user)
+    dispatch(signUpWithoutGoogle(user));
   } catch (error) {
     console.log(error);
   }
@@ -32,11 +47,17 @@ export const login = formData => async dispatch => {
 
 const userReducer = (userState = initialState, action) => {
   switch (action.type) {
-    case GOT_ME:
+    case LOGIN_ME:
       return {
         ...userState,
-        user: action.user
+        user: action.user,
       };
+    case SIGN_UP_WITHOUT_GOOGLE:
+      return {
+        ...userState,
+        user: action.user,
+      };
+    
     default:
       return userState;
   }

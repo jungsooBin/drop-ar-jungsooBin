@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,17 +7,17 @@ import {
   Image,
   PanResponder,
   Animated,
-  Alert
-} from "react-native";
-import axios from "axios";
-import Expo from "expo";
-import * as THREE from "three";
-import ExpoTHREE from "expo-three";
-import { Button } from "react-native-elements";
-import { ColorWheel } from "react-native-color-wheel";
-var convert = require("color-convert");
-var hsl = require("hsl-to-hex");
-import Icon from "react-native-vector-icons/FontAwesome";
+  Alert,
+} from 'react-native';
+import axios from 'axios';
+import Expo from 'expo';
+import * as THREE from 'three';
+import ExpoTHREE from 'expo-three';
+import { Button } from 'react-native-elements';
+import { ColorWheel } from 'react-native-color-wheel';
+var convert = require('color-convert');
+var hsl = require('hsl-to-hex');
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 console.disableYellowBox = true;
 
@@ -27,9 +27,9 @@ export default class LoadArtView extends React.Component {
     this.state = {
       pan: new Animated.ValueXY(),
       color: null,
-      hexColor: "",
+      hexColor: '',
       latitude: null,
-      longitude: null
+      longitude: null,
     };
     this.model = null;
     this.graffitiObjects = [];
@@ -88,17 +88,17 @@ export default class LoadArtView extends React.Component {
   async addCube() {
     const glassMaterial = new THREE.MeshBasicMaterial({
       map: await ExpoTHREE.createTextureAsync({
-        asset: Expo.Asset.fromModule(require("../Glass.jpg"))
+        asset: Expo.Asset.fromModule(require('../Glass.jpg')),
       }),
       transparent: true,
-      opacity: 0.85
+      opacity: 0.85,
     });
     const colorToUse = this.findColor();
     const geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
     var material = new THREE.MeshBasicMaterial({
       color: colorToUse,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.85,
     });
     const mesh = new THREE.Mesh(geometry, material);
     const newItem = setModelPos(mesh, this.camera.position);
@@ -112,7 +112,7 @@ export default class LoadArtView extends React.Component {
     var material = new THREE.MeshBasicMaterial({
       color: colorToUse,
       opacity: 0.85,
-      transparent: true
+      transparent: true,
     });
     const mesh = new THREE.Mesh(
       new THREE.TetrahedronBufferGeometry(0.1, 0),
@@ -131,7 +131,7 @@ export default class LoadArtView extends React.Component {
     var material = new THREE.MeshBasicMaterial({
       color: colorToUse,
       opacity: 0.75,
-      transparent: true
+      transparent: true,
     });
     const mesh = new THREE.Mesh(sphereGeometry, material);
     // console.log(this.state);
@@ -146,7 +146,7 @@ export default class LoadArtView extends React.Component {
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-          error: null
+          error: null,
         });
       },
       error => this.setState({ error: error.message }),
@@ -156,19 +156,16 @@ export default class LoadArtView extends React.Component {
       this.showFailAlert();
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
-      console.log("Location", locationToSave);
+      console.log('Location', locationToSave);
       try {
         let count = 0;
-        const newArt = await axios.post(
-          "http://172.16.21.129:8080/api/art/add",
-          {
-            location: locationToSave,
-            artPiece: this.scene.toJSON(),
-            description: "Amazing art piece, love it",
-            likes: 10
-          }
-        );
-        console.log("SUCCESS");
+        const newArt = await axios.post(`http://172.16.23.84/art/add`, {
+          location: locationToSave,
+          artPiece: this.scene.toJSON(),
+          description: 'Amazing art piece, love it',
+          likes: 10,
+        });
+        console.log('SUCCESS');
         this.showAlert();
       } catch (err) {
         console.log(err);
@@ -179,9 +176,9 @@ export default class LoadArtView extends React.Component {
 
   showAlert = () => {
     Alert.alert(
-      "Posted!",
-      "Awesome!",
-      [{ text: ":)", onPress: () => console.log("Posted") }],
+      'Posted!',
+      'Awesome!',
+      [{ text: ':)', onPress: () => console.log('Posted') }],
       { cancelable: false }
     );
   };
@@ -189,13 +186,13 @@ export default class LoadArtView extends React.Component {
   // Message to user when post fails
   showFailAlert = () => {
     Alert.alert(
-      "Failed To Add!",
-      "Error!",
+      'Failed To Add!',
+      'Error!',
       [
         {
-          text: "Please Try Again",
-          onPress: () => console.log("Error")
-        }
+          text: 'Please Try Again',
+          onPress: () => console.log('Error'),
+        },
       ],
       { cancelable: false }
     );
@@ -215,9 +212,9 @@ export default class LoadArtView extends React.Component {
             style={{
               height: 100,
               width: 100,
-              position: "absolute",
-              justifyContent: "center",
-              alignItems: "center"
+              position: 'absolute',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           />
         </View>
@@ -228,10 +225,10 @@ export default class LoadArtView extends React.Component {
             title="Cube"
             onPress={this.addCube}
             buttonStyle={{
-              backgroundColor: "red",
+              backgroundColor: 'red',
               opacity: 0.2,
               width: 85,
-              height: 85
+              height: 85,
             }}
           />
           <Button
@@ -240,10 +237,10 @@ export default class LoadArtView extends React.Component {
             title="Sphere"
             onPress={this.addSphere}
             buttonStyle={{
-              backgroundColor: "green",
+              backgroundColor: 'green',
               opacity: 0.2,
               width: 85,
-              height: 85
+              height: 85,
             }}
           />
           <Button
@@ -252,10 +249,10 @@ export default class LoadArtView extends React.Component {
             onPress={this.addTriangle}
             title="Triangle"
             buttonStyle={{
-              backgroundColor: "blue",
+              backgroundColor: 'blue',
               opacity: 0.2,
               width: 85,
-              height: 85
+              height: 85,
             }}
           />
           <Button
@@ -264,10 +261,10 @@ export default class LoadArtView extends React.Component {
             title="Save"
             onPress={this.handleSubmit}
             buttonStyle={{
-              backgroundColor: "purple",
+              backgroundColor: 'purple',
               opacity: 0.2,
               width: 85,
-              height: 85
+              height: 85,
             }}
           />
         </View>
@@ -298,17 +295,17 @@ export default class LoadArtView extends React.Component {
 
     const customMaterial = new THREE.MeshBasicMaterial({
       map: await ExpoTHREE.createTextureAsync({
-        asset: Expo.Asset.fromModule(require("../uv.jpg"))
+        asset: Expo.Asset.fromModule(require('../uv.jpg')),
       }),
-      transparent: true
+      transparent: true,
     });
 
     const glassMaterial = new THREE.MeshBasicMaterial({
       map: await ExpoTHREE.createTextureAsync({
-        asset: Expo.Asset.fromModule(require("../Glass.jpg"))
+        asset: Expo.Asset.fromModule(require('../Glass.jpg')),
       }),
       transparent: true,
-      opacity: 0.75
+      opacity: 0.75,
     });
 
     this.scene.background = ExpoTHREE.createARBackgroundTexture(
@@ -356,60 +353,60 @@ export default class LoadArtView extends React.Component {
   };
 }
 
-const { height, width } = Dimensions.get("window");
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     top: height - 350,
-    left: width / 2 + 100
+    left: width / 2 + 100,
   },
   dropView: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     top: height - 200,
-    left: width / 2 - 200
+    left: width / 2 - 200,
   },
   colorPicker: {
-    position: "absolute",
+    position: 'absolute',
     top: height - 620,
     left: width / 2 - 100,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   badge: {
-    position: "absolute",
+    position: 'absolute',
     top: 17,
-    left: 10
+    left: 10,
   },
   items: {
-    position: "absolute",
+    position: 'absolute',
     top: 60,
     left: 25,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 20,
     padding: 8,
-    marginRight: 5
+    marginRight: 5,
   },
   can: {
-    justifyContent: "center",
-    alignItems: "center"
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 async function loadModel(hexcolor) {
   const geometry = new THREE.BoxGeometry(0.07, 0.07, 0.07);
-  var material = new THREE.MeshBasicMaterial({ color: "#FFFFFFF" });
+  var material = new THREE.MeshBasicMaterial({ color: '#FFFFFFF' });
   const sphere = new THREE.SphereGeometry(0.1, 0.07, 0.07);
   const customMaterial = new THREE.MeshBasicMaterial({
     map: await ExpoTHREE.createTextureAsync({
-      asset: Expo.Asset.fromModule(require("../uv.jpg"))
+      asset: Expo.Asset.fromModule(require('../uv.jpg')),
     }),
     transparent: true,
-    opacity: 0.75
+    opacity: 0.75,
   });
   const mesh = new THREE.Mesh(geometry, material);
   return mesh;
