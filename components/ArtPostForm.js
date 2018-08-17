@@ -14,7 +14,7 @@ const firebaseConfig = {
     storageBucket: "graftarfinal-6b59a.appspot.com",
     messagingSenderId: "196028019561"
 }
-firebase.initializeApp(firebaseConfig);
+//firebase.initializeApp(firebaseConfig);
 
 
 class ArtPostFormPresenTational extends Component {
