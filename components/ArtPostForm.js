@@ -28,6 +28,7 @@ class ArtPostFormPresenTational extends Component {
       likes: 0,
       artistId: 0,
       coverPhoto: null,
+      tempPhotoUrl: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
@@ -45,14 +46,14 @@ class ArtPostFormPresenTational extends Component {
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    const image = this.uploadImage(artData.coverPhoto, `${artData.title}`)
+    this.uploadImage(artData.coverPhoto, `${artData.title}`)
     this.props.addArt(artData);
   }
 
   async uploadImage (uri, imageName) {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref().child("images/" + imageName);
+    var ref = firebase.storage().ref().child("images/" + imageName)
     return ref.put(blob);
   }
 
