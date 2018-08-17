@@ -46,7 +46,7 @@ class ArtPostFormPresenTational extends Component {
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    this.uploadImage(artData.coverPhoto, `${artData.title}`)
+    const callback = this.uploadImage(artData.coverPhoto, `${artData.title}`)
     this.props.addArt(artData);
   }
 
