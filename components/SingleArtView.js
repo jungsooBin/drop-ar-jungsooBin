@@ -70,6 +70,7 @@ class SingleArtView extends React.Component {
   }
 
   render() {
+    console.log('THIS IS PROPS', this.props.user)
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>

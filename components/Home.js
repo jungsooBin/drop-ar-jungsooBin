@@ -23,8 +23,10 @@ class Home extends Component {
         const newUser = processFBData(user)
         //Checks whether user exists
         const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
-       
-      //If user doesn't exist, sign them up and log them in, if they do exist, log in
+        //Adds id property to newUser 
+        newUser.id = doesUserExist.data[0].id
+
+        //If user doesn't exist, sign them up and log them in, if they do exist, log in
       if (!doesUserExist.data.length ){
         await this.props.handleSignUp(newUser)  
         this.props.navigation.navigate('ArtFeed') 

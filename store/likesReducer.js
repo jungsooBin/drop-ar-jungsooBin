@@ -45,6 +45,7 @@ export const saveDislikeArt = dislikeArtData => async dispatch => {
     console.log(error);
   }
 };
+
 export const saveLikeArt = likeData => async dispatch => {
   try {
     const response = await axios.post(`${domain}/api/likes`, likeData);

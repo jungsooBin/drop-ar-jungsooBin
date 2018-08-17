@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import SingleArtItem from './SingleArtItem';
 import { fetchAllArt } from '../store/artReducer';
-// import { fetchAllLikes } from '../store/likesReducer';
+import { fetchAllLikes } from '../store/likesReducer';
 
 class ArtFeed extends Component {
   componentDidMount() {
     this.props.fetchAllArt();
-    // this.props.fetchAllLikes();
+    this.props.fetchAllLikes();
   }
 
   render() {
@@ -109,7 +109,7 @@ const styles = {
 const mapStateToProps = state => {
   return {
     allArt: state.arts.allArt,
-    // allLikes: state.likes.allLikes,
+    allLikes: state.likes.allLikes,
   };
 };
 
@@ -117,9 +117,9 @@ const mapDispatchToProps = dispatch => ({
   fetchAllArt: () => {
     dispatch(fetchAllArt());
   },
-  // fetchAllLikes: () => {
-  //   dispatch(fetchAllLikes());
-  // },
+  fetchAllLikes: () => {
+    dispatch(fetchAllLikes());
+  },
 });
 
 export default connect(
