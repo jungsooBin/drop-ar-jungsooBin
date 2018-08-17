@@ -16,7 +16,7 @@ import SingleArtItem from './components/SingleArtItem';
 
 const RootNavigator = createStackNavigator({
   Main: {
-    screen: Home,
+    screen: CameraView,
     navigationOptions: ({ navigation }) => ({
       header: null,
       title: `GraftAR`,
