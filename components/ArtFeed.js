@@ -16,7 +16,10 @@ class ArtFeed extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.scrollContainer}>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView
+            style={styles.scrollView}
+            showsVerticalScrollIndicator={false}
+          >
             {this.props.allArt.map(art => (
               <SingleArtItem key={art.id} art={art} />
             ))}
