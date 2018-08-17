@@ -19,7 +19,6 @@ import { Button } from 'react-native-elements';
 import { ColorWheel } from 'react-native-color-wheel';
 var hsl = require('hsl-to-hex');
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
-import ViewShot from 'react-native-view-shot';
 
 console.disableYellowBox = true;
 

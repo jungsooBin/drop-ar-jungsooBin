@@ -1,11 +1,16 @@
-process.env.GOOGLE_CLIENT_ID = "274290465462-od9mmlprskk4of70qvcpdip169us6ja4.apps.googleusercontent.com"
+//FaceBook
 
-process.env.GOOGLE_CLIENT_SECRET = "mYbZ0JwQYWByoguLsmx4y0xX"
+process.env.FACEBOOK_APP_ID = '2112247582376014';
 
-process.env.GOOGLE_CALLBACK = "https://localhost:8080/auth/google/callback"
+process.env.FACEBOOK_CLIENT_SECRET = '2a9c9710fd596e16cef20cbef439eafb';
 
-//From the Googles
-/*
-{"web":{"client_id":"274290465462-od9mmlprskk4of70qvcpdip169us6ja4.apps.googleusercontent.com","project_id":"lithe-elixir-213321","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://www.googleapis.com/oauth2/v3/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"mYbZ0JwQYWByoguLsmx4y0xX","redirect_uris":["https://localhost:8080/auth/google/callback"]}}
+const firebaseConfig = {
+  apiKey: 'AIzaSyA6royGnNb6iwK4qGFZyy6TzEszpLHXkEE',
+  authDomain: 'graftarfinal.firebaseapp.com',
+  databaseURL: 'https://graftarfinal.firebaseio.com',
+  projectId: 'graftarfinal',
+  storageBucket: 'graftarfinal.appspot.com',
+  messagingSenderId: '599185074055',
+};
 
-*/
+export default firebaseConfig;
