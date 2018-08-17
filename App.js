@@ -13,6 +13,9 @@ import FriendProfile from './components/FriendProfile';
 import ArtPostForm from './components/ArtPostForm';
 import SingleArtView from './components/SingleArtView';
 import SingleArtItem from './components/SingleArtItem';
+import ApiKeys from './constants/ApiKeys';
+import * as firebase from 'firebase';
+
 
 const RootNavigator = createStackNavigator({
   Main: {
@@ -96,6 +99,12 @@ const RootNavigator = createStackNavigator({
 });
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+
+    // Initialize firebase...
+    if (!firebase.apps.length) { firebase.initializeApp(ApiKeys.FirebaseConfig); }
+  }
   render() {
     return (
       <Provider store={store}>

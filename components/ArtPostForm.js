@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { FormLabel, FormInput, Text } from 'react-native-elements';
 import { View, Image } from 'react-native';
 import Button from './Button';
+import * as firebase from 'firebase';
 
 import { saveArt } from '../store/artReducer';
 
