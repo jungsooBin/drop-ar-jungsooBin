@@ -10,7 +10,6 @@ import domain from '../domain.js';
 
 //Globals
 firebase.initializeApp(firebaseConfig);
-let newUser;
 
 //Component
 class Home extends Component {
@@ -18,46 +17,41 @@ class Home extends Component {
     super();
   }
 
-  async componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
+  async componentDidMount(){
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user != null) {
-        newUser = processFBData(user);
-        return newUser;
-      }
-    });
+        const newUser = processFBData(user)
+        //Checks whether user exists
+        const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
+       
+      //If user doesn't exist, sign them up and log them in, if they do exist, log in
+      if (!doesUserExist.data.length ){
+        await this.props.handleSignUp(newUser)  
+        this.props.navigation.navigate('ArtFeed') 
+      } else {
+          await this.props.setCurrentUser(newUser)
+          this.props.navigation.navigate('ArtFeed') 
+        }
+      } 
+    })
   }
 
   async loginWithFacebook() {
-    const { navigation } = this.props;
-    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+    const {navigation} = this.props
+    const  {token, type} = await Expo.Facebook.logInWithReadPermissionsAsync(
+
       process.env.FACEBOOK_APP_ID,
       { permissions: ['public_profile', 'email'] }
     );
 
     if (type === 'success') {
-      //Checks whether user exists
-      const doesUserExist = await axios.get(
-        `${domain}/api/user/${newUser.email}`
-      );
-      //If user doesn't exist, sign them up and log them in, if they do exist, log in
-      if (!doesUserExist.data.length) {
-        await this.props.handleSignUp(newUser);
-        this.props.navigation.navigate('ArtFeed');
-      } else {
-        await this.props.setCurrentUser(newUser);
-        this.props.navigation.navigate('ArtFeed');
-      }
-
       // Build Firebase credential with the Facebook access token.
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
       // Sign in with credential from the Facebook user.
-      firebase
-        .auth()
-        .signInAndRetrieveDataWithCredential(credential)
-        .catch(error => {
-          console.log(error);
-          // Handle Errors here.
-        });
+      firebase.auth().signInAndRetrieveDataWithCredential(credential).catch((error) => {
+        // Handle Errors here.
+         console.log(error)
+      });
     }
   }
 
