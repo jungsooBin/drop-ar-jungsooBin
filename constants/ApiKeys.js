@@ -1,3 +1,5 @@
+
+
 export default {
 	FirebaseConfig: {
 		apiKey: "AIzaSyAKdplWrPK2fft2XwNEN_yqx8dXjk_Mggw",

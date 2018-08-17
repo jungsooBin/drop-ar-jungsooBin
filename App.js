@@ -99,12 +99,7 @@ const RootNavigator = createStackNavigator({
 });
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
 
-    // Initialize firebase...
-    if (!firebase.apps.length) { firebase.initializeApp(ApiKeys.FirebaseConfig); }
-  }
   render() {
     return (
       <Provider store={store}>

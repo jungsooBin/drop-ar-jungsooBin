@@ -9,7 +9,7 @@ import axios from 'axios';
 import domain from '../domain.js';
 
 //Globals
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 let newUser;
 
 //Component
