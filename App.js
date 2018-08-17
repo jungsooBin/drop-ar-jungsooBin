@@ -14,7 +14,7 @@ import ArtPostForm from './components/ArtPostForm';
 import SingleArtView from './components/SingleArtView';
 import SingleArtItem from './components/SingleArtItem';
 import ApiKeys from './constants/ApiKeys';
-import * as firebase from 'firebase';
+
 
 
 const RootNavigator = createStackNavigator({
@@ -22,80 +22,80 @@ const RootNavigator = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
-      title: `GraftAR`,
-    }),
+      title: `GraftAR`
+    })
   },
   LoginForm: {
     screen: LoginForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SignUpForm: {
     screen: SignUpForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   CameraView: {
     screen: CameraView,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   UserProfile: {
     screen: UserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   EditUserProfile: {
     screen: EditUserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   ArtFeed: {
     screen: ArtFeed,
     navigationOptions: ({ navigation }) => ({
       gesturesEnabled: false,
       headerLeft: null,
-      title: 'ARt',
+      title: "EXPLORE",
       headerStyle: {
-        backgroundColor: 'white',
-        borderBottomColor: 'transparent',
+        backgroundColor: "#ff5858",
+        borderBottomColor: "transparent"
       },
       headerTitleStyle: {
-        color: '#ff5858',
-        fontWeight: '800',
-        fontSize: 24,
-      },
-    }),
+        color: "#FFF",
+        fontWeight: "800",
+        fontSize: 24
+      }
+    })
   },
-  FriendProfile: {
-    screen: FriendProfile,
-    navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
-  },
+  // FriendProfile: {
+  //   screen: FriendProfile,
+  //   navigationOptions: ({ navigation }) => ({
+  //     header: null
+  //   })
+  // },
   ArtPostForm: {
     screen: ArtPostForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SingleArtView: {
     screen: SingleArtView,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SingleArtItem: {
     screen: SingleArtItem,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
-  },
+      header: null
+    })
+  }
 });
 
 export default class App extends Component {

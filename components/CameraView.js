@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,12 +22,12 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 console.disableYellowBox = true;
 
-export default class CameraView extends React.Component {
+export default class CameraView extends Component {
   constructor() {
     super();
     this.state = {
-      color: { h: 0, s: 0, v: 200 },
-      hexColor: '#FF0000',
+      color: { h: 0, s: 0, v: 100 },
+      hexColor: '#ff00000',
       latitude: null,
       longitude: null,
       shape: 'cube',
@@ -48,7 +48,7 @@ export default class CameraView extends React.Component {
     this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
     this.undo = this.undo.bind(this);
-    this.undoAll = this.undoAll.bind(this);
+    // this.undoAll = this.undoAll.bind(this);
     this.takeScreenshot = this.takeScreenshot.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
   }
@@ -85,6 +85,15 @@ export default class CameraView extends React.Component {
       this.setState({ coverPhoto: file });
     } else {
       this.showFailToSave();
+    }
+  }
+
+  async componentWillUnmount() {
+    cancelAnimationFrame(this.gameRequest);
+    try {
+      this.arSession = await this._glView.stopARSessionAsync();
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -130,11 +139,11 @@ export default class CameraView extends React.Component {
     this.scene.remove(this.scene.children[this.scene.children.length - 1]);
   }
 
-  undoAll() {
-    while (this.scene.children.length > 0) {
-      this.undo();
-    }
-  }
+  // undoAll() {
+  //   while (this.scene.children.length > 0) {
+  //     this.undo();
+  //   }
+  // }
 
   showImageSave = () => {
     Alert.alert(
@@ -196,11 +205,11 @@ export default class CameraView extends React.Component {
 
   findSize() {
     if (this.state.size === 'medium') {
-      return 0.5;
+      return 0.04;
     } else if (this.state.size === 'large') {
-      return 0.1;
+      return 0.06;
     } else {
-      return 0.025;
+      return 0.02;
     }
   }
 
@@ -318,18 +327,16 @@ export default class CameraView extends React.Component {
   }
 
   generateLighting(scene) {
-    // const leftLight = new THREE.DirectionalLight(0xffffff);
-    // const rightLight = new THREE.DirectionalLight(0xffffff);
-    // const bottomLight = new THREE.DirectionalLight(0xffffff);
-    // const frontLight = new THREE.DirectionalLight(0xffffff);
-    // leftLight.position.set(-3, 5, 0).normalize();
-    // rightLight.position.set(3, 5, 0).normalize();
-    // bottomLight.position.set(0, -5, 0).normalize();
-    // frontLight.position.set(0, 0, 0).normalize();
-    // scene.add(leftLight);
-    // scene.add(rightLight);
-    // scene.add(bottomLight);
-    // scene.add(frontLight);
+    const leftLight = new THREE.DirectionalLight(0xffffff);
+    const rightLight = new THREE.DirectionalLight(0xffffff);
+    const bottomLight = new THREE.DirectionalLight(0xffffff);
+    const frontLight = new THREE.DirectionalLight(0xffffff);
+    leftLight.position.set(-3, 5, 0).normalize();
+    rightLight.position.set(3, 5, 0).normalize();
+    frontLight.position.set(0, 0, 0).normalize();
+    this.scene.add(leftLight);
+    this.scene.add(rightLight);
+    this.scene.add(frontLight);
     const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     this.scene.add(new THREE.AmbientLight(0x404040));
     this.scene.add(light);
@@ -342,6 +349,8 @@ export default class CameraView extends React.Component {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
+    console.log('colorToUse: ', colorToUse);
+    console.log('this.state.texture: ', this.state.texture);
     let material = '';
     if (this.state.texture === 'color') {
       material = new THREE.MeshPhongMaterial({
@@ -356,12 +365,12 @@ export default class CameraView extends React.Component {
     }
     const mesh = new THREE.Mesh(objectToRender, material);
     const newItem = setModelPos(mesh, this.camera.position);
-    newItem.position.z -= 0.1;
-    newItem.position.x -= 0.01;
-    newItem.position.y += 0.01;
+    newItem.position.z -= 0.2;
+    // newItem.position.x -= 0.01;
+    // newItem.position.y += 0.01;
     this.graffitiObjects.push(newItem);
     this.scene.add(newItem);
-    this.timer = setTimeout(this.addShapeWithSize, 100);
+    this.timer = setTimeout(this.addShapeWithSize, 20);
   }
 
   render() {
@@ -497,18 +506,6 @@ export default class CameraView extends React.Component {
             <Button
               raised
               rounded
-              title="Next"
-              onPress={this.handleSubmit}
-              buttonStyle={{
-                backgroundColor: 'black',
-                opacity: 0.5,
-                width: 85,
-                height: 50,
-              }}
-            />
-            <Button
-              raised
-              rounded
               title="Undo"
               onPress={this.undo}
               buttonStyle={{
@@ -518,7 +515,7 @@ export default class CameraView extends React.Component {
                 height: 50,
               }}
             />
-            <Button
+            {/* <Button
               raised
               rounded
               title="Clear"
@@ -529,22 +526,10 @@ export default class CameraView extends React.Component {
                 width: 85,
                 height: 50,
               }}
-            />
+            /> */}
           </View>
         )}
         <View style={styles.takePhoto}>
-          <Button
-            raised
-            rounded
-            title="Options"
-            onPress={this.hideAllButtons}
-            buttonStyle={{
-              backgroundColor: 'red',
-              opacity: 0.3,
-              width: 'auto',
-              height: 50,
-            }}
-          />
           {this.state.hideButtons === false ? null : (
             <Button
               raised
@@ -559,6 +544,32 @@ export default class CameraView extends React.Component {
               }}
             />
           )}
+          {this.state.hideButtons === true ? null : (
+            <Button
+              raised
+              rounded
+              title="Next"
+              onPress={this.handleSubmit}
+              buttonStyle={{
+                backgroundColor: 'black',
+                opacity: 0.5,
+                width: 85,
+                height: 50,
+              }}
+            />
+          )}
+          <Button
+            raised
+            rounded
+            title="Options"
+            onPress={this.hideAllButtons}
+            buttonStyle={{
+              backgroundColor: 'red',
+              opacity: 0.3,
+              width: 'auto',
+              height: 50,
+            }}
+          />
         </View>
         <View style={styles.draw}>
           {/* <Button
@@ -620,21 +631,22 @@ export default class CameraView extends React.Component {
     this.generateLighting(this.scene);
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      this.gameRequest = requestAnimationFrame(animate);
       this.camera.position.setFromMatrixPosition(this.camera.matrixWorld);
-      const cameraPos = new THREE.Vector3(0, 0, -0.04);
+      const cameraPos = new THREE.Vector3(0, 0, 0);
       cameraPos.applyMatrix4(this.camera.matrixWorld);
 
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
         // Fire objects like a gun lol ==>
-        // art.position.z -= 0.04;
-        // if (art.position.z === -5) {
+        setModelPos(art, this.camera.position);
+        // art.position.z -= 0.01;
+        // if (art.position.z === -1) {
         //   this.scene.remove(art);
         // }
         // Animates items for live movement
-        art.rotation.x += art.rotator;
-        art.rotation.y += art.rotator;
+        // art.rotation.x += art.rotator;
+        // art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);
@@ -666,7 +678,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: height - 100,
+    top: height - 150,
     left: width / 2 + 90,
   },
   draw: {
@@ -724,6 +736,6 @@ function setModelPos(model, dropPos) {
   item.position.x = dropPos.x;
   item.position.y = dropPos.y;
   item.position.z = dropPos.z;
-  item.rotator = 0.02;
+  item.rotator = 0.2;
   return item;
 }
