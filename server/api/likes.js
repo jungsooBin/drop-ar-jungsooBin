@@ -6,7 +6,7 @@ router.put('/', async (req, res, next) => {
     console.log(req.body);
     const currentUser = await User.findById(req.body.userId);
     const currentArt = await Art.findById(req.body.artId);
-    const dislikedArt = await currentArt.removeUser(currentUser, {
+    const dislikedArt = await currentArt.removeLikedBy(currentUser, {
       through: 'likes',
     });
     res.status(201).json(dislikedArt);
@@ -19,10 +19,29 @@ router.post('/', async (req, res, next) => {
   try {
     const currentUser = await User.findById(req.body.userId);
     const currentArt = await Art.findById(req.body.artId);
-    const likedArt = await currentArt.addUser(currentUser, {
+    const likedArt = await currentArt.addLikedBy(currentUser, {
       through: 'likes',
     });
     res.status(201).json(likedArt);
+  } catch (err) {
+    next(err);
+  }
+});
+
+// // get all users who liked this art
+router.get('/', async (req, res, next) => {
+  try {
+    const currentArt = await Art.findAll({
+      attributes: ['id', 'title'],
+      include: [
+        {
+          model: User,
+          as: 'likedBy',
+          attributes: ['id'],
+        },
+      ],
+    });
+    res.json(currentArt);
   } catch (err) {
     next(err);
   }

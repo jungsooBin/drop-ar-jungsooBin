@@ -5,7 +5,10 @@ const { Art, User } = require('../../database');
 router.get('/', async (req, res, next) => {
   try {
     const allArt = await Art.findAll({
-      include: [{ model: User }],
+      include: [
+        { model: User, as: 'artist' },
+        { model: User, as: 'likedBy', attributes: ['id'] },
+      ],
     });
     res.json(allArt);
   } catch (err) {
@@ -35,8 +38,9 @@ router.get('/user/:id', async (req, res, next) => {
   try {
     const usersArt = await Art.findAll({
       where: {
-        userId: req.params.id,
+        artistId: req.params.id,
       },
+      include: [{ model: User, as: 'likedBy', attributes: ['id'] }],
     });
     res.json(usersArt);
   } catch (err) {

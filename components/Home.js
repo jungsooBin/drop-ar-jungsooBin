@@ -1,7 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Text, View, Image, TouchableOpacity, Button } from "react-native";
-
+import { Text, View, Image, TouchableOpacity, Button } from 'react-native';
 
 const Home = ({ navigation }) => (
   <View style={styles.container}>
@@ -12,7 +11,6 @@ const Home = ({ navigation }) => (
         onPress={() => navigation.navigate(`LoginForm`)}
       >
         <Text style={styles.buttonText}>Log In </Text>
-        
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
@@ -20,7 +18,6 @@ const Home = ({ navigation }) => (
       >
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-
     </View>
   </View>
 );
@@ -29,30 +26,30 @@ const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    backgroundColor: "#ff5858"
+    backgroundColor: '#ff5858',
   },
   text: {
-    top: "30%",
-    fontWeight: "800",
+    top: '30%',
+    fontWeight: '800',
     fontSize: 48,
-    color: "#FFF"
+    color: '#FFF',
   },
   buttonContainer: {
-    top: "55%"
+    top: '55%',
   },
   button: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    width: 250
+    width: 250,
   },
   buttonText: {
-    color: "#ff5858",
+    color: '#ff5858',
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
-  }
+    fontWeight: '800',
+    textAlign: 'center',
+  },
 };
 
 export default Home;

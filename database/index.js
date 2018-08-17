@@ -3,12 +3,11 @@ const User = require('./models/user');
 const db = require('./database');
 
 // One to Many Association
-
-Art.belongsTo(User);
-User.hasMany(Art);
-
+Art.belongsToMany(User, { as: 'likedBy', through: 'likes' });
 User.belongsToMany(Art, { through: 'likes' });
-Art.belongsToMany(User, { through: 'likes' });
+
+Art.belongsTo(User, { as: 'artist' });
+User.hasMany(Art);
 
 module.exports = {
   db,

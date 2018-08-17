@@ -33,6 +33,18 @@ class SingleArtView extends React.Component {
     this.dislikeArt = this.dislikeArt.bind(this);
   }
 
+  componentDidMount() {
+    const { navigation } = this.props;
+    const artObj = navigation.getParam('art');
+    const usersWhoLikedThisArt = [];
+    artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
+    const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
+    console.log('youLikedThisArt: ', youLikedThisArt);
+    if (youLikedThisArt === true) {
+      this.setState({ like: true });
+    }
+  }
+
   async likeArt() {
     const { navigation } = this.props;
     const art = navigation.getParam('art');
@@ -59,7 +71,6 @@ class SingleArtView extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('art');
     return (
       <View style={{ flex: 1 }}>
         <StatusBar hidden={true} />
@@ -81,7 +92,7 @@ class SingleArtView extends React.Component {
               height: 85,
             }}
           />
-          {this.state.like === true ? (
+          {this.state.like === false ? (
             <TouchableOpacity
               style={styles.button}
               onPress={this.likeArt.bind(this)}
@@ -93,6 +104,7 @@ class SingleArtView extends React.Component {
                 }}
                 style={{ width: 80, height: 80, borderRadius: 40 }}
               />
+              <Text>Like</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
@@ -106,6 +118,7 @@ class SingleArtView extends React.Component {
                 }}
                 style={{ width: 80, height: 80, borderRadius: 40 }}
               />
+              <Text>Liked</Text>
             </TouchableOpacity>
           )}
         </View>

@@ -3,10 +3,12 @@ import domain from '../domain.js';
 
 const initialState = {
   likeArt: [],
+  allLikes: [],
 };
 
 const LIKE_ART = 'LIKE_ART';
 const DISLIKE_ART = 'DISLIKE_ART';
+const GET_LIKES = 'GET_LIKES';
 
 export const likeArt = likeArt => ({
   type: LIKE_ART,
@@ -17,6 +19,22 @@ export const dislikeArt = dislikeArt => ({
   type: DISLIKE_ART,
   dislikeArt,
 });
+
+export const getLikes = likes => ({
+  type: GET_LIKES,
+  likes,
+});
+
+export const fetchAllLikes = () => async dispatch => {
+  try {
+    const res = await axios.get(`${domain}/api/likes/`);
+    // console.log(res);
+    const allLikes = res.data;
+    dispatch(getLikes(allLikes));
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const saveDislikeArt = dislikeArtData => async dispatch => {
   try {
@@ -47,6 +65,11 @@ const likesReducer = (likesState = initialState, action) => {
       return {
         ...likesState,
         likeArt: action.likeArt,
+      };
+    case GET_LIKES:
+      return {
+        ...likesState,
+        allLikes: action.likes,
       };
     default:
       return likesState;

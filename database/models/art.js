@@ -24,9 +24,6 @@ const Art = db.define('art', {
   title: {
     type: STRING,
   },
-  likes: {
-    type: INTEGER,
-  },
   coverPhoto: {
     type: TEXT,
     defaultValue:
