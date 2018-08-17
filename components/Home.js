@@ -1,22 +1,22 @@
-import React, {Component} from "react";
-import { Text, View, TouchableOpacity} from "react-native";
+import React, { Component } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
-import firebaseConfig from '../secrets.js'
-import processFBData from '../utilities/getDataFromFB'
+import firebaseConfig from '../secrets.js';
+import processFBData from '../utilities/getDataFromFB';
 import { signup, setCurrentUser } from '../store/userReducer';
-import {connect} from 'react-redux'
-import axios from "axios";
-import domain from "../domain.js";
+import { connect } from 'react-redux';
+import axios from 'axios';
+import domain from '../domain.js';
 
 //Globals
 firebase.initializeApp(firebaseConfig);
 
 //Component
-class Home extends Component{ 
-  constructor(){
-    super()
+class Home extends Component {
+  constructor() {
+    super();
   }
-  
+
   async componentDidMount(){
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user != null) {
@@ -39,10 +39,11 @@ class Home extends Component{
   async loginWithFacebook() {
     const {navigation} = this.props
     const  {token, type} = await Expo.Facebook.logInWithReadPermissionsAsync(
+
       process.env.FACEBOOK_APP_ID,
       { permissions: ['public_profile', 'email'] }
     );
-    
+
     if (type === 'success') {
       // Build Firebase credential with the Facebook access token.
       const credential = firebase.auth.FacebookAuthProvider.credential(token);
@@ -54,8 +55,8 @@ class Home extends Component{
     }
   }
 
-  render(){
-    const {navigation} = this.props
+  render() {
+    const { navigation } = this.props;
     return (
       <View style={styles.container}>
         <Text style={styles.text}>GraftAR</Text>
@@ -76,12 +77,10 @@ class Home extends Component{
 
           <TouchableOpacity
             style={styles.button}
-            
-            onPress={ () => this.loginWithFacebook()}
+            onPress={() => this.loginWithFacebook()}
           >
             <Text style={styles.buttonText}>Sign Up with Facebook</Text>
           </TouchableOpacity>
-
         </View>
       </View>
     );
@@ -92,30 +91,30 @@ const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    backgroundColor: "#ff5858"
+    backgroundColor: '#ff5858',
   },
   text: {
-    top: "30%",
-    fontWeight: "800",
+    top: '30%',
+    fontWeight: '800',
     fontSize: 48,
-    color: "#FFF"
+    color: '#FFF',
   },
   buttonContainer: {
-    top: "55%"
+    top: '55%',
   },
   button: {
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     padding: 10,
     margin: 5,
     borderRadius: 5,
-    width: 250
+    width: 250,
   },
   buttonText: {
-    color: "#ff5858",
+    color: '#ff5858',
     fontSize: 24,
-    fontWeight: "800",
-    textAlign: "center"
-  }
+    fontWeight: '800',
+    textAlign: 'center',
+  },
 };
 
 const mapDispatchToProps = dispatch => {
@@ -124,8 +123,8 @@ const mapDispatchToProps = dispatch => {
       return dispatch(signup(formData));
     },
     setCurrentUser: formData => {
-      return dispatch(setCurrentUser(formData))
-    }
+      return dispatch(setCurrentUser(formData));
+    },
   };
 };
 

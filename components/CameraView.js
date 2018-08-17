@@ -27,7 +27,7 @@ export default class CameraView extends React.Component {
     super();
     this.state = {
       color: { h: 0, s: 0, v: 200 },
-      hexColor: '#FFFFFF',
+      hexColor: '#FF0000',
       latitude: null,
       longitude: null,
       shape: 'cube',
@@ -41,6 +41,7 @@ export default class CameraView extends React.Component {
     this.timer = null;
     this.findColor = this.findColor.bind(this);
     this.findShape = this.findShape.bind(this);
+    this.generateLighting.bind(this);
     this.findSize = this.findSize.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addShapeWithSize = this.addShapeWithSize.bind(this);
@@ -204,7 +205,7 @@ export default class CameraView extends React.Component {
 
   findShape(sizeToUse) {
     if (this.state.shape === 'sphere') {
-      return new THREE.SphereGeometry(sizeToUse, 64, 64);
+      return new THREE.SphereGeometry(sizeToUse, 32, 32);
     } else if (this.state.shape === 'pyramid') {
       return new THREE.TetrahedronBufferGeometry(sizeToUse, 0);
     } else {
@@ -315,13 +316,34 @@ export default class CameraView extends React.Component {
     this.setState({ hideButtons: !this.state.hideButtons });
   }
 
+  generateLighting(scene) {
+    // const leftLight = new THREE.DirectionalLight(0xffffff);
+    // const rightLight = new THREE.DirectionalLight(0xffffff);
+    // const bottomLight = new THREE.DirectionalLight(0xffffff);
+    // const frontLight = new THREE.DirectionalLight(0xffffff);
+    // leftLight.position.set(-3, 5, 0).normalize();
+    // rightLight.position.set(3, 5, 0).normalize();
+    // bottomLight.position.set(0, -5, 0).normalize();
+    // frontLight.position.set(0, 0, 0).normalize();
+    // scene.add(leftLight);
+    // scene.add(rightLight);
+    // scene.add(bottomLight);
+    // scene.add(frontLight);
+    const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+    this.scene.add(new THREE.AmbientLight(0x404040));
+    this.scene.add(light);
+    var plight = new THREE.PointLight(0xff0000, 1, 100);
+    plight.position.set(50, 50, 50);
+    this.scene.add(plight);
+  }
+
   async addShapeWithSize() {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
     let material = '';
     if (this.state.texture === 'color') {
-      material = new THREE.MeshBasicMaterial({
+      material = new THREE.MeshPhongMaterial({
         color: colorToUse,
         // transparent: true,
         specular: 0x555555,
@@ -333,9 +355,12 @@ export default class CameraView extends React.Component {
     }
     const mesh = new THREE.Mesh(objectToRender, material);
     const newItem = setModelPos(mesh, this.camera.position);
+    newItem.position.z -= 0.1;
+    newItem.position.x -= 0.01;
+    newItem.position.y += 0.01;
     this.graffitiObjects.push(newItem);
     this.scene.add(newItem);
-    this.timer = setTimeout(this.addShapeWithSize, 5);
+    this.timer = setTimeout(this.addShapeWithSize, 100);
   }
 
   render() {
@@ -581,23 +606,25 @@ export default class CameraView extends React.Component {
       this.arSession,
       renderer
     );
-
-    // const geometry = new THREE.BoxGeometry(0.05, 0.05, 0.05);
-    // const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    // const cube = new THREE.Mesh(geometry, material);
-    // this.scene.add(cube);
+    const cameraPosition = this.camera.position;
+    this.generateLighting(this.scene);
 
     const animate = () => {
       requestAnimationFrame(animate);
       this.camera.position.setFromMatrixPosition(this.camera.matrixWorld);
-      const cameraPos = new THREE.Vector3(0, 0, 0);
+      const cameraPos = new THREE.Vector3(0, 0, -0.04);
       cameraPos.applyMatrix4(this.camera.matrixWorld);
 
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
+        // Fire objects like a gun lol ==>
+        // art.position.z -= 0.04;
+        // if (art.position.z === -5) {
+        //   this.scene.remove(art);
+        // }
         // Animates items for live movement
-        // art.rotation.x += art.rotator;
-        // art.rotation.y += art.rotator;
+        art.rotation.x += art.rotator;
+        art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);
@@ -688,16 +715,4 @@ function setModelPos(model, dropPos) {
   item.position.z = dropPos.z;
   item.rotator = 0.02;
   return item;
-}
-
-function generateLighting(scene) {
-  const leftLight = new THREE.DirectionalLight(0xffffff);
-  const rightLight = new THREE.DirectionalLight(0xffffff);
-  const bottomLight = new THREE.DirectionalLight(0xffffff);
-  leftLight.position.set(-3, 5, 0).normalize();
-  rightLight.position.set(3, 5, 0).normalize();
-  bottomLight.position.set(0, -5, 0).normalize();
-  scene.add(leftLight);
-  scene.add(rightLight);
-  scene.add(bottomLight);
 }
