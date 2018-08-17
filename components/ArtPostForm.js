@@ -3,8 +3,19 @@ import React, { Component } from 'react';
 import { FormLabel, FormInput, Text } from 'react-native-elements';
 import { View, Image } from 'react-native';
 import Button from './Button';
+import * as firebase from 'firebase';
 
 import { saveArt } from '../store/artReducer';
+const firebaseConfig = {
+  apiKey: "AIzaSyAKdplWrPK2fft2XwNEN_yqx8dXjk_Mggw",
+    authDomain: "graftarfinal-6b59a.firebaseapp.com",
+    databaseURL: "https://graftarfinal-6b59a.firebaseio.com",
+    projectId: "graftarfinal-6b59a",
+    storageBucket: "graftarfinal-6b59a.appspot.com",
+    messagingSenderId: "196028019561"
+}
+firebase.initializeApp(firebaseConfig);
+
 
 class ArtPostFormPresenTational extends Component {
   constructor() {
@@ -17,8 +28,10 @@ class ArtPostFormPresenTational extends Component {
       likes: 0,
       artistId: 0,
       coverPhoto: null,
+      tempPhotoUrl: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
   async componentWillMount() {
     const { navigation } = this.props;
@@ -33,7 +46,15 @@ class ArtPostFormPresenTational extends Component {
 
   async handleSubmit(event, artData) {
     event.preventDefault();
+    const callback = this.uploadImage(artData.coverPhoto, `${artData.title}`)
     this.props.addArt(artData);
+  }
+
+  async uploadImage (uri, imageName) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    var ref = firebase.storage().ref().child("images/" + imageName)
+    return ref.put(blob);
   }
 
   render() {
