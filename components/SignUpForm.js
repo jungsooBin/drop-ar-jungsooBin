@@ -1,20 +1,20 @@
 import React, { Component } from "react";
+import { View, KeyboardAvoidingView, TouchableOpacity } from "react-native";
 import {
   FormLabel,
   FormInput,
   FormValidationMessage,
   Text,
-  CheckBox,
-} from 'react-native-elements';
-import { connect } from 'react-redux';
-import { View } from 'react-native';
-import Button from './Button';
+  CheckBox
+} from "react-native-elements";
+import { connect } from "react-redux";
+import Button from "./Button";
 import {
   formValidator,
   checkEachField,
-  individualizedErrMsg,
-} from '../utilities/formValidator';
-import { signup } from '../store/userReducer';
+  individualizedErrMsg
+} from "../utilities/formValidator";
+import { signup } from "../store/userReducer";
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -32,8 +32,6 @@ class SignUpForm extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    //Post new user in DB
-
     if (checkEachField(formValidator, this.state).length < 1) {
       try {
         await this.props.handleSignUp({
@@ -53,57 +51,67 @@ class SignUpForm extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     const { terms } = this.state;
     const messages = individualizedErrMsg(
       checkEachField(formValidator, this.state)
     );
     return (
-      <View style={styles.container}>
-        <Text h1 style={styles.heading}>
-          Sign Up
-        </Text>
-        <FormLabel>First Name</FormLabel>
-        <FormInput
-          value={this.state.firstName}
-          onChangeText={firstName => this.setState({ firstName })}
-        />
-
-        <FormLabel>Last Name</FormLabel>
-        <FormInput
-          value={this.state.lastName}
-          onChangeText={lastName => this.setState({ lastName })}
-        />
-
-        <FormLabel>Email</FormLabel>
-        <FormInput
-          value={this.state.email}
-          onChangeText={email => this.setState({ email })}
-        />
-
-        <FormLabel>Password</FormLabel>
-        <FormInput
-          value={this.state.password}
-          onChangeText={password => this.setState({ password })}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
-
-        <FormLabel>Re-Enter Password</FormLabel>
-        <FormInput
-          value={this.state.rePassword}
-          onChangeText={rePassword => this.setState({ rePassword })}
-          autoCapitalize="none"
-          secureTextEntry={true}
-        />
-
-        <CheckBox
-          title="Terms and Conditions"
-          checked={this.state.terms}
-          onPress={() => this.setState({ terms: !terms })}
-        />
-
-        <Button onPress={this.handleSubmit}>Submit</Button>
-
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={350}
+      >
+        <Text style={styles.titleText}>GraftAR</Text>
+        <View style={styles.formContainer}>
+          <FormLabel>First Name</FormLabel>
+          <FormInput
+            value={this.state.firstName}
+            onChangeText={firstName => this.setState({ firstName })}
+          />
+          <FormLabel>Last Name</FormLabel>
+          <FormInput
+            value={this.state.lastName}
+            onChangeText={lastName => this.setState({ lastName })}
+          />
+          <FormLabel>Email</FormLabel>
+          <FormInput
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
+            autoCapitalize="none"
+          />
+          <FormLabel>Password</FormLabel>
+          <FormInput
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+            autoCapitalize="none"
+            secureTextEntry={true}
+          />
+          <FormLabel>Re-Enter Password</FormLabel>
+          <FormInput
+            value={this.state.rePassword}
+            onChangeText={rePassword => this.setState({ rePassword })}
+            autoCapitalize="none"
+            secureTextEntry={true}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <CheckBox
+            title="Terms and Conditions"
+            checked={this.state.terms}
+            style={styles.checkbox}
+            onPress={() => this.setState({ terms: !terms })}
+          />
+          <TouchableOpacity onPress={this.handleSubmit} style={styles.button}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+          <Text
+            style={styles.textLink}
+            onPress={() => navigation.navigate(`LoginForm`)}
+          >
+            Have an account? Log in.
+          </Text>
+        </View>
         {!this.state.formErrs
           ? null
           : messages.map(entry => {
@@ -113,22 +121,48 @@ class SignUpForm extends Component {
                 >{`${entry}`}</FormValidationMessage>
               );
             })}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-//Styles
 const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    justifyContent: `center`,
-    backgroundColor: "#ffffff"
-    // top: -50
+    backgroundColor: "#FFF"
   },
-  heading: {
-    top: -40
+  titleText: {
+    top: "15%",
+    fontWeight: "800",
+    fontSize: 48,
+    color: "#ff5858"
+  },
+  formContainer: {
+    top: "15%",
+    width: 290
+  },
+  buttonContainer: {
+    top: "15%"
+  },
+  button: {
+    backgroundColor: "#ff5858",
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    width: 250
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center"
+  },
+  textLink: {
+    color: "#ff5858",
+    fontWeight: "800",
+    textAlign: "center",
+    margin: 5
   }
 };
 
@@ -136,7 +170,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleSignUp: formData => {
       return dispatch(signup(formData));
-    },
+    }
   };
 };
 
