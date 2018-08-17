@@ -14,7 +14,4 @@ function processFBData(user){
   return userModel
 }
 
-
-
-
 module.exports = processFBData 
