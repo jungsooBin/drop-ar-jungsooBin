@@ -104,6 +104,7 @@ export default class CameraView extends React.Component {
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
       try {
+        console.log(this.scene)
         const artPiece = this.scene.toJSON();
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
@@ -576,6 +577,15 @@ export default class CameraView extends React.Component {
 
     const renderer = ExpoTHREE.createRenderer({ gl });
     renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
+    
+    // Create ambient light and add to scene.
+    var light = new THREE.AmbientLight(0x404040); // soft white light
+    this.scene.add(light);
+
+    // Create directional light and add to scene.
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(1, 1, 1).normalize();
+    this.scene.add(directionalLight);
 
     this.scene.background = ExpoTHREE.createARBackgroundTexture(
       this.arSession,
@@ -603,6 +613,7 @@ export default class CameraView extends React.Component {
       renderer.render(this.scene, this.camera);
       gl.endFrameEXP();
     };
+        
     animate();
   };
 }
