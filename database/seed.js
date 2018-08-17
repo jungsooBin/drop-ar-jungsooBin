@@ -41,7 +41,7 @@ const newUsers = [
 
 const newArt = [
   {
-    userId: 1,
+    artistId: 1,
     location: [40.70922922853889, -74.00780365188648],
     description: 'Cool art',
     title: 'Starry Night',
@@ -822,7 +822,7 @@ const newArt = [
     },
   },
   {
-    userId: 2,
+    artistId: 2,
     description: 'Out of this world',
     title: 'Solar System',
     location: [40.70922922853889, -74.00780365188648],
@@ -1603,7 +1603,7 @@ const newArt = [
     },
   },
   {
-    userId: 3,
+    artistId: 3,
     description: 'Its a jungle out here',
     title: 'AR Tree',
     coverPhoto:
@@ -3674,7 +3674,7 @@ const newArt = [
     },
   },
   {
-    userId: 4,
+    artistId: 4,
     description: 'Art better than the mona lisa',
     title: 'Leaning tower of AR',
     location: [40.70922922853889, -74.00780365188648],
@@ -4077,7 +4077,7 @@ const newArt = [
     },
   },
   {
-    userId: 1,
+    artistId: 1,
     description: 'Amazing art, check it out',
     title: 'Sistine Chapel',
     location: [40.70922922853889, -74.00780365188648],
@@ -4360,7 +4360,7 @@ const newArt = [
     },
   },
   {
-    userId: 2,
+    artistId: 2,
     description: 'best thing youll ever see for real',
     title: 'The Creation Of Adam',
     location: [40.70922922853889, -74.00780365188648],
@@ -4637,7 +4637,7 @@ const newArt = [
     },
   },
   {
-    userId: 3,
+    artistId: 3,
     description: 'Check out my cool art',
     title: 'The Birth of Venus',
     location: [40.70922922853889, -74.00780365188648],
@@ -5040,7 +5040,7 @@ const newArt = [
     },
   },
   {
-    userId: 2,
+    artistId: 2,
     description: 'Best thing youll ever see',
     title: 'The Night watch',
     location: [40.70922922853889, -74.00780365188648],
@@ -5321,7 +5321,7 @@ const newArt = [
     },
   },
   {
-    userId: 4,
+    artistId: 4,
     description: 'Like for like',
     title: 'The Last Supper',
     location: [40.70922922853889, -74.00780365188648],

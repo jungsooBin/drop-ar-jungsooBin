@@ -11,15 +11,17 @@ import {
   StatusBar,
 } from 'react-native';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import Expo from 'expo';
 import { AR } from 'expo';
 import * as THREE from 'three';
 import ExpoTHREE from 'expo-three';
 import { Button } from 'react-native-elements';
+import { saveLikeArt, saveDislikeArt } from '../store/likesReducer';
 
 console.disableYellowBox = true;
 
-export default class SingleArtView extends React.Component {
+class SingleArtView extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -27,15 +29,33 @@ export default class SingleArtView extends React.Component {
       like: false,
     };
     this.handleLoad = this.handleLoad.bind(this);
-    this.loveArt = this.loveArt.bind(this);
+    this.likeArt = this.likeArt.bind(this);
+    this.dislikeArt = this.dislikeArt.bind(this);
   }
 
-  async loveArt() {
-    // var geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-    // var material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    // var cube = new THREE.Mesh(geometry, material);
-    // const newItem = setModelPos(cube, this.camera.position);
-    // this.scene.add(cube);
+  componentDidMount() {
+    const { navigation } = this.props;
+    const artObj = navigation.getParam('art');
+    const usersWhoLikedThisArt = [];
+    artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
+    const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
+    console.log('youLikedThisArt: ', youLikedThisArt);
+    if (youLikedThisArt === true) {
+      this.setState({ like: true });
+    }
+  }
+
+  async likeArt() {
+    const { navigation } = this.props;
+    const art = navigation.getParam('art');
+    this.props.saveLikeArt({ userId: this.props.user.id, artId: art.id });
+    this.setState({ like: !this.state.like });
+  }
+
+  async dislikeArt() {
+    const { navigation } = this.props;
+    const art = navigation.getParam('art');
+    this.props.saveDislikeArt({ userId: this.props.user.id, artId: art.id });
     this.setState({ like: !this.state.like });
   }
 
@@ -51,7 +71,6 @@ export default class SingleArtView extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('art');
     return (
       <View style={{ flex: 1 }}>
         <StatusBar hidden={true} />
@@ -73,29 +92,35 @@ export default class SingleArtView extends React.Component {
               height: 85,
             }}
           />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={this.loveArt.bind(this)}
-          >
-            <Image
-              source={{
-                uri:
-                  'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
-              }}
-              style={{ width: 80, height: 80, borderRadius: 40 }}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.love}>
-          {this.state.like === true ? (
-            <Image
-              source={{
-                uri:
-                  'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
-              }}
-              style={{ width: 80, height: 80, borderRadius: 40 }}
-            />
-          ) : null}
+          {this.state.like === false ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.likeArt.bind(this)}
+            >
+              <Image
+                source={{
+                  uri:
+                    'https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png',
+                }}
+                style={{ width: 80, height: 80, borderRadius: 40 }}
+              />
+              <Text>Like</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={this.dislikeArt.bind(this)}
+            >
+              <Image
+                source={{
+                  uri:
+                    'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
+                }}
+                style={{ width: 80, height: 80, borderRadius: 40 }}
+              />
+              <Text>Liked</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
@@ -161,3 +186,25 @@ function setModelPos(model, dropPos) {
   item.rotator = 0.02;
   return item;
 }
+
+const mapStateToProps = state => {
+  return {
+    likeArt: state.likes.likeArt,
+    dislikeArt: state.likes.dislikeArt,
+    user: state.users.user,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  saveLikeArt: likeData => {
+    dispatch(saveLikeArt(likeData));
+  },
+  saveDislikeArt: dislikeData => {
+    dispatch(saveDislikeArt(dislikeData));
+  },
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SingleArtView);

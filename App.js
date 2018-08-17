@@ -55,8 +55,18 @@ const RootNavigator = createStackNavigator({
   ArtFeed: {
     screen: ArtFeed,
     navigationOptions: ({ navigation }) => ({
-      header: null,
       gesturesEnabled: false,
+      headerLeft: null,
+      title: 'ARt',
+      headerStyle: {
+        backgroundColor: 'white',
+        borderBottomColor: 'transparent',
+      },
+      headerTitleStyle: {
+        color: '#ff5858',
+        fontWeight: '800',
+        fontSize: 24,
+      },
     }),
   },
   FriendProfile: {
