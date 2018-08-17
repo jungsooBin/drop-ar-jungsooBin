@@ -37,7 +37,6 @@ class ArtPostFormPresenTational extends Component {
   }
 
   render() {
-
     const { navigation } = this.props;
     const { checked } = this.state;
     return (
