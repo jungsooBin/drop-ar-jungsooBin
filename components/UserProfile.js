@@ -13,16 +13,20 @@ class UserProfile extends Component {
     const { email, firstName, lastName, picture } = this.props.user;
     return (
       <View style={styles.container}>
-        <Image style={styles.thumbnailStyle} source={{ uri: picture }} />
-        <Text style={styles.textStyle}>{firstName + ' ' + lastName}</Text>
-        <Text style={styles.textStyle}>{email}</Text>
-        <EditProfileButton
-          style={styles.buttonStyle}
-          onPress={() => navigation.navigate(`EditUserProfile`)}
-        >
-          Edit
-        </EditProfileButton>
-        <UserFeed userId={this.props.user.id} />
+        <View style={styles.userInfo}>
+          <Image style={styles.thumbnailStyle} source={{ uri: picture }} />
+          <Text style={styles.textStyle}>{firstName + ' ' + lastName}</Text>
+          <Text style={styles.textStyle}>{email}</Text>
+          <EditProfileButton
+            style={styles.buttonStyle}
+            onPress={() => navigation.navigate(`EditUserProfile`)}
+          >
+            Edit
+          </EditProfileButton>
+        </View>
+        <View style={styles.container}>
+          <UserFeed userId={this.props.user.id} />
+        </View>
       </View>
     );
   }
@@ -31,8 +35,13 @@ class UserProfile extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#eeeeee',
     alignItems: 'center',
+  },
+  userInfo: {
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    width: '100%',
   },
   thumbnailStyle: {
     height: 80,
