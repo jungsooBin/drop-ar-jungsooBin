@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { FormLabel, FormInput, Text } from 'react-native-elements';
-import { View, Image } from 'react-native';
+import { View, Image, Alert } from 'react-native';
 import Button from './Button';
 import * as firebase from 'firebase';
 
@@ -46,8 +46,8 @@ class ArtPostFormPresenTational extends Component {
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    const callback = this.uploadImage(artData.coverPhoto, `${artData.title}`)
-    this.props.addArt(artData);
+    await this.props.addArt(artData);
+    this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
   }
 
   async uploadImage (uri, imageName) {
@@ -57,6 +57,19 @@ class ArtPostFormPresenTational extends Component {
     return ref.put(blob);
   }
 
+  showFailAlert = message => {
+    Alert.alert(
+      message,
+      "Error!",
+      [
+        {
+          text: "Please try again!",
+          onPress: () => console.log("Will do!")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   render() {
     const { navigation } = this.props;
     const { checked } = this.state;
@@ -106,6 +119,7 @@ const styles = {
 const mapStateToProps = state => {
   return {
     user: state.users.user,
+    singleArt: state.arts.singleArt
   };
 };
 
