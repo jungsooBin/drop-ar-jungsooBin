@@ -40,10 +40,10 @@ class ArtPostFormPresenTational extends Component {
     this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
   }
 
-  async uploadImage (uri, imageName) {
+  async uploadImage (uri, artId) {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref().child("images/" + imageName)
+    var ref = firebase.storage().ref().child("images/" + artId)
     return ref.put(blob);
   }
 

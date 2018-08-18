@@ -25,6 +25,23 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+router.put('/:id', async (req, res, next) => {
+  try {
+    const updateCampus = await Art.update(req.body,
+      {
+        where: {
+          id: req.params.id
+        },
+        returning: true
+      }
+      
+    )
+    res.json(updateCampus)
+  } catch (error) {
+    console.error(error)
+  }
+})
+
 router.post('/add', async (req, res, next) => {
   try {
     const CreatedArt = await Art.create(req.body);
