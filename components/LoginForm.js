@@ -26,8 +26,10 @@ class LoginForm extends React.Component {
       await this.props.handleLogin(formData);
       if (this.props.user.response) {
         this.showFailAlert(this.props.user.response.data);
-      } else {
+      } else if (this.props.user.id){
         this.props.navigation.navigate("ArtFeed");
+      } else {
+        this.showFailAlert('Server error. check your domain');
       }
     } catch (error) {
       console.log(error);
