@@ -114,7 +114,7 @@ export default class CameraView extends Component {
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
       try {
-\        const artPiece = this.scene.toJSON();
+        const artPiece = this.scene.toJSON();
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
           location: locationToSave,

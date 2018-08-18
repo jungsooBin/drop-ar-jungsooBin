@@ -6,7 +6,11 @@ import * as firebase from 'firebase';
 const SingleArtItem = props => {
   const { navigation } = props;
   const { title, likes, description, coverPhoto, artist, likedBy } = props.art;
-  const ref = firebase.storage().ref(`images/${props.art.id}.jpg`);
+  const ref = firebase.storage().ref(`images/${props.art.id}`);
+  ref.getDownloadURL().then(function(url) {
+    props.art.coverPhoto = url;
+  })
+  
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -17,7 +21,8 @@ const SingleArtItem = props => {
         }
       >
         <View style={styles.imageContainer}>
-          <Image style={styles.imageStyle} source={{ uri: ref.getDownloadURL() }} />
+          <Image style={styles.imageStyle} source={{ uri: coverPhoto}} />
+
         </View>
       </TouchableOpacity>
       <View style={styles.info}>
