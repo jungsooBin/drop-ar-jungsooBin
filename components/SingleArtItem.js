@@ -27,7 +27,6 @@ const SingleArtItem = props => {
         </View>
       </TouchableOpacity>
       <View style={styles.info}>
-        <Text style={styles.artTitle}>{coverPhoto}</Text>
         <Text style={styles.artTitle}>{title}</Text>
         <Text style={styles.artDescription}>{'"' + description + '"'}</Text>
         {artist ? (

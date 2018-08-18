@@ -37,11 +37,13 @@ class ArtPostFormPresenTational extends Component {
   async handleSubmit(event, artData) {
     event.preventDefault();
     await this.props.addArt(artData);
-    this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
-    const ref = firebase.storage().ref(`images/${props.art.id}`);
-    ref.getDownloadURL().then(function(url) {
-      this.props.modifyArt({coverPhoto: url})
+    await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
+    const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
+    let ImageUrl;
+    await ref.getDownloadURL().then(function(url) {
+      ImageUrl = url;
     })
+    this.props.modifyArt(this.props.singleArt.id, {coverPhoto: ImageUrl})
   }
 
   async uploadImage (uri, artId) {
@@ -120,7 +122,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
-    modifyArt: editArtObj => dispatch(editArt(editArtObj))
+    modifyArt: (artId, editArtObj) => dispatch(editArt(artId, editArtObj))
   };
 };
 
