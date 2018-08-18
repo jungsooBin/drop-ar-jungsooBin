@@ -27,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
-    const updateCampus = await Art.update(req.body,
+    const singleArt = await Art.update(req.body,
       {
         where: {
           id: req.params.id
@@ -36,7 +36,7 @@ router.put('/:id', async (req, res, next) => {
       }
       
     )
-    res.json(updateCampus)
+    res.json(singleArt)
   } catch (error) {
     console.error(error)
   }

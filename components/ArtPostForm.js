@@ -5,7 +5,7 @@ import { View, Image, Alert } from 'react-native';
 import Button from './Button';
 import * as firebase from 'firebase';
 
-import { saveArt } from '../store/artReducer';
+import { saveArt, editArt } from '../store/artReducer';
 
 class ArtPostFormPresenTational extends Component {
   constructor() {
@@ -38,6 +38,10 @@ class ArtPostFormPresenTational extends Component {
     event.preventDefault();
     await this.props.addArt(artData);
     this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
+    const ref = firebase.storage().ref(`images/${props.art.id}`);
+    ref.getDownloadURL().then(function(url) {
+      this.props.modifyArt({coverPhoto: url})
+    })
   }
 
   async uploadImage (uri, artId) {
@@ -116,6 +120,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
+    modifyArt: editArtObj => dispatch(editArt(editArtObj))
   };
 };
 
