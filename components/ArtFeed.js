@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import SingleArtItem from "./SingleArtItem";
 import { fetchAllArt } from "../store/artReducer";
+
 // import { fetchAllLikes } from '../store/likesReducer';
 
 class ArtFeed extends Component {
