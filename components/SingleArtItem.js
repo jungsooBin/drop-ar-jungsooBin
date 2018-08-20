@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text, TouchableOpacity, View, Image, Button } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import React from "react";
+import { Text, TouchableOpacity, View, Image } from "react-native";
+import { withNavigation } from "react-navigation";
 
 const SingleArtItem = props => {
   const { navigation } = props;
@@ -10,7 +10,7 @@ const SingleArtItem = props => {
       <TouchableOpacity
         onPress={() =>
           navigation.navigate(`SingleArtView`, {
-            art: props.art,
+            art: props.art
           })
         }
       >
@@ -23,7 +23,7 @@ const SingleArtItem = props => {
         <Text style={styles.artDescription}>{'"' + description + '"'}</Text>
         {artist ? (
           <Text style={styles.artDescription}>
-            ARtist: {artist.firstName + ' ' + artist.lastName}
+            ARtist: {artist.firstName + " " + artist.lastName}
           </Text>
         ) : null}
         <Text style={styles.artDescription}>{`Likes: ${likedBy.length}`}</Text>
@@ -35,43 +35,43 @@ const SingleArtItem = props => {
 const styles = {
   container: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'stretch',
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "stretch",
     // justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     marginTop: 7,
     marginLeft: 7,
-    marginRight: 5,
+    marginRight: 5
   },
   imageContainer: {
     // alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF',
-    marginTop: 5,
+    justifyContent: "center",
+    backgroundColor: "#FFF",
+    marginTop: 5
   },
   artImage: {
-    width: '50%',
-    height: '100%',
+    width: "50%",
+    height: "100%"
   },
   info: {
-    flexDirection: 'column',
+    flexDirection: "column",
     // width: '100%',
     // alignItems: 'center',
     // justifyContent: 'center',
     // flexDirection: 'row',
-    width: '100%',
+    width: "100%",
     padding: 10,
     marginTop: 5,
-    marginLeft: 7,
+    marginLeft: 7
   },
   artTitle: {
-    fontFamily: 'Georgia-BoldItalic',
-    fontSize: 15,
+    fontFamily: "Georgia-BoldItalic",
+    fontSize: 15
   },
   artDescription: {
-    fontFamily: 'Georgia-Italic',
-    fontSize: 13,
+    fontFamily: "Georgia-Italic",
+    fontSize: 13
   },
   imageStyle: {
     width: 80,
@@ -79,8 +79,8 @@ const styles = {
     borderRadius: 40,
     marginLeft: 10,
     marginTop: 5,
-    marginBottom: 5,
-  },
+    marginBottom: 5
+  }
 };
 
 export default withNavigation(SingleArtItem);
