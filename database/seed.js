@@ -46,7 +46,7 @@ const newArt = [
     description: 'Cool art',
     title: 'Starry Night',
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/D39E1732-5B00-43B2-9570-8A623EF6BEAA.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F1?alt=media&token=87ca1eb1-935d-47fc-8667-0ce3938d5f90',
     likes: 6,
     artPiece: {
       object: {
@@ -827,7 +827,7 @@ const newArt = [
     title: 'Solar System',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/D072E262-DE38-4B2B-8254-98330DD5DC1C.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F2?alt=media&token=74cd3e85-c6b9-4d26-9236-46481d64ad7e',
     likes: 8,
     artPiece: {
       object: {
@@ -1607,7 +1607,7 @@ const newArt = [
     description: 'Its a jungle out here',
     title: 'AR Tree',
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/F48D6CEE-7A77-4988-B0EB-8A1FF1D3B4A9.jpg',
+'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F3?alt=media&token=968e4d7f-374b-4642-a898-892f736814eb',
     likes: 6,
     location: [40.70922922853889, -74.00780365188648],
     artPiece: {
@@ -3679,7 +3679,7 @@ const newArt = [
     title: 'Leaning tower of AR',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/313A6561-29D6-43FE-A777-463790FB9C61.jpg',
+'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F4?alt=media&token=563eb9a5-7a9e-4596-9191-687053cd460b',
     likes: 7,
     artPiece: {
       object: {
@@ -4082,7 +4082,7 @@ const newArt = [
     title: 'Sistine Chapel',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/A40E064E-E6D3-4E49-A2EE-B6E5217BAFE6.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F1?alt=media&token=87ca1eb1-935d-47fc-8667-0ce3938d5f90',
     likes: 6,
     artPiece: {
       object: {
@@ -4365,7 +4365,7 @@ const newArt = [
     title: 'The Creation Of Adam',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/11997605-F859-4883-8715-8D6CC8F05C3F.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F5?alt=media&token=292e3ebd-0ed7-439b-8020-2e5218a73a5d',
     likes: 2,
     artPiece: {
       object: {
@@ -4642,7 +4642,7 @@ const newArt = [
     title: 'The Birth of Venus',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/F91730B5-8A6A-40BC-A2EB-333299BC34AF.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F6?alt=media&token=0bda6d68-5d1b-4699-aefb-9bf1553fe471',
     likes: 4,
     artPiece: {
       object: {
@@ -5045,7 +5045,7 @@ const newArt = [
     title: 'The Night watch',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/516960EE-03C4-4710-AC1D-E23B5F91955B.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F7?alt=media&token=883fb5e5-1bf3-4f67-b47f-bc578c16d1b1',
     likes: 9,
     artPiece: {
       object: {
@@ -5326,7 +5326,7 @@ const newArt = [
     title: 'The Last Supper',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'file:///var/mobile/Containers/Data/Application/7451383F-D618-4C67-A697-065CEEF7018F/Library/Caches/ExponentExperienceData/%2540anonymous%252Fgraffitiar-751475e4-5fb7-4757-ba62-7080462716ff/ViewShot/516960EE-03C4-4710-AC1D-E23B5F91955B.jpg',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F8?alt=media&token=5a4df12b-d7cf-432a-96aa-94b393397c6d',
     likes: 9,
     artPiece: {
       object: {

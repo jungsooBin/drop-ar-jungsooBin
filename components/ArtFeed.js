@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import SingleArtItem from "./SingleArtItem";
 import { fetchAllArt } from "../store/artReducer";
+
 // import { fetchAllLikes } from '../store/likesReducer';
 
 class ArtFeed extends Component {
@@ -26,9 +27,12 @@ class ArtFeed extends Component {
             style={styles.scrollView}
             showsVerticalScrollIndicator={false}
           >
-            {this.props.allArt.map(art => (
-              <SingleArtItem key={art.id} art={art} />
-            ))}
+            {this.props.allArt.map(art => {
+              return (
+                <SingleArtItem key={art.id} art={art} />
+              )
+            }
+            )}
           </ScrollView>
         </View>
         <View style={styles.buttonContainer}>

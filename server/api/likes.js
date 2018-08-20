@@ -3,7 +3,6 @@ const { User, Art } = require('../../database');
 
 router.put('/', async (req, res, next) => {
   try {
-    console.log(req.body);
     const currentUser = await User.findById(req.body.userId);
     const currentArt = await Art.findById(req.body.artId);
     const dislikedArt = await currentArt.removeLikedBy(currentUser, {
