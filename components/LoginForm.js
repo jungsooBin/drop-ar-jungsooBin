@@ -28,10 +28,10 @@ class LoginForm extends React.Component {
       await this.props.handleLogin(formData);
       if (this.props.user.response) {
         this.showFailAlert(this.props.user.response.data);
-      } else if (this.props.user.id){
+      } else if (this.props.user.id) {
         this.props.navigation.navigate("ArtFeed");
       } else {
-        this.showFailAlert('Server error. check your domain');
+        this.showFailAlert("Server error. check your domain");
       }
     } catch (error) {
       console.log(error);
@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
 
     return (
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <Text style={styles.titleText}>GraftAR</Text>
+        <Text style={styles.titleText}>DropAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>Email</FormLabel>
           <FormInput
