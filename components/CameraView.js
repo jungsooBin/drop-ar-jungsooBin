@@ -371,13 +371,20 @@ export default class CameraView extends Component {
       material = await this.findCustomMaterial();
     }
     const mesh = new THREE.Mesh(objectToRender, material);
-    const newItem = setModelPos(mesh, this.camera.position);
-    newItem.position.z -= 0.2;
+    // const newItem = setModelPos(mesh, this.camera.position);
+    // this.camera.matrixWorldInverse.getInverse(this.camera.matrixWorld);
+    // newItem.position.z -= 0.2;
     // newItem.position.x -= 0.01;
     // newItem.position.y += 0.01;
-    this.graffitiObjects.push(newItem);
-    this.scene.add(newItem);
-    this.timer = setTimeout(this.addShapeWithSize, 40);
+    // newItem.applyMatrix4(this.camera.matrixWorldInverse);
+    var pLocal = new THREE.Vector3(0, 0, -0.2);
+    var target = pLocal.applyMatrix4(this.camera.matrixWorld);
+    mesh.position.copy(target);
+    // mesh.lookAt(this.camera.position);
+    mesh.rotator = 0.025;
+    this.scene.add(mesh);
+    this.graffitiObjects.push(mesh);
+    this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
   render() {
@@ -625,6 +632,8 @@ export default class CameraView extends Component {
     );
     const cameraPosition = this.camera.position;
     this.generateLighting(this.scene);
+    var helper = new THREE.CameraHelper(this.camera);
+    this.scene.add(helper);
 
     const animate = () => {
       this.gameRequest = requestAnimationFrame(animate);
@@ -635,7 +644,7 @@ export default class CameraView extends Component {
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
         // Fire objects like a gun lol ==>
-        setModelPos(art, this.camera.position);
+        // setModelPos(art, this.camera.position);
         // art.position.z -= 0.01;
         // if (art.position.z === -1) {
         //   this.scene.remove(art);
