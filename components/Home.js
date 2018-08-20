@@ -8,10 +8,8 @@ import { connect } from "react-redux";
 import axios from "axios";
 import domain from "../domain.js";
 
+
 //Globals
-
-let newUser;
-
 firebase.initializeApp(firebaseConfig);
 
 //Component
@@ -25,17 +23,17 @@ class Home extends Component {
       if (user != null) {
         const newUser = processFBData(user);
         //Checks whether user exists
-        const doesUserExist = await axios.get(
-          `${domain}/api/user/${newUser.email}`
-        );
+        const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
+        //Adds id property to newUser 
+        newUser.id = doesUserExist.data[0].id
 
         //If user doesn't exist, sign them up and log them in, if they do exist, log in
-        if (!doesUserExist.data.length) {
-          await this.props.handleSignUp(newUser);
-          this.props.navigation.navigate("ArtFeed");
-        } else {
-          await this.props.setCurrentUser(newUser);
-          this.props.navigation.navigate("ArtFeed");
+      if (!doesUserExist.data.length ){
+        await this.props.handleSignUp(newUser)  
+        this.props.navigation.navigate('ArtFeed') 
+      } else {
+          await this.props.setCurrentUser(newUser)
+          this.props.navigation.navigate('ArtFeed') 
         }
       }
     });
