@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
@@ -19,55 +20,55 @@ const RootNavigator = createStackNavigator({
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
-      title: `GraftAR`
-    })
+      title: `GraftAR`,
+    }),
   },
   LoginForm: {
     screen: LoginForm,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   SignUpForm: {
     screen: SignUpForm,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   CameraView: {
     screen: CameraView,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   UserProfile: {
     screen: UserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   EditUserProfile: {
     screen: EditUserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   ArtFeed: {
     screen: ArtFeed,
     navigationOptions: ({ navigation }) => ({
       gesturesEnabled: false,
       headerLeft: null,
-      title: "EXPLORE",
+      title: 'EXPLORE',
       headerStyle: {
-        backgroundColor: "#ff5858",
-        borderBottomColor: "transparent"
+        backgroundColor: '#ff5858',
+        borderBottomColor: 'transparent',
       },
       headerTitleStyle: {
-        color: "#FFF",
-        fontWeight: "800",
-        fontSize: 24
-      }
-    })
+        color: '#FFF',
+        fontWeight: '800',
+        fontSize: 24,
+      },
+    }),
   },
   // FriendProfile: {
   //   screen: FriendProfile,
@@ -78,21 +79,21 @@ const RootNavigator = createStackNavigator({
   ArtPostForm: {
     screen: ArtPostForm,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   SingleArtView: {
     screen: SingleArtView,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
+      header: null,
+    }),
   },
   SingleArtItem: {
     screen: SingleArtItem,
     navigationOptions: ({ navigation }) => ({
-      header: null
-    })
-  }
+      header: null,
+    }),
+  },
 });
 
 export default class App extends Component {

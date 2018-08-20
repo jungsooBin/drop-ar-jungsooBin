@@ -89,6 +89,7 @@ export default class CameraView extends Component {
   }
 
   async componentWillUnmount() {
+    console.log('COMPONENT DID UNMOUNT');
     cancelAnimationFrame(this.gameRequest);
     try {
       this.arSession = await this._glView.stopARSessionAsync();
@@ -98,44 +99,51 @@ export default class CameraView extends Component {
   }
 
   async handleSubmit(evt) {
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        });
-      },
-      error => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    );
-    if (this.state.latitude === null || this.state.longitude === null) {
-      this.showFailAlert();
-    } else {
-      const locationToSave = [this.state.latitude, this.state.longitude];
-      try {
-        console.log(this.scene);
-        const artPiece = this.scene.toJSON();
-        const coverPhoto = this.state.coverPhoto;
-        const artObj = {
-          location: locationToSave,
-          artPiece: artPiece,
-          title: "",
-          description: "",
-          likes: 0,
-          coverPhoto: coverPhoto
-        };
-        this.showAlert();
+    // navigator.geolocation.getCurrentPosition(
+    //   position => {
+    //     this.setState({
+    //       latitude: position.coords.latitude,
+    //       longitude: position.coords.longitude,
+    //       error: null,
+    //     });
+    //   },
+    //   error => this.setState({ error: error.message }),
+    //   { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    // );
+    // if (this.state.latitude === null || this.state.longitude === null) {
+    //   this.showFailAlert();
+    // } else {
+    //   const locationToSave = [this.state.latitude, this.state.longitude];
+    try {
+      const artPiece = this.scene.toJSON();
+      const coverPhoto = this.state.coverPhoto;
+      const artObj = {
+        // location: locationToSave,
+        artPiece: artPiece,
+        title: '',
+        description: '',
+        likes: 0,
+        coverPhoto: coverPhoto,
+      };
+      // console.log('SUCCESS');
+      // this.showAlert();
+      if (this.state.coverPhoto === null) {
+        this.pleaseSaveImageAlert();
+      } else {
+
         this.props.navigation.navigate(`ArtPostForm`, { artObj: artObj });
-      } catch (err) {
-        console.log(err);
-        this.showFailAlert();
       }
+    } catch (err) {
+      console.log(err);
+      this.showFailAlert();
     }
   }
 
   undo() {
-    this.scene.remove(this.scene.children[this.scene.children.length - 1]);
+    if (this.scene.children.length > 3) {
+      this.scene.remove(this.scene.children[this.scene.children.length - 1]);
+      this.timer = setTimeout(this.undo, 100);
+    }
   }
 
   // undoAll() {
@@ -146,9 +154,10 @@ export default class CameraView extends Component {
 
   showImageSave = () => {
     Alert.alert(
-      "Cover Photo Set!",
-      "Cool!",
-      [{ text: ":)", onPress: () => console.log("Posted") }],
+      'Cover Photo Set!',
+      'Cool!',
+      [{ text: 'Success', onPress: () => console.log('Image Loaded') }],
+
       { cancelable: false }
     );
   };
@@ -173,6 +182,15 @@ export default class CameraView extends Component {
       "Posted!",
       "Awesome!",
       [{ text: ":)", onPress: () => console.log("Posted") }],
+      { cancelable: false }
+    );
+  };
+
+  pleaseSaveImageAlert = () => {
+    Alert.alert(
+      'Error!',
+      'No Image! Please Set One',
+      [{ text: 'Okay', onPress: () => console.log('Posted') }],
       { cancelable: false }
     );
   };
@@ -320,18 +338,17 @@ export default class CameraView extends Component {
   generateLighting(scene) {
     const leftLight = new THREE.DirectionalLight(0xffffff);
     const rightLight = new THREE.DirectionalLight(0xffffff);
-    const bottomLight = new THREE.DirectionalLight(0xffffff);
-    const frontLight = new THREE.DirectionalLight(0xffffff);
-    leftLight.position.set(-3, 5, 0).normalize();
-    rightLight.position.set(3, 5, 0).normalize();
-    frontLight.position.set(0, 0, 0).normalize();
+    // const frontLight = new THREE.DirectionalLight(0xffffff);
+    // leftLight.position.set(-3, 5, 0).normalize();
+    // rightLight.position.set(3, 5, 0).normalize();
+    // frontLight.position.set(0, 0, 0).normalize();
     this.scene.add(leftLight);
     this.scene.add(rightLight);
-    this.scene.add(frontLight);
+    // this.scene.add(frontLight);
     const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     this.scene.add(new THREE.AmbientLight(0x404040));
     this.scene.add(light);
-    var plight = new THREE.PointLight(0xff0000, 1, 100);
+    var plight = new THREE.PointLight(0x000000, 1, 100);
     plight.position.set(50, 50, 50);
     this.scene.add(plight);
   }
@@ -340,10 +357,9 @@ export default class CameraView extends Component {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
-    console.log("colorToUse: ", colorToUse);
-    console.log("this.state.texture: ", this.state.texture);
-    let material = "";
-    if (this.state.texture === "color") {
+    let material = '';
+    if (this.state.texture === 'color') {
+
       material = new THREE.MeshPhongMaterial({
         color: colorToUse,
         // transparent: true,
@@ -361,7 +377,7 @@ export default class CameraView extends Component {
     // newItem.position.y += 0.01;
     this.graffitiObjects.push(newItem);
     this.scene.add(newItem);
-    this.timer = setTimeout(this.addShapeWithSize, 20);
+    this.timer = setTimeout(this.addShapeWithSize, 40);
   }
 
   render() {
@@ -428,13 +444,15 @@ export default class CameraView extends Component {
                 <Button
                   raised
                   rounded
-                  title="size"
-                  onPress={() => this.showMenu("size")}
+                  title="Size"
+                  onPress={() => this.showMenu('size')}
+
                   buttonStyle={{
                     backgroundColor: "purple",
                     opacity: 0.5,
-                    width: "auto",
-                    height: 50
+                    width: 85,
+                    height: 50,
+
                   }}
                 />
               }
@@ -494,18 +512,20 @@ export default class CameraView extends Component {
                 Color
               </MenuItem>
             </Menu>
-            <Button
-              raised
-              rounded
-              title="Undo"
-              onPress={this.undo}
-              buttonStyle={{
-                backgroundColor: "#FF5858",
-                opacity: 0.5,
-                width: 85,
-                height: 50
-              }}
-            />
+            <TouchableOpacity
+              onPressIn={this.undo}
+              onPressOut={this.stopTimer}
+              style={styles.undoButton}
+            >
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={{
+                  uri:
+                    'https://flaticons.net/icons/Mobile%20Application/Command-Undo.png',
+                }}
+              />
+            </TouchableOpacity>
+
             {/* <Button
               raised
               rounded
@@ -549,38 +569,23 @@ export default class CameraView extends Component {
               }}
             />
           )}
-          <Button
-            raised
-            rounded
-            title="Options"
-            onPress={this.hideAllButtons}
-            buttonStyle={{
-              backgroundColor: "red",
-              opacity: 0.3,
-              width: "auto",
-              height: 50
-            }}
-          />
+          <TouchableOpacity onPress={this.hideAllButtons}>
+            <Image
+              style={styles.optionButton}
+              source={require('./../public/menu.png')}
+            />
+          </TouchableOpacity>
+
         </View>
         <View style={styles.draw}>
-          {/* <Button
-            raised
-            rounded
-            title="Draw"
-            onPress={this.addShapeWithSize}
-            buttonStyle={{
-              backgroundColor: 'black',
-              opacity: 0.2,
-              width: 100,
-              height: 50,
-            }}
-          /> */}
           <TouchableOpacity
             onPressIn={this.addShapeWithSize}
             onPressOut={this.stopTimer}
-            style={styles.drawButton}
           >
-            <Text style={styles.buttonText}> DRAW </Text>
+            <Image
+              style={styles.optionButton}
+              source={require('./../public/add.png')}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -652,18 +657,19 @@ const { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: height - 600,
-    left: width / 2 + 100
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: height - 700,
+    left: width / 2 + 100,
   },
   size: {
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    top: height - 550,
-    left: width / 2 + 100
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: height - 650,
+    left: width / 2 + 100,
+
   },
   takePhoto: {
     justifyContent: "center",
@@ -677,7 +683,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "absolute",
     top: height - 100,
-    left: width / 2 - 50
+    left: width / 2 - 25,
+
   },
   dropView: {
     justifyContent: "center",
@@ -687,11 +694,12 @@ const styles = StyleSheet.create({
     left: width / 2 - 200
   },
   colorPicker: {
-    position: "absolute",
-    top: height - 620,
-    left: width / 2 - 100,
-    justifyContent: "center",
-    alignItems: "center"
+    position: 'absolute',
+    top: height - 80,
+    left: width / 2 - 130,
+    justifyContent: 'center',
+    alignItems: 'center',
+
   },
   badge: {
     position: "absolute",
@@ -716,10 +724,27 @@ const styles = StyleSheet.create({
     opacity: 0.4,
     width: 100,
     height: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10
-  }
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  optionButton: {
+    opacity: 0.6,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  undoButton: {
+    opacity: 0.6,
+    width: 100,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+
 });
 
 function setModelPos(model, dropPos) {
