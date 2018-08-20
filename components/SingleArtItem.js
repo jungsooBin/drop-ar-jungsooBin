@@ -2,10 +2,17 @@ import React from 'react';
 import { Text, TouchableOpacity, View, Image, Button } from 'react-native';
 import { withNavigation } from 'react-navigation';
 // import * as firebase from 'firebase';
+import { connect } from 'react-redux'
+
+
+
 
 const SingleArtItem = props => {
+  console.log("STORE STATES", props.art.id)
   const { navigation } = props;
   let { title, likes, description, artist, likedBy, coverPhoto} = props.art;
+  console.log('THIS IS LIKEDBY', likedBy)
+  
   // const ref = firebase.storage().ref(`images/${props.art.id}`);
   // ref.getDownloadURL().then(function(url) {
   //   console.log('url', url)
@@ -90,4 +97,24 @@ const styles = {
   }
 };
 
-export default withNavigation(SingleArtItem);
+// export default withNavigation(SingleArtItem);
+
+const mapStateToProps = state => {
+  return {
+    allArt: state.arts.allArt,
+  };
+};
+
+// const mapDispatchToProps = dispatch => ({
+//   fetchAllArt: () => {
+//     dispatch(fetchAllArt());
+//   },
+//   getLikeForArt: (id) => {
+//     dispatch(fetchLikesForPiece(id))
+//   }
+// });
+
+export default connect(
+  mapStateToProps,
+  null
+)(withNavigation(SingleArtItem));

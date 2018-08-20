@@ -9,6 +9,7 @@ const initialState = {
 const LIKE_ART = 'LIKE_ART';
 const DISLIKE_ART = 'DISLIKE_ART';
 const GET_LIKES = 'GET_LIKES';
+const CHANGE_LIKED = 'CHANGE_LIKED'
 
 export const likeArt = likeArt => ({
   type: LIKE_ART,
@@ -24,6 +25,8 @@ export const getLikes = likes => ({
   type: GET_LIKES,
   likes,
 });
+
+
 
 export const fetchAllLikes = () => async dispatch => {
   try {

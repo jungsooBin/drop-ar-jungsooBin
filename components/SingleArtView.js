@@ -9,6 +9,7 @@ import {
   Animated,
   TouchableOpacity,
   StatusBar,
+  
 } from 'react-native';
 import axios from 'axios';
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ import { AR } from 'expo';
 import * as THREE from 'three';
 import ExpoTHREE from 'expo-three';
 import { Button } from 'react-native-elements';
-import { saveLikeArt, saveDislikeArt } from '../store/likesReducer';
+import { saveLikeArt, saveDislikeArt, changeLike } from '../store/likesReducer';
 
 console.disableYellowBox = true;
 
@@ -26,13 +27,14 @@ class SingleArtView extends React.Component {
     super();
     this.state = {
       singleArt: {},
-      like: false,
+      like: false
     };
     this.handleLoad = this.handleLoad.bind(this);
     this.likeArt = this.likeArt.bind(this);
     this.dislikeArt = this.dislikeArt.bind(this);
   }
 
+ 
   componentDidMount() {
     const { navigation } = this.props;
     const artObj = navigation.getParam('art');
@@ -71,6 +73,8 @@ class SingleArtView extends React.Component {
 
   render() {
     console.log('THIS IS PROPS', this.props.user)
+    console.log('TRYAGAIN', this.props.navigation)
+
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
@@ -203,6 +207,7 @@ const mapDispatchToProps = dispatch => ({
   saveDislikeArt: dislikeData => {
     dispatch(saveDislikeArt(dislikeData));
   },
+  likedArt: (liked) =>  dispatch(changeLike(liked))
 });
 
 export default connect(

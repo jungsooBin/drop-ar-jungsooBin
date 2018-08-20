@@ -5,35 +5,49 @@ import {
   View,
   ScrollView,
   TouchableHighlight,
-<<<<<<< HEAD
   Image,
-} from 'react-native';
-import SingleArtItem from './SingleArtItem';
-import { fetchAllArt } from '../store/artReducer';
-import { fetchAllLikes } from '../store/likesReducer';
-=======
-  Image
+  RefreshControl
 } from "react-native";
 import SingleArtItem from "./SingleArtItem";
 import { fetchAllArt } from "../store/artReducer";
 
-// import { fetchAllLikes } from '../store/likesReducer';
->>>>>>> 741c48fa8860989e99525cc0ec281203a3935741
+let count = 0;
 
 class ArtFeed extends Component {
+  constructor(){
+    super()
+    this.state = {
+      refreshing: false 
+    }
+  }
   componentDidMount() {
     this.props.fetchAllArt();
-    this.props.fetchAllLikes();
+    count++
+    console.log(count)
+  }
+
+  _onRefresh = async () => {
+    this.setState({refreshing: true});
+    await this.props.fetchAllArt()
+    this.setState({refreshing: false});
+    
   }
 
   render() {
     const { navigation } = this.props;
     return (
+       
       <View style={styles.container}>
         <View style={styles.scrollContainer}>
           <ScrollView
             style={styles.scrollView}
             showsVerticalScrollIndicator={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
           >
             {this.props.allArt.map(art => {
               return (
@@ -78,6 +92,7 @@ class ArtFeed extends Component {
           </TouchableHighlight>
         </View>
       </View>
+     
     );
   }
 }
@@ -120,30 +135,14 @@ const styles = {
 
 const mapStateToProps = state => {
   return {
-<<<<<<< HEAD
     allArt: state.arts.allArt,
-    allLikes: state.likes.allLikes,
-=======
-    allArt: state.arts.allArt
-    // allLikes: state.likes.allLikes,
->>>>>>> 741c48fa8860989e99525cc0ec281203a3935741
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchAllArt: () => {
     dispatch(fetchAllArt());
-<<<<<<< HEAD
-  },
-  fetchAllLikes: () => {
-    dispatch(fetchAllLikes());
-  },
-=======
   }
-  // fetchAllLikes: () => {
-  //   dispatch(fetchAllLikes());
-  // },
->>>>>>> 741c48fa8860989e99525cc0ec281203a3935741
 });
 
 export default connect(
