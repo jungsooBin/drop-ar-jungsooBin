@@ -21,11 +21,13 @@ router.post('/', async (req, res, next) => {
     const likedArt = await currentArt.addLikedBy(currentUser, {
       through: 'likes',
     });
-    res.status(201).json(likedArt);
+    console.log(likedArt)
+    res.status(201).json(currentUser);
   } catch (err) {
     next(err);
   }
 });
+
 
 // // get all users who liked this art
 router.get('/', async (req, res, next) => {
