@@ -1,26 +1,17 @@
-// Edit user info
 import React, { Component } from "react";
-import {
-  FormLabel,
-  FormInput,
-  Text,
-  
-} from 'react-native-elements';
-import {  View } from "react-native";
-import Button from "./Button";
-import { connect } from 'react-redux';
+import { View, TouchableOpacity, KeyboardAvoidingView } from "react-native";
+import { FormLabel, FormInput, Text } from "react-native-elements";
+import { connect } from "react-redux";
+import { updatingUser } from "../store/userReducer";
 
-import { updatingUser } from '../store/userReducer';
-
-class EditUserProfilePresentational extends Component {
+class EditUserProfile extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   async componentWillMount() {
-    const { navigation } = this.props;
-    const userData = this.props.user
+    const userData = this.props.user;
     this.setState(userData);
   }
 
@@ -28,45 +19,47 @@ class EditUserProfilePresentational extends Component {
     event.preventDefault();
     this.props.updateUser(userData);
   }
-  
 
   render() {
-
     const { navigation } = this.props;
     return (
-      <View style={styles.container}>
-        <Text h1 style={styles.heading}>
-          Edit Profile
-        </Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={200}
+      >
+        <Text style={styles.titleText}>Edit Profile</Text>
+        <View style={styles.formContainer}>
           <FormLabel>First Name</FormLabel>
-            <FormInput
-              value={this.state.firstName}
-              onChangeText={firstName => this.setState({ firstName })}
-            />
-
+          <FormInput
+            value={this.state.firstName}
+            onChangeText={firstName => this.setState({ firstName })}
+          />
           <FormLabel>Last Name</FormLabel>
-            <FormInput
-              value={this.state.lastName}
-              onChangeText={lastName => this.setState({ lastName })}
-            />
-
+          <FormInput
+            value={this.state.lastName}
+            onChangeText={lastName => this.setState({ lastName })}
+          />
           <FormLabel>Email</FormLabel>
-            <FormInput
-              value={this.state.email}
-              onChangeText={email => this.setState({ email })}
-            />
-
+          <FormInput
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
+          />
           <FormLabel>Password</FormLabel>
-            <FormInput
-              value={this.state.password}
-              onChangeText={password => this.setState({ password })}
-              autoCapitalize="none"
-              secureTextEntry={true}
-            />
-          <Button onPress={evt => this.handleSubmit(evt, this.state)}>Submit</Button>
-
-          <Button onPress={() => navigation.goBack()}>Back</Button>
-      </View>
+          <FormInput
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+            autoCapitalize="none"
+            secureTextEntry={true}
+          />
+        </View>
+        <TouchableOpacity
+          style={styles.buttonContainer}
+          onPress={event => this.handleSubmit(event, this.state)}
+        >
+          Save
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -75,13 +68,36 @@ const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    justifyContent: `center`,
-    backgroundColor: '#ffffff',
-    // top: -50
+    backgroundColor: "#FFF"
   },
-  heading: {
-    top: -40,
+  titleText: {
+    top: "15%",
+    fontWeight: "800",
+    fontSize: 36,
+    color: "#FF5858"
   },
+  formContainer: {
+    top: "20%",
+    width: 290,
+    marginBottom: 0,
+    paddingBottom: 0
+  },
+  buttonContainer: {
+    top: "40%"
+  },
+  button: {
+    backgroundColor: "#ff5858",
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    width: 250
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center"
+  }
 };
 
 const mapStateToProps = state => {
@@ -92,13 +108,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateUser: userData => dispatch(updatingUser(userData)),
+    updateUser: userData => dispatch(updatingUser(userData))
   };
 };
 
 const ArtPostForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditUserProfilePresentational);
+)(EditUserProfile);
 
 export default ArtPostForm;

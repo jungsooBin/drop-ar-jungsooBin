@@ -3,7 +3,10 @@ const { User, Art } = require('../../database');
 
 router.put('/', async (req, res, next) => {
   try {
+<<<<<<< HEAD
     console.log('TESTETSTSETET', req.body);
+=======
+>>>>>>> 741c48fa8860989e99525cc0ec281203a3935741
     const currentUser = await User.findById(req.body.userId);
     const currentArt = await Art.findById(req.body.artId);
     const dislikedArt = await currentArt.removeLikedBy(currentUser, {

@@ -1,10 +1,11 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import { FormLabel, FormInput, Text } from 'react-native-elements';
-import { View, Image } from 'react-native';
-import Button from './Button';
 
-import { saveArt } from '../store/artReducer';
+import { connect } from "react-redux";
+import React, { Component } from "react";
+import { FormLabel, FormInput, Text } from "react-native-elements";
+import { View, Image } from "react-native";
+import Button from "./Button";
+import * as firebase from "firebase";
+import { saveArt } from "../store/artReducer";
 
 class ArtPostFormPresenTational extends Component {
   constructor() {
@@ -12,30 +13,70 @@ class ArtPostFormPresenTational extends Component {
     this.state = {
       location: [],
       artPiece: null,
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       likes: 0,
       artistId: 0,
       coverPhoto: null,
+      tempPhotoUrl: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
   }
   async componentWillMount() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('artObj');
+    const artObj = navigation.getParam("artObj");
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
       coverPhoto: artObj.coverPhoto.uri,
-      artistId: this.props.user.id,
+      artistId: this.props.user.id
     });
   }
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    this.props.addArt(artData);
+    await this.props.addArt(artData);
+    await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
+    const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
+    let ImageUrl;
+    await ref.getDownloadURL().then(function(url) {
+      ImageUrl = url;
+    }) 
+    this.props.modifyArt(this.props.singleArt.id, {coverPhoto: ImageUrl})
+    this.showAlert();
+    this.props.navigation.navigate(`ArtFeed`);
   }
 
+  async uploadImage (uri, artId) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    var ref = firebase.storage().ref().child("images/" + artId)
+    return ref.put(blob);
+  }
+
+  showAlert = () => {
+    Alert.alert(
+      'Posted!',
+      'Awesome!',
+      [{ text: ':)', onPress: () => console.log('Posted') }],
+      { cancelable: false }
+    );
+  };
+
+  showFailAlert = message => {
+    Alert.alert(
+      message,
+      "Error!",
+      [
+        {
+          text: "Please try again!",
+          onPress: () => console.log("Will do!")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   render() {
     const { navigation } = this.props;
     const { checked } = this.state;
@@ -75,22 +116,24 @@ const styles = {
     flex: 1,
     alignItems: `center`,
     justifyContent: `center`,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff"
     // top: -50
   },
   heading: {
-    top: -40,
-  },
+    top: -40
+  }
 };
 const mapStateToProps = state => {
   return {
     user: state.users.user,
+    singleArt: state.arts.singleArt
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
+    modifyArt: (artId, editArtObj) => dispatch(editArt(artId, editArtObj))
   };
 };
 
