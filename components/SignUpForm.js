@@ -61,7 +61,7 @@ class SignUpForm extends Component {
         behavior="padding"
         keyboardVerticalOffset={350}
       >
-        <Text style={styles.titleText}>GraftAR</Text>
+        <Text style={styles.titleText}>DropAR</Text>
         <View style={styles.formContainer}>
           <FormLabel>First Name</FormLabel>
           <FormInput

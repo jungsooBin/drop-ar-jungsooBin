@@ -64,7 +64,7 @@ class Home extends Component {
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>GraftAR</Text>
+        <Text style={styles.text}>DropAR</Text>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
