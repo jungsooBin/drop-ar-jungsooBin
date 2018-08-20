@@ -42,8 +42,10 @@ class ArtPostFormPresenTational extends Component {
     let ImageUrl;
     await ref.getDownloadURL().then(function(url) {
       ImageUrl = url;
-    })
+    }) 
     this.props.modifyArt(this.props.singleArt.id, {coverPhoto: ImageUrl})
+    this.showAlert();
+    this.props.navigation.navigate(`ArtFeed`);
   }
 
   async uploadImage (uri, artId) {
@@ -52,6 +54,15 @@ class ArtPostFormPresenTational extends Component {
     var ref = firebase.storage().ref().child("images/" + artId)
     return ref.put(blob);
   }
+
+  showAlert = () => {
+    Alert.alert(
+      'Posted!',
+      'Awesome!',
+      [{ text: ':)', onPress: () => console.log('Posted') }],
+      { cancelable: false }
+    );
+  };
 
   showFailAlert = message => {
     Alert.alert(

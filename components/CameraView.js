@@ -114,6 +114,7 @@ export default class CameraView extends Component {
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
       try {
+        console.log(this.scene)
         const artPiece = this.scene.toJSON();
         const coverPhoto = this.state.coverPhoto;
         const artObj = {
@@ -348,6 +349,8 @@ export default class CameraView extends Component {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
+    console.log('colorToUse: ', colorToUse);
+    console.log('this.state.texture: ', this.state.texture);
     let material = '';
     if (this.state.texture === 'color') {
       material = new THREE.MeshPhongMaterial({

@@ -39,6 +39,7 @@ class SingleArtView extends React.Component {
     const usersWhoLikedThisArt = [];
     artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
     const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
+    console.log('youLikedThisArt: ', youLikedThisArt);
     if (youLikedThisArt === true) {
       this.setState({ like: true });
     }
