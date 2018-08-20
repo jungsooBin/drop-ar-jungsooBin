@@ -1,11 +1,11 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import { FormLabel, FormInput, Text } from 'react-native-elements';
-import { View, Image, Alert } from 'react-native';
-import Button from './Button';
-import * as firebase from 'firebase';
 
-import { saveArt, editArt } from '../store/artReducer';
+import { connect } from "react-redux";
+import React, { Component } from "react";
+import { FormLabel, FormInput, Text } from "react-native-elements";
+import { View, Image } from "react-native";
+import Button from "./Button";
+import * as firebase from "firebase";
+import { saveArt } from "../store/artReducer";
 
 class ArtPostFormPresenTational extends Component {
   constructor() {
@@ -13,24 +13,24 @@ class ArtPostFormPresenTational extends Component {
     this.state = {
       location: [],
       artPiece: null,
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       likes: 0,
       artistId: 0,
       coverPhoto: null,
-      tempPhotoUrl: ''
+      tempPhotoUrl: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
   }
   async componentWillMount() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('artObj');
+    const artObj = navigation.getParam("artObj");
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
       coverPhoto: artObj.coverPhoto.uri,
-      artistId: this.props.user.id,
+      artistId: this.props.user.id
     });
   }
 
@@ -116,12 +116,12 @@ const styles = {
     flex: 1,
     alignItems: `center`,
     justifyContent: `center`,
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff"
     // top: -50
   },
   heading: {
-    top: -40,
-  },
+    top: -40
+  }
 };
 const mapStateToProps = state => {
   return {
