@@ -23,8 +23,6 @@ class LoginForm extends React.Component {
 
   async handleSubmit(event, formData) {
     try {
-      this.props.navigation.navigate("ArtFeed");
-
       await this.props.handleLogin(formData);
       if (this.props.user.response) {
         this.showFailAlert(this.props.user.response.data);

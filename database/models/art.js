@@ -14,10 +14,9 @@ const Art = db.define('art', {
     type: JSONB,
     allowNull: false,
   },
-  location: {
-    type: ARRAY(DECIMAL),
-    allowNull: false,
-  },
+  // location: {
+  //   type: ARRAY(DECIMAL),
+  // },
   description: {
     type: STRING,
   },

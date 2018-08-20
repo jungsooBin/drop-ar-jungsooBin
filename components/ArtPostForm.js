@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView
 } from "react-native";
 import { FormLabel, FormInput, Text } from "react-native-elements";
-import { saveArt } from "../store/artReducer";
+import { saveArt, editArt} from "../store/artReducer";
 import * as firebase from "firebase";
 
 class ArtPostFormPresentational extends Component {
@@ -39,19 +39,19 @@ class ArtPostFormPresentational extends Component {
   }
 
   async handleSubmit(event, artData) {
-    event.preventDefault();
-    await this.props.addArt(artData);
+    try {
+      await this.props.addArt(artData);
     await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`);
-    const ref = await firebase
-      .storage()
-      .ref(`images/${this.props.singleArt.id}`);
-    let ImageUrl;
-    await ref.getDownloadURL().then(function(url) {
-      ImageUrl = url;
-    });
-    this.props.modifyArt(this.props.singleArt.id, { coverPhoto: ImageUrl });
-    this.showAlert();
+    const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
+    const url = await ref.getDownloadURL()
+    await this.props.modifyArt(this.props.singleArt.id, { coverPhoto: url });
     this.props.navigation.navigate(`ArtFeed`);
+
+    } catch (error) {
+      console.log(error)
+    }
+    this.showAlert()
+
   }
 
   async uploadImage(uri, artId) {

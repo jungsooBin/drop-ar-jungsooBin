@@ -19,7 +19,13 @@ import { Button } from "react-native-elements";
 import { ColorWheel } from "react-native-color-wheel";
 var hsl = require("hsl-to-hex");
 import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import * as firebase from 'firebase';
+import firebaseConfig from "../secrets";
 
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 console.disableYellowBox = true;
 
 export default class CameraView extends Component {
@@ -384,6 +390,9 @@ export default class CameraView extends Component {
     mesh.rotator = 0.025;
     this.scene.add(mesh);
     this.graffitiObjects.push(mesh);
+
+    firebase.database().ref('users/').set({hey: 'hey'});
+
     this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
