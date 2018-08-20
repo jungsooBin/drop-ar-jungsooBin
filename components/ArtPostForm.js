@@ -1,3 +1,4 @@
+
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { FormLabel, FormInput, Text } from "react-native-elements";
@@ -35,20 +36,47 @@ class ArtPostFormPresenTational extends Component {
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    const callback = this.uploadImage(artData.coverPhoto, `${artData.title}`);
-    this.props.addArt(artData);
+    await this.props.addArt(artData);
+    await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`)
+    const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
+    let ImageUrl;
+    await ref.getDownloadURL().then(function(url) {
+      ImageUrl = url;
+    }) 
+    this.props.modifyArt(this.props.singleArt.id, {coverPhoto: ImageUrl})
+    this.showAlert();
+    this.props.navigation.navigate(`ArtFeed`);
   }
 
-  async uploadImage(uri, imageName) {
+  async uploadImage (uri, artId) {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase
-      .storage()
-      .ref()
-      .child("images/" + imageName);
+    var ref = firebase.storage().ref().child("images/" + artId)
     return ref.put(blob);
   }
 
+  showAlert = () => {
+    Alert.alert(
+      'Posted!',
+      'Awesome!',
+      [{ text: ':)', onPress: () => console.log('Posted') }],
+      { cancelable: false }
+    );
+  };
+
+  showFailAlert = message => {
+    Alert.alert(
+      message,
+      "Error!",
+      [
+        {
+          text: "Please try again!",
+          onPress: () => console.log("Will do!")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   render() {
     const { navigation } = this.props;
     const { checked } = this.state;
@@ -97,13 +125,15 @@ const styles = {
 };
 const mapStateToProps = state => {
   return {
-    user: state.users.user
+    user: state.users.user,
+    singleArt: state.arts.singleArt
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    addArt: artObj => dispatch(saveArt(artObj))
+    addArt: artObj => dispatch(saveArt(artObj)),
+    modifyArt: (artId, editArtObj) => dispatch(editArt(artId, editArtObj))
   };
 };
 

@@ -1,10 +1,15 @@
-import React from "react";
-import { Text, TouchableOpacity, View, Image } from "react-native";
-import { withNavigation } from "react-navigation";
+import React from 'react';
+import { Text, TouchableOpacity, View, Image, Button } from 'react-native';
+import { withNavigation } from 'react-navigation';
+// import * as firebase from 'firebase';
 
 const SingleArtItem = props => {
   const { navigation } = props;
-  const { title, likes, description, coverPhoto, artist, likedBy } = props.art;
+  let { title, likes, description, artist, likedBy, coverPhoto} = props.art;
+  // const ref = firebase.storage().ref(`images/${props.art.id}`);
+  // ref.getDownloadURL().then(function(url) {
+  //   console.log('url', url)
+  // })
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -15,7 +20,9 @@ const SingleArtItem = props => {
         }
       >
         <View style={styles.imageContainer}>
-          <Image style={styles.imageStyle} source={{ uri: coverPhoto }} />
+
+          <Image style={styles.imageStyle} source={{ uri: coverPhoto}} />
+
         </View>
       </TouchableOpacity>
       <View style={styles.info}>
