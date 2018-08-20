@@ -47,6 +47,15 @@ class SingleArtView extends React.Component {
     }
   }
 
+  async componentWillUnmount() {
+    console.log('COMPONENT DID UNMOUNT');
+    try {
+      this.arSession = await this._glView.stopARSessionAsync();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async likeArt() {
     const { navigation } = this.props;
     const art = navigation.getParam('art');
