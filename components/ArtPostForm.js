@@ -39,14 +39,19 @@ class ArtPostFormPresentational extends Component {
   }
 
   async handleSubmit(event, artData) {
-    event.preventDefault();
-    await this.props.addArt(artData);
+    try {
+      await this.props.addArt(artData);
     await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`);
     const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
     const url = await ref.getDownloadURL()
-    this.props.modifyArt(this.props.singleArt.id, { coverPhoto: url });
-    this.showAlert();
+    await this.props.modifyArt(this.props.singleArt.id, { coverPhoto: url });
     this.props.navigation.navigate(`ArtFeed`);
+
+    } catch (error) {
+      console.log(error)
+    }
+    this.showAlert()
+
   }
 
   async uploadImage(uri, artId) {
