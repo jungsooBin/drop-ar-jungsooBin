@@ -17,7 +17,7 @@ import ApiKeys from './constants/ApiKeys';
 
 const RootNavigator = createStackNavigator({
   Main: {
-    screen: Home,
+    screen: CameraView,
     navigationOptions: ({ navigation }) => ({
       header: null,
       title: `GraftAR`,
