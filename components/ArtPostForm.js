@@ -1,123 +1,192 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
-import { FormLabel, FormInput, Text } from 'react-native-elements';
-import { View, Image } from 'react-native';
-import Button from './Button';
-import * as firebase from 'firebase';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  KeyboardAvoidingView
+} from "react-native";
+import { FormLabel, FormInput, Text } from "react-native-elements";
+import { saveArt } from "../store/artReducer";
+import * as firebase from "firebase";
 
-import { saveArt } from '../store/artReducer';
-const firebaseConfig = {
-  apiKey: "AIzaSyAKdplWrPK2fft2XwNEN_yqx8dXjk_Mggw",
-    authDomain: "graftarfinal-6b59a.firebaseapp.com",
-    databaseURL: "https://graftarfinal-6b59a.firebaseio.com",
-    projectId: "graftarfinal-6b59a",
-    storageBucket: "graftarfinal-6b59a.appspot.com",
-    messagingSenderId: "196028019561"
-}
-//firebase.initializeApp(firebaseConfig);
-
-
-class ArtPostFormPresenTational extends Component {
+class ArtPostFormPresentational extends Component {
   constructor() {
     super();
     this.state = {
       location: [],
       artPiece: null,
-      title: '',
-      description: '',
+      title: "",
+      description: "",
       likes: 0,
       artistId: 0,
       coverPhoto: null,
-      tempPhotoUrl: ''
+      tempPhotoUrl: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
   }
+
   async componentWillMount() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('artObj');
+    const artObj = navigation.getParam("artObj");
     this.setState({
       location: artObj.location,
       artPiece: artObj.artPiece,
       coverPhoto: artObj.coverPhoto.uri,
-      artistId: this.props.user.id,
+      artistId: this.props.user.id
     });
   }
 
   async handleSubmit(event, artData) {
     event.preventDefault();
-    const callback = this.uploadImage(artData.coverPhoto, `${artData.title}`)
-    this.props.addArt(artData);
+    await this.props.addArt(artData);
+    await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`);
+    const ref = await firebase
+      .storage()
+      .ref(`images/${this.props.singleArt.id}`);
+    let ImageUrl;
+    await ref.getDownloadURL().then(function(url) {
+      ImageUrl = url;
+    });
+    this.props.modifyArt(this.props.singleArt.id, { coverPhoto: ImageUrl });
+    this.showAlert();
+    this.props.navigation.navigate(`ArtFeed`);
   }
 
-  async uploadImage (uri, imageName) {
+  async uploadImage(uri, artId) {
     const response = await fetch(uri);
     const blob = await response.blob();
-    var ref = firebase.storage().ref().child("images/" + imageName)
+    var ref = firebase
+      .storage()
+      .ref()
+      .child("images/" + artId);
     return ref.put(blob);
   }
 
+  showAlert = () => {
+    Alert.alert(
+      "Posted!",
+      "Awesome!",
+      [{ text: ":)", onPress: () => console.log("Posted") }],
+      { cancelable: false }
+    );
+  };
+
+  showFailAlert = message => {
+    Alert.alert(
+      message,
+      "Error!",
+      [
+        {
+          text: "Please try again!",
+          onPress: () => console.log("Will do!")
+        }
+      ],
+      { cancelable: false }
+    );
+  };
+
   render() {
     const { navigation } = this.props;
-    const { checked } = this.state;
     return (
-      <View style={styles.container}>
-        <Image
-          style={{ width: 50, height: 50 }}
-          source={{ uri: this.state.coverPhoto }}
-        />
-
-        <Text h1 style={styles.heading}>
-          ArtForm
-        </Text>
-        <FormLabel>Title</FormLabel>
-        <FormInput
-          value={this.state.title}
-          onChangeText={title => this.setState({ title })}
-        />
-
-        <FormLabel>Description</FormLabel>
-        <FormInput
-          value={this.state.description}
-          onChangeText={description => this.setState({ description })}
-        />
-        <Button onPress={evt => this.handleSubmit(evt, this.state)}>
-          Submit
-        </Button>
-        <Button onPress={() => navigation.goBack()}>Back</Button>
-      </View>
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={200}
+        style={styles.container}
+      >
+        <Text style={styles.titleText}>Art Form</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            style={{ width: 100, height: 100, borderRadius: "50%" }}
+            source={{ uri: this.state.coverPhoto }}
+          />
+        </View>
+        <View style={styles.formContainer}>
+          <FormLabel>Title</FormLabel>
+          <FormInput
+            value={this.state.title}
+            onChangeText={title => this.setState({ title })}
+          />
+          <FormLabel>Description</FormLabel>
+          <FormInput
+            value={this.state.description}
+            onChangeText={description => this.setState({ description })}
+          />
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={evt => this.handleSubmit(evt, this.state)}
+          >
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-//Styles
 const styles = {
   container: {
     flex: 1,
     alignItems: `center`,
-    justifyContent: `center`,
-    backgroundColor: '#ffffff',
-    // top: -50
+    backgroundColor: "#FFF"
   },
-  heading: {
-    top: -40,
+  titleText: {
+    top: "20%",
+    fontWeight: "800",
+    fontSize: 36,
+    color: "#ff5858"
   },
+  imageContainer: {
+    top: "23%"
+  },
+  formContainer: {
+    top: "25%",
+    width: 290
+  },
+  buttonContainer: {
+    top: "30%"
+  },
+  button: {
+    backgroundColor: "#ff5858",
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    width: 250
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center"
+  }
 };
+
 const mapStateToProps = state => {
   return {
     user: state.users.user,
+    singleArt: state.arts.singleArt
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     addArt: artObj => dispatch(saveArt(artObj)),
+    modifyArt: (artId, editArtObj) => dispatch(editArt(artId, editArtObj))
   };
 };
 
 const ArtPostForm = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ArtPostFormPresenTational);
+)(ArtPostFormPresentational);
 
 export default ArtPostForm;

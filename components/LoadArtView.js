@@ -80,7 +80,6 @@ export default class LoadArtView extends React.Component {
       Math.round(this.state.color.s),
       Math.round(this.state.color.v / 2)
     );
-    console.log(colorHex);
     this.setState({ colorHex: colorHex });
     return colorHex;
   }
@@ -125,7 +124,6 @@ export default class LoadArtView extends React.Component {
 
   async addSphere() {
     const colorToUse = this.findColor();
-    console.log(colorToUse);
     console.log(this.graffitiObjects);
     const sphereGeometry = new THREE.SphereGeometry(0.1, 0.1, 0.1);
     var material = new THREE.MeshBasicMaterial({
@@ -156,7 +154,6 @@ export default class LoadArtView extends React.Component {
       this.showFailAlert();
     } else {
       const locationToSave = [this.state.latitude, this.state.longitude];
-      console.log('Location', locationToSave);
       try {
         let count = 0;
         const newArt = await axios.post(`http://172.16.23.84/art/add`, {

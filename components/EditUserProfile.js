@@ -4,7 +4,7 @@ import { FormLabel, FormInput, Text } from "react-native-elements";
 import { connect } from "react-redux";
 import { updatingUser } from "../store/userReducer";
 
-class EditUserProfile extends Component {
+class EditUserProfilePresentational extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,6 +18,7 @@ class EditUserProfile extends Component {
   async handleSubmit(event, userData) {
     event.preventDefault();
     this.props.updateUser(userData);
+    this.props.navigation.navigate(`UserProfile`);
   }
 
   render() {
@@ -53,12 +54,20 @@ class EditUserProfile extends Component {
             secureTextEntry={true}
           />
         </View>
-        <TouchableOpacity
-          style={styles.buttonContainer}
-          onPress={event => this.handleSubmit(event, this.state)}
-        >
-          Save
-        </TouchableOpacity>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={event => this.handleSubmit(event, this.state)}
+          >
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.buttonText}>Back</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     );
   }
@@ -83,7 +92,7 @@ const styles = {
     paddingBottom: 0
   },
   buttonContainer: {
-    top: "40%"
+    top: "25%"
   },
   button: {
     backgroundColor: "#ff5858",
@@ -112,9 +121,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const ArtPostForm = connect(
+const EditUserProfile = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditUserProfile);
+)(EditUserProfilePresentational);
 
-export default ArtPostForm;
+export default EditUserProfile;
