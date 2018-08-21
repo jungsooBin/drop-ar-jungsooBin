@@ -7,10 +7,16 @@ import { updatingUser } from "../store/userReducer";
 class EditUserProfilePresentational extends Component {
   constructor() {
     super();
+    this.state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: ""
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const userData = this.props.user;
     this.setState(userData);
   }
