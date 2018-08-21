@@ -78,12 +78,12 @@ export default class CameraView extends Component {
     let result = await takeSnapshotAsync(this._glView, {
       format: 'jpg',
       result: 'file',
-      quality: 1.0,
+      quality: 0.4,
     });
 
     const file = {
       uri: result,
-      type: 'image/jpeg',
+      type: 'image/jpg',
     };
     if (file) {
       this.showImageSave();
@@ -696,8 +696,8 @@ export default class CameraView extends Component {
         //   this.scene.remove(art);
         // }
         // Animates items for live movement
-        // art.rotation.x += art.rotator;
-        // art.rotation.y += art.rotator;
+        art.rotation.x += art.rotator;
+        art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);

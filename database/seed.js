@@ -46,7 +46,7 @@ const newArt = [
     description: 'Cool art',
     title: 'Starry Night',
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F1?alt=media&token=87ca1eb1-935d-47fc-8667-0ce3938d5f90',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F11?alt=media&token=76f3d5f3-d9d9-440d-aff2-56f15d7150f5',
     likes: 6,
     artPiece: {
       object: {
@@ -827,7 +827,7 @@ const newArt = [
     title: 'Solar System',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F2?alt=media&token=74cd3e85-c6b9-4d26-9236-46481d64ad7e',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F10?alt=media&token=671c273a-e301-428c-8469-3e7ec843ea26',
     likes: 8,
     artPiece: {
       object: {
@@ -1607,7 +1607,7 @@ const newArt = [
     description: 'Its a jungle out here',
     title: 'AR Tree',
     coverPhoto:
-'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F3?alt=media&token=968e4d7f-374b-4642-a898-892f736814eb',
+'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F12?alt=media&token=455a0f9e-ee65-43f1-93a6-09ec27d83fbd',
     likes: 6,
     location: [40.70922922853889, -74.00780365188648],
     artPiece: {
@@ -3679,7 +3679,7 @@ const newArt = [
     title: 'Leaning tower of AR',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F4?alt=media&token=563eb9a5-7a9e-4596-9191-687053cd460b',
+'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F13?alt=media&token=badec7fa-64b4-44e2-b00b-c1e40c4564ce',
     likes: 7,
     artPiece: {
       object: {
@@ -4082,7 +4082,7 @@ const newArt = [
     title: 'Sistine Chapel',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F1?alt=media&token=87ca1eb1-935d-47fc-8667-0ce3938d5f90',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F14?alt=media&token=283c86df-a69d-4ac0-b69e-19274e9ce60b',
     likes: 6,
     artPiece: {
       object: {
@@ -4365,7 +4365,7 @@ const newArt = [
     title: 'The Creation Of Adam',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F5?alt=media&token=292e3ebd-0ed7-439b-8020-2e5218a73a5d',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F15?alt=media&token=c503212a-dc33-4c44-bbb7-26ad9af4f160',
     likes: 2,
     artPiece: {
       object: {
@@ -4642,7 +4642,7 @@ const newArt = [
     title: 'The Birth of Venus',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F6?alt=media&token=0bda6d68-5d1b-4699-aefb-9bf1553fe471',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F16?alt=media&token=16e62ee8-c19d-4efa-a7ca-36ca3bd0e1de',
     likes: 4,
     artPiece: {
       object: {
@@ -5045,7 +5045,7 @@ const newArt = [
     title: 'The Night watch',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F7?alt=media&token=883fb5e5-1bf3-4f67-b47f-bc578c16d1b1',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F17?alt=media&token=1e349583-75b5-48a0-9a8c-ea77dd6e7a36',
     likes: 9,
     artPiece: {
       object: {
@@ -5326,7 +5326,7 @@ const newArt = [
     title: 'The Last Supper',
     location: [40.70922922853889, -74.00780365188648],
     coverPhoto:
-      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F8?alt=media&token=5a4df12b-d7cf-432a-96aa-94b393397c6d',
+      'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/images%2F18?alt=media&token=7d414e9c-d537-4131-b3c4-97d31e8f90bb',
     likes: 9,
     artPiece: {
       object: {
