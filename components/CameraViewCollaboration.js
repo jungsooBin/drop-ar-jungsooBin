@@ -233,7 +233,7 @@ export default class CameraViewCollaboration extends Component {
     }
   }
 
-  findShape(sizeToUse,shape) {
+  findShape(sizeToUse, shape) {
     if (shape === 'sphere') {
       return new THREE.SphereGeometry(sizeToUse, 32, 32);
     } else if (shape === 'pyramid') {
@@ -375,7 +375,7 @@ export default class CameraViewCollaboration extends Component {
         sizeToUse: sizeToUse,
         colorToUse: colorToUse,
         matrixWorld: matrixWorld,
-        shape:shape,
+        shape: shape,
       });
   }
 
@@ -383,7 +383,7 @@ export default class CameraViewCollaboration extends Component {
     firebase
       .database()
       .ref('itemList/')
-      .once('value', ItemListObj => {
+      .on('value', ItemListObj => {
         ItemListObj.forEach(item => {
           if (!this.objectKeys.includes(item.key)) {
             this.addItem(
@@ -403,7 +403,7 @@ export default class CameraViewCollaboration extends Component {
     const colorToUse = this.findColor();
 
     const matrixWorld = this.camera.matrixWorld;
-    await this.ItemElementsListener();
+    // await this.ItemElementsListener();
     this.storeItems(sizeToUse, colorToUse, matrixWorld, this.state.shape);
   }
   async addItem(itemKey, sizeToUse, colorToUse, matrixWorld, shape) {
@@ -440,6 +440,7 @@ export default class CameraViewCollaboration extends Component {
   }
 
   render() {
+    this.ItemElementsListener();
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
