@@ -55,14 +55,14 @@ class ArtFeed extends Component {
           <TouchableHighlight
             style={styles.button}
             underlayColor={'#ff5858'}
-            onPress={() => navigation.navigate(`CameraView`)}
+            onPress={() => navigation.navigate(`CameraViewCollaboration`)}
           >
             <View style={styles.textButtonContainer}>
               <Image
                 style={{ width: 30, height: 30, marginBottom: 4 }}
                 source={{
                   uri:
-                    'https://www.peace.edu/wp-content/uploads/Camera-icon-White-SMALL.png',
+                    'https://www.musohealth.org/wp-content/uploads/2015/09/icons-04.png',
                 }}
               />
               {/* <Text style={styles.buttonText}>Camera</Text> */}
@@ -71,7 +71,7 @@ class ArtFeed extends Component {
           <TouchableHighlight
             style={styles.button}
             underlayColor={'#ff5858'}
-            onPress={() => navigation.navigate(`CameraViewCollaboration`)}
+            onPress={() => navigation.navigate(`CameraView`)}
           >
             <View style={styles.textButtonContainer}>
               <Image
