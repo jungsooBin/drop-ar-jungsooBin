@@ -22,8 +22,7 @@ class ArtFeed extends Component {
   }
   componentDidMount() {
     this.props.fetchAllArt();
-    count++
-    console.log(count)
+    count++;
   }
 
   _onRefresh = async () => {
@@ -62,6 +61,22 @@ class ArtFeed extends Component {
             style={styles.button}
             underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`CameraView`)}
+          >
+            <View style={styles.textButtonContainer}>
+              <Image
+                style={{ width: 30, height: 30, marginBottom: 4 }}
+                source={{
+                  uri:
+                    "https://www.peace.edu/wp-content/uploads/Camera-icon-White-SMALL.png"
+                }}
+              />
+              {/* <Text style={styles.buttonText}>Camera</Text> */}
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={styles.button}z
+            underlayColor={"#ff5858"}
+            onPress={() => navigation.navigate(`CameraViewCollaboration`)}
           >
             <View style={styles.textButtonContainer}>
               <Image
