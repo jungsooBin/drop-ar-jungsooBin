@@ -16,7 +16,7 @@ import SingleArtItem from './components/SingleArtItem';
 
 const RootNavigator = createStackNavigator({
   Main: {
-    screen: CameraView,
+    screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
       title: `DropAR`,
