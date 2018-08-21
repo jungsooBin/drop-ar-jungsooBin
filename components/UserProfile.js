@@ -1,7 +1,4 @@
-// Users info : Name (first name, last name), profile pic,
-// Tab Bar, Created, Saved, --> Link to single art view
 import { connect } from "react-redux";
-
 import React, { Component } from "react";
 import { Text, View, Image } from "react-native";
 import EditProfileButton from "./EditProfileButton";
