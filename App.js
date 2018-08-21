@@ -6,6 +6,8 @@ import Home from "./components/Home";
 import LoginForm from "./components/LoginForm";
 import SignUpForm from "./components/SignUpForm";
 import CameraView from "./components/CameraView";
+import CameraViewCollaboration from "./components/CameraViewCollaboration";
+
 import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
@@ -17,6 +19,13 @@ import SingleArtItem from "./components/SingleArtItem";
 const RootNavigator = createStackNavigator({
   Main: {
     screen: Home,
+    navigationOptions: ({ navigation }) => ({
+      header: null,
+      title: `DropAR`
+    })
+  },
+  CameraViewCollaboration: {
+    screen: CameraViewCollaboration,
     navigationOptions: ({ navigation }) => ({
       header: null,
       title: `DropAR`
