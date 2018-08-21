@@ -383,7 +383,7 @@ export default class CameraViewCollaboration extends Component {
     firebase
       .database()
       .ref('itemList/')
-      .once('value', ItemListObj => {
+      .on('value', ItemListObj => {
         ItemListObj.forEach(item => {
           if (!this.objectKeys.includes(item.key)) {
             this.addItem(
