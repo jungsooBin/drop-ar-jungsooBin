@@ -436,7 +436,7 @@ export default class CameraViewCollaboration extends Component {
     mesh.rotator = 0.025;
     this.scene.add(mesh);
     this.graffitiObjects.push(mesh);
-    this.timer = setTimeout(this.addShapeWithSize, 50);
+    // this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
   render() {
