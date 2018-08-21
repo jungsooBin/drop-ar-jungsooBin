@@ -408,7 +408,7 @@ export default class CameraView extends Component {
     // newItem.position.x -= 0.01;
     // newItem.position.y += 0.01;
     // newItem.applyMatrix4(this.camera.matrixWorldInverse);
-    const drawPoint = new THREE.Vector3(0, 0, -0.2);
+    const drawPoint = new THREE.Vector3(0, 0, -0.35);
     const targetPosition = drawPoint.applyMatrix4(this.camera.matrixWorld);
     mesh.position.copy(targetPosition);
     mesh.lookAt(this.camera.position);
