@@ -11,17 +11,17 @@ import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
 // import FriendProfile from "./components/FriendProfile";
-import ArtPostForm from './components/ArtPostForm';
-import SingleArtView from './components/SingleArtView';
-import SingleArtItem from './components/SingleArtItem';
+import ArtPostForm from "./components/ArtPostForm";
+import SingleArtView from "./components/SingleArtView";
+import SingleArtItem from "./components/SingleArtItem";
 
 const RootNavigator = createStackNavigator({
   Main: {
     screen: Home,
     navigationOptions: ({ navigation }) => ({
       header: null,
-      title: `DropAR`,
-    }),
+      title: `DropAR`
+    })
   },
   CameraViewCollaboration: {
     screen: CameraViewCollaboration,
@@ -33,49 +33,49 @@ const RootNavigator = createStackNavigator({
   LoginForm: {
     screen: LoginForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SignUpForm: {
     screen: SignUpForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   CameraView: {
     screen: CameraView,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   UserProfile: {
     screen: UserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   EditUserProfile: {
     screen: EditUserProfile,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   ArtFeed: {
     screen: ArtFeed,
     navigationOptions: ({ navigation }) => ({
       gesturesEnabled: false,
       headerLeft: null,
-      title: 'EXPLORE',
+      title: "EXPLORE",
       headerStyle: {
-        backgroundColor: '#ff5858',
-        borderBottomColor: 'transparent',
+        backgroundColor: "#ff5858",
+        borderBottomColor: "transparent"
       },
       headerTitleStyle: {
-        color: '#FFF',
-        fontWeight: '800',
-        fontSize: 24,
-      },
-    }),
+        color: "#FFF",
+        fontWeight: "800",
+        fontSize: 24
+      }
+    })
   },
   // FriendProfile: {
   //   screen: FriendProfile,
@@ -86,21 +86,21 @@ const RootNavigator = createStackNavigator({
   ArtPostForm: {
     screen: ArtPostForm,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SingleArtView: {
     screen: SingleArtView,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
+      header: null
+    })
   },
   SingleArtItem: {
     screen: SingleArtItem,
     navigationOptions: ({ navigation }) => ({
-      header: null,
-    }),
-  },
+      header: null
+    })
+  }
 });
 
 export default class App extends Component {
