@@ -1,8 +1,8 @@
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import { Text, View, Image } from "react-native";
-import EditProfileButton from "./EditProfileButton";
-import UserFeed from "./UserFeed";
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import { Text, View, Image } from 'react-native';
+import EditProfileButton from './EditProfileButton';
+import UserFeed from './UserFeed';
 
 class UserProfile extends Component {
   render() {
@@ -12,13 +12,19 @@ class UserProfile extends Component {
       <View style={styles.container}>
         <View style={styles.userInfoContainer}>
           <Image style={styles.thumbnailStyle} source={{ uri: picture }} />
-          <Text style={styles.textStyle}>{firstName + " " + lastName}</Text>
+          <Text style={styles.textStyle}>{firstName + ' ' + lastName}</Text>
           <Text style={styles.textStyle}>{email}</Text>
           <EditProfileButton
             style={styles.buttonStyle}
             onPress={() => navigation.navigate(`EditUserProfile`)}
           >
             Edit
+          </EditProfileButton>
+          <EditProfileButton
+            style={styles.buttonStyle}
+            onPress={() => navigation.navigate(`LoginForm`)}
+          >
+            LogOut
           </EditProfileButton>
         </View>
         <View style={styles.feedContainer}>
@@ -32,51 +38,51 @@ class UserProfile extends Component {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#EEE",
-    alignItems: "center"
+    backgroundColor: '#EEE',
+    alignItems: 'center',
   },
   userInfoContainer: {
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    width: "100%",
-    height: "30%",
-    padding: "2.5%"
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    width: '100%',
+    height: '30%',
+    padding: '2.5%',
   },
   thumbnailStyle: {
     height: 80,
     width: 80,
     borderRadius: 40,
     marginTop: 30,
-    marginBottom: 10
+    marginBottom: 10,
   },
   buttonStyle: {
     height: 20,
     width: 80,
-    alignSelf: "stretch",
+    alignSelf: 'stretch',
     borderRadius: 5,
-    backgroundColor: "#009a9a",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 10
+    backgroundColor: '#009a9a',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
   },
   textStyle: {
     fontSize: 14,
-    width: "100%",
-    textAlign: "center",
-    fontFamily: "Helvetica Neue"
+    width: '100%',
+    textAlign: 'center',
+    fontFamily: 'Helvetica Neue',
   },
   feedContainer: {
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    width: "100%",
-    height: "70%",
-    top: "1%"
-  }
+    backgroundColor: '#FFF',
+    alignItems: 'center',
+    width: '100%',
+    height: '70%',
+    top: '1%',
+  },
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.users.user
+    user: state.users.user,
   };
 };
 
