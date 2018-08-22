@@ -402,12 +402,6 @@ export default class CameraView extends Component {
     mesh.rotator = 0.025;
     this.graffitiObjects.push(mesh);
     this.scene.add(mesh);
-
-    firebase
-      .database()
-      .ref("users/")
-      .set({ hey: "hey" });
-
     this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 

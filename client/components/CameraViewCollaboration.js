@@ -421,13 +421,13 @@ export default class CameraViewCollaboration extends Component {
     // newItem.position.x -= 0.01;
     // newItem.position.y += 0.01;
     // newItem.applyMatrix4(this.camera.matrixWorldInverse);
-    var pLocal = new THREE.Vector3(0, 0, -0.2);
-    var target = pLocal.applyMatrix4(matrixWorld);
-    mesh.position.copy(target);
-    // mesh.lookAt(this.camera.position);
+    const drawPoint = new THREE.Vector3(0, 0, -0.35);
+    const targetPosition = drawPoint.applyMatrix4(matrixWorld);
+    mesh.position.copy(targetPosition);
+    mesh.lookAt(this.camera.position);
     mesh.rotator = 0.025;
-    this.scene.add(mesh);
     this.graffitiObjects.push(mesh);
+    this.scene.add(mesh);
     // this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
@@ -691,8 +691,8 @@ export default class CameraViewCollaboration extends Component {
         //   this.scene.remove(art);
         // }
         // Animates items for live movement
-        // art.rotation.x += art.rotator;
-        // art.rotation.y += art.rotator;
+        art.rotation.x += art.rotator;
+        art.rotation.y += art.rotator;
       });
 
       renderer.render(this.scene, this.camera);
