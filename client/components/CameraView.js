@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Image,
-  PanResponder,
-  Animated,
   Alert,
   TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import axios from 'axios';
-import Expo, { AR, takeSnapshotAsync } from 'expo';
-import * as THREE from 'three';
-import ExpoTHREE from 'expo-three';
-import { Button } from 'react-native-elements';
-import { ColorWheel } from 'react-native-color-wheel';
-var hsl = require('hsl-to-hex');
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
-import * as firebase from 'firebase';
-import firebaseConfig from '../secrets';
+  StatusBar
+} from "react-native";
+import Expo, { takeSnapshotAsync } from "expo";
+import * as THREE from "three";
+import ExpoTHREE from "expo-three";
+import { Button } from "react-native-elements";
+import { ColorWheel } from "react-native-color-wheel";
+var hsl = require("hsl-to-hex");
+import Menu, { MenuItem } from "react-native-material-menu";
+import * as firebase from "firebase";
+import firebaseConfig from "../../secrets";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -32,14 +28,14 @@ export default class CameraView extends Component {
     super();
     this.state = {
       color: { h: 0, s: 0, v: 100 },
-      hexColor: '#ff00000',
+      hexColor: "#ff00000",
       latitude: null,
       longitude: null,
-      shape: 'cube',
-      size: 'small',
-      texture: 'color',
+      shape: "cube",
+      size: "small",
+      texture: "color",
       hideButtons: true,
-      coverPhoto: null,
+      coverPhoto: null
     };
     this.model = null;
     this.graffitiObjects = [];
@@ -50,7 +46,7 @@ export default class CameraView extends Component {
     this.findSize = this.findSize.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addShapeWithSize = this.addShapeWithSize.bind(this);
-    this.findCustomMaterial = this.findCustomMaterial.bind(this);
+    // this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
     this.undo = this.undo.bind(this);
     // this.undoAll = this.undoAll.bind(this);
@@ -76,14 +72,14 @@ export default class CameraView extends Component {
 
   async takeScreenshot() {
     let result = await takeSnapshotAsync(this._glView, {
-      format: 'jpg',
-      result: 'file',
-      quality: 0.4,
+      format: "jpg",
+      result: "file",
+      quality: 0.4
     });
 
     const file = {
       uri: result,
-      type: 'image/jpg',
+      type: "image/jpg"
     };
     if (file) {
       this.showImageSave();
@@ -94,7 +90,6 @@ export default class CameraView extends Component {
   }
 
   async componentWillUnmount() {
-    console.log('COMPONENT DID UNMOUNT');
     cancelAnimationFrame(this.gameRequest);
     try {
       this.arSession = await this._glView.stopARSessionAsync();
@@ -125,10 +120,10 @@ export default class CameraView extends Component {
       const artObj = {
         // location: locationToSave,
         artPiece: artPiece,
-        title: '',
-        description: '',
+        title: "",
+        description: "",
         likes: 0,
-        coverPhoto: coverPhoto,
+        coverPhoto: coverPhoto
       };
       // console.log('SUCCESS');
       // this.showAlert();
@@ -158,9 +153,9 @@ export default class CameraView extends Component {
 
   showImageSave = () => {
     Alert.alert(
-      'Cover Photo Set!',
-      'Cool!',
-      [{ text: 'Success', onPress: () => console.log('Image Loaded') }],
+      "Cover Photo Set!",
+      "Cool!",
+      [{ text: "Success", onPress: () => console.log("Image Loaded") }],
 
       { cancelable: false }
     );
@@ -169,13 +164,13 @@ export default class CameraView extends Component {
   // Message to user when post fails
   showFailToSave = () => {
     Alert.alert(
-      'Failed To Add Photo!',
-      'Error!',
+      "Failed To Add Photo!",
+      "Error!",
       [
         {
-          text: 'Please Try Again',
-          onPress: () => console.log('Error'),
-        },
+          text: "Please Try Again",
+          onPress: () => console.log("Error")
+        }
       ],
       { cancelable: false }
     );
@@ -183,18 +178,18 @@ export default class CameraView extends Component {
 
   showAlert = () => {
     Alert.alert(
-      'Posted!',
-      'Awesome!',
-      [{ text: ':)', onPress: () => console.log('Posted') }],
+      "Posted!",
+      "Awesome!",
+      [{ text: ":)", onPress: () => console.log("Posted") }],
       { cancelable: false }
     );
   };
 
   pleaseSaveImageAlert = () => {
     Alert.alert(
-      'Error!',
-      'No Image! Please Set One',
-      [{ text: 'Okay', onPress: () => console.log('Posted') }],
+      "Error!",
+      "No Image! Please Set One",
+      [{ text: "Okay", onPress: () => console.log("Posted") }],
       { cancelable: false }
     );
   };
@@ -202,13 +197,13 @@ export default class CameraView extends Component {
   // Message to user when post fails
   showFailAlert = () => {
     Alert.alert(
-      'Failed To Add!',
-      'Error!',
+      "Failed To Add!",
+      "Error!",
       [
         {
-          text: 'Please Try Again',
-          onPress: () => console.log('Error'),
-        },
+          text: "Please Try Again",
+          onPress: () => console.log("Error")
+        }
       ],
       { cancelable: false }
     );
@@ -225,11 +220,11 @@ export default class CameraView extends Component {
   }
 
   findSize() {
-    if (this.state.size === 'medium') {
+    if (this.state.size === "medium") {
       return 0.04;
-    } else if (this.state.size === 'large') {
+    } else if (this.state.size === "large") {
       return 0.06;
-    } else if (this.state.size === 'xlarge') {
+    } else if (this.state.size === "xlarge") {
       return 0.1;
     } else {
       return 0.02;
@@ -237,22 +232,22 @@ export default class CameraView extends Component {
   }
 
   findShape(sizeToUse) {
-    if (this.state.shape === 'sphere') {
+    if (this.state.shape === "sphere") {
       return new THREE.SphereGeometry(sizeToUse, 32, 32);
-    } else if (this.state.shape === 'pyramid') {
+    } else if (this.state.shape === "pyramid") {
       return new THREE.TetrahedronBufferGeometry(sizeToUse, 0);
-    } else if (this.state.shape === 'icosahedron') {
+    } else if (this.state.shape === "icosahedron") {
       return new THREE.IcosahedronGeometry(sizeToUse, 0);
-    } else if (this.state.shape === 'octahedron') {
+    } else if (this.state.shape === "octahedron") {
       return new THREE.OctahedronGeometry(sizeToUse, 0);
-    } else if (this.state.shape === 'ring') {
+    } else if (this.state.shape === "ring") {
       return new THREE.TorusGeometry(
         sizeToUse,
         sizeToUse / 4,
         sizeToUse / 2,
         100
       );
-    } else if (this.state.shape === 'knot') {
+    } else if (this.state.shape === "knot") {
       return new THREE.TorusKnotBufferGeometry(
         sizeToUse,
         sizeToUse / 3,
@@ -264,104 +259,96 @@ export default class CameraView extends Component {
     }
   }
 
-  async findCustomMaterial() {
-    switch (this.state.texture) {
-      case 'glass':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Glass.jpg')
-            ),
-          }),
-          transparent: true,
-          opacity: 0.7,
-        }));
-      case 'water':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Water.jpg')
-            ),
-          }),
-          transparent: true,
-          opacity: 0.7,
-        }));
-      case 'fire':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Fire.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'leaves':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Leaves.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'snow':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Snow.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'wood':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Wood.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'minecraft':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Minecraft.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'bricks':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Bricks.jpg')
-            ),
-          }),
-          transparent: true,
-        }));
-      case 'snow':
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Snow.jpg')
-            ),
-          }),
-          transparent: true,
-          opacity: 0.7,
-        }));
-      default:
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require('../public/textures/Glass.jpg')
-            ),
-          }),
-          transparent: true,
-          opacity: 0.7,
-        }));
-    }
-  }
+  // async findCustomMaterial() {
+  //   switch (this.state.texture) {
+  //     case "glass":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Glass.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     case "water":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Water.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     case "fire":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Fire.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "leaves":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Leaves.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "snow":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Snow.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "wood":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Wood.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "minecraft":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Minecraft.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "bricks":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Bricks.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "snow":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Snow.jpg"))
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     default:
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Glass.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //   }
+  // }
 
   hideAllButtons() {
     this.setState({ hideButtons: !this.state.hideButtons });
@@ -389,18 +376,18 @@ export default class CameraView extends Component {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
-    let material = '';
-    if (this.state.texture === 'color') {
-      material = new THREE.MeshPhongMaterial({
-        color: colorToUse,
-        // transparent: true,
-        specular: 0x555555,
-        opacity: 1.0,
-        shininess: 100,
-      });
-    } else {
-      material = await this.findCustomMaterial();
-    }
+    let material = "";
+    // if (this.state.texture === "color") {
+    material = new THREE.MeshPhongMaterial({
+      color: colorToUse,
+      // transparent: true,
+      specular: 0x555555,
+      opacity: 1.0,
+      shininess: 100
+    });
+    // } else {
+    //   material = await this.findCustomMaterial();
+    // }
     const mesh = new THREE.Mesh(objectToRender, material);
     // const newItem = setModelPos(mesh, this.camera.position);
     // this.camera.matrixWorldInverse.getInverse(this.camera.matrixWorld);
@@ -415,7 +402,6 @@ export default class CameraView extends Component {
     mesh.rotator = 0.025;
     this.graffitiObjects.push(mesh);
     this.scene.add(mesh);
-
     this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
@@ -436,9 +422,9 @@ export default class CameraView extends Component {
               style={{
                 height: 100,
                 width: 100,
-                position: 'absolute',
-                justifyContent: 'center',
-                alignItems: 'center',
+                position: "absolute",
+                justifyContent: "center",
+                alignItems: "center"
               }}
             />
           </View>
@@ -447,38 +433,38 @@ export default class CameraView extends Component {
           <View style={styles.drop}>
             {/* Pick shape from list menu */}
             <Menu
-              ref={ref => this.setMenuRef(ref, 'shape')}
+              ref={ref => this.setMenuRef(ref, "shape")}
               button={
                 <Button
                   raised
                   rounded
                   title="Shape"
-                  onPress={() => this.showMenu('shape')}
+                  onPress={() => this.showMenu("shape")}
                   buttonStyle={{
-                    backgroundColor: 'red',
+                    backgroundColor: "red",
                     opacity: 0.5,
-                    width: 'auto',
-                    height: 50,
+                    width: "auto",
+                    height: 50
                   }}
                 />
               }
             >
-              <MenuItem onPress={() => this.setState({ shape: 'cube' })}>
+              <MenuItem onPress={() => this.setState({ shape: "cube" })}>
                 Cube
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ shape: 'sphere' })}>
+              <MenuItem onPress={() => this.setState({ shape: "sphere" })}>
                 Sphere
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ shape: 'pyramid' })}>
+              <MenuItem onPress={() => this.setState({ shape: "pyramid" })}>
                 Pyramid
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ shape: 'icosahedron' })}>
+              <MenuItem onPress={() => this.setState({ shape: "icosahedron" })}>
                 Icosahedron
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ shape: 'octahedron' })}>
+              <MenuItem onPress={() => this.setState({ shape: "octahedron" })}>
                 Octahedron
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ shape: 'ring' })}>
+              <MenuItem onPress={() => this.setState({ shape: "ring" })}>
                 Ring
               </MenuItem>
             </Menu>
@@ -487,80 +473,80 @@ export default class CameraView extends Component {
         {this.state.hideButtons === true ? null : (
           <View style={styles.size}>
             <Menu
-              ref={ref => this.setMenuRef(ref, 'size')}
+              ref={ref => this.setMenuRef(ref, "size")}
               button={
                 <Button
                   raised
                   rounded
                   title="Size"
-                  onPress={() => this.showMenu('size')}
+                  onPress={() => this.showMenu("size")}
                   buttonStyle={{
-                    backgroundColor: 'purple',
+                    backgroundColor: "purple",
                     opacity: 0.5,
                     width: 85,
-                    height: 50,
+                    height: 50
                   }}
                 />
               }
             >
-              <MenuItem onPress={() => this.setState({ size: 'small' })}>
+              <MenuItem onPress={() => this.setState({ size: "small" })}>
                 Small
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ size: 'medium' })}>
+              <MenuItem onPress={() => this.setState({ size: "medium" })}>
                 Medium
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ size: 'large' })}>
+              <MenuItem onPress={() => this.setState({ size: "large" })}>
                 Large
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ size: 'xlarge' })}>
+              <MenuItem onPress={() => this.setState({ size: "xlarge" })}>
                 X-Large
               </MenuItem>
             </Menu>
-            <Menu
-              ref={ref => this.setMenuRef(ref, 'texture')}
+            {/* <Menu
+              ref={ref => this.setMenuRef(ref, "texture")}
               button={
                 <Button
                   raised
                   rounded
                   title="Texture"
-                  onPress={() => this.showMenu('texture')}
+                  onPress={() => this.showMenu("texture")}
                   buttonStyle={{
-                    backgroundColor: 'green',
+                    backgroundColor: "green",
                     opacity: 0.5,
-                    width: 'auto',
-                    height: 50,
+                    width: "auto",
+                    height: 50
                   }}
                 />
               }
             >
-              <MenuItem onPress={() => this.setState({ texture: 'glass' })}>
+              <MenuItem onPress={() => this.setState({ texture: "glass" })}>
                 Glass
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'fire' })}>
+              <MenuItem onPress={() => this.setState({ texture: "fire" })}>
                 Fire
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'snow' })}>
+              <MenuItem onPress={() => this.setState({ texture: "snow" })}>
                 Snow
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'leaves' })}>
+              <MenuItem onPress={() => this.setState({ texture: "leaves" })}>
                 Leaves
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'wood' })}>
+              <MenuItem onPress={() => this.setState({ texture: "wood" })}>
                 Wood
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'minecraft' })}>
+              <MenuItem onPress={() => this.setState({ texture: "minecraft" })}>
                 Minecraft
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'water' })}>
+              <MenuItem onPress={() => this.setState({ texture: "water" })}>
                 Water
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'bricks' })}>
+              <MenuItem onPress={() => this.setState({ texture: "bricks" })}>
                 Brick
               </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: 'color' })}>
+              <MenuItem onPress={() => this.setState({ texture: "color" })}>
                 Color
               </MenuItem>
-            </Menu>
+            </Menu> */}
             <TouchableOpacity
               onPressIn={this.undo}
               onPressOut={this.stopTimer}
@@ -570,23 +556,10 @@ export default class CameraView extends Component {
                 style={{ width: 40, height: 40 }}
                 source={{
                   uri:
-                    'https://flaticons.net/icons/Mobile%20Application/Command-Undo.png',
+                    "https://flaticons.net/icons/Mobile%20Application/Command-Undo.png"
                 }}
               />
             </TouchableOpacity>
-
-            {/* <Button
-              raised
-              rounded
-              title="Clear"
-              onPress={this.undoAll}
-              buttonStyle={{
-                backgroundColor: 'purple',
-                opacity: 0.5,
-                width: 85,
-                height: 50,
-              }}
-            /> */}
           </View>
         )}
         <View style={styles.takePhoto}>
@@ -597,10 +570,10 @@ export default class CameraView extends Component {
               title=" Photo"
               onPress={this.takeScreenshot}
               buttonStyle={{
-                backgroundColor: 'blue',
+                backgroundColor: "blue",
                 opacity: 0.3,
-                width: 'auto',
-                height: 50,
+                width: "auto",
+                height: 50
               }}
             />
           )}
@@ -611,17 +584,17 @@ export default class CameraView extends Component {
               title="Next"
               onPress={this.handleSubmit}
               buttonStyle={{
-                backgroundColor: 'black',
+                backgroundColor: "black",
                 opacity: 0.5,
                 width: 85,
-                height: 50,
+                height: 50
               }}
             />
           )}
           <TouchableOpacity onPress={this.hideAllButtons}>
             <Image
               style={styles.optionButton}
-              source={require('./../public/menu.png')}
+              source={require("../../public/menu.png")}
             />
           </TouchableOpacity>
         </View>
@@ -632,7 +605,7 @@ export default class CameraView extends Component {
           >
             <Image
               style={styles.optionButton}
-              source={require('./../public/add.png')}
+              source={require("../../public/add.png")}
             />
           </TouchableOpacity>
         </View>
@@ -703,94 +676,94 @@ export default class CameraView extends Component {
   };
 }
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: height - 700,
-    left: width / 2 + 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: height - 650,
+    left: width / 2 + 88
   },
   size: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: height - 650,
-    left: width / 2 + 100,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: height - 600,
+    left: width / 2 + 88
   },
   takePhoto: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: height - 150,
-    left: width / 2 + 90,
+    left: width / 2 + 88
   },
   draw: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: height - 100,
-    left: width / 2 - 25,
+    left: width / 2 - 25
   },
   dropView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: height - 200,
-    left: width / 2 - 200,
+    left: width / 2 - 200
   },
   colorPicker: {
-    position: 'absolute',
+    position: "absolute",
     top: height - 80,
     left: width / 2 - 130,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   badge: {
-    position: 'absolute',
+    position: "absolute",
     top: 17,
-    left: 10,
+    left: 10
   },
   items: {
-    position: 'absolute',
+    position: "absolute",
     top: 60,
     left: 25,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     padding: 8,
-    marginRight: 5,
+    marginRight: 5
   },
   buttonText: {
-    color: 'white',
-    fontSize: 20,
+    color: "white",
+    fontSize: 20
   },
   drawButton: {
-    backgroundColor: 'black',
+    backgroundColor: "black",
     opacity: 0.4,
     width: 100,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10
   },
   optionButton: {
     opacity: 0.6,
     width: 50,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10
   },
   undoButton: {
     opacity: 0.6,
     width: 100,
     height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-  },
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10
+  }
 });
 
 function setModelPos(model, dropPos) {

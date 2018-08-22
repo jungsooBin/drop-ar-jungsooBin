@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
-import EditProfileButton from "./EditProfileButton";
 import UserFeed from "./UserFeed";
 
 class UserProfile extends Component {

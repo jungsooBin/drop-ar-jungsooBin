@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import { createStackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-import store from "./store/store";
-import Home from "./components/Home";
-import LoginForm from "./components/LoginForm";
-import SignUpForm from "./components/SignUpForm";
-import CameraView from "./components/CameraView";
-import CameraViewCollaboration from "./components/CameraViewCollaboration";
-import UserProfile from "./components/UserProfile";
-import EditUserProfile from "./components/EditUserProfile";
-import ArtFeed from "./components/ArtFeed";
-// import FriendProfile from "./components/FriendProfile";
-import ArtPostForm from "./components/ArtPostForm";
-import SingleArtView from "./components/SingleArtView";
-import SingleArtItem from "./components/SingleArtItem";
+import store from "./client/store/store";
+import Home from "./client/components/Home";
+import LoginForm from "./client/components/LoginForm";
+import SignUpForm from "./client/components/SignUpForm";
+import CameraView from "./client/components/CameraView";
+import CameraViewCollaboration from "./client/components/CameraViewCollaboration";
+import UserProfile from "./client/components/UserProfile";
+import EditUserProfile from "./client/components/EditUserProfile";
+import ArtFeed from "./client/components/ArtFeed";
+import ArtPostForm from "./client/components/ArtPostForm";
+import SingleArtView from "./client/components/SingleArtView";
+import SingleArtItem from "./client/components/SingleArtItem";
 
 const RootNavigator = createStackNavigator({
   Main: {
@@ -77,12 +76,6 @@ const RootNavigator = createStackNavigator({
       }
     })
   },
-  // FriendProfile: {
-  //   screen: FriendProfile,
-  //   navigationOptions: ({ navigation }) => ({
-  //     header: null
-  //   })
-  // },
   ArtPostForm: {
     screen: ArtPostForm,
     navigationOptions: ({ navigation }) => ({

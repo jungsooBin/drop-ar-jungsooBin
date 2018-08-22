@@ -18,7 +18,7 @@
     "ios": "react-native-scripts ios",
     "test": "jest",
     "test-mocha": "NODE_ENV='test' mocha \"./database/**/*.spec.js\" \"./utilities/*.spec.js\" ",
-    "seed": "node database/seed.js",
+    "seed": "node ./server/database/seed.js",
     "start-watch": "nodemon server/index.js --watch server --watch database --watch package.json",
     "start-dev": "cross-env NODE_ENV=development npm run start-watch",
     "build:ios": "react-native bundle --entry-file='index.ios.js' --bundle-output='./ios/AwesomeProject/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"

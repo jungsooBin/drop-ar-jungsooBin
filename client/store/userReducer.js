@@ -1,5 +1,5 @@
 import axios from "axios";
-import domain from "../domain.js";
+import domain from "../../domain.js";
 
 const initialState = {
   user: {}
@@ -7,8 +7,8 @@ const initialState = {
 
 const LOGIN_ME = "LOGIN_ME";
 const SIGN_UP_WITHOUT_GOOGLE = "SIGN_UP_WITHOUT_GOOGLE";
-const SET_USER = "SET_USER"
-const UPDATE_USER = 'UPDATE_USER'
+const SET_USER = "SET_USER";
+const UPDATE_USER = "UPDATE_USER";
 
 const loginWithoutGoogle = user => ({
   type: LOGIN_ME,
@@ -23,7 +23,7 @@ const signUpWithoutGoogle = user => ({
 export const setCurrentUser = user => ({
   type: SET_USER,
   user: user
-})
+});
 
 const updateUser = user => ({
   type: UPDATE_USER,
@@ -36,7 +36,7 @@ export const login = formData => async dispatch => {
     const user = res.data;
     dispatch(loginWithoutGoogle(user));
   } catch (error) {
-    console.log('do we get error?',error);
+    console.log("do we get error?", error);
     dispatch(loginWithoutGoogle(error));
   }
 };
@@ -51,16 +51,19 @@ export const signup = formData => async dispatch => {
   }
 };
 
-export const updatingUser = (userData) => async dispatch => { 
+export const updatingUser = userData => async dispatch => {
   try {
-      await axios.put(`${domain}/api/user/update`, userData)
-      const res = await axios.put(`${domain}/api/user/login`, {email: userData.email, password: userData.password})
-      const user = res.data;
-      dispatch(updateUser(user))
+    await axios.put(`${domain}/api/user/update`, userData);
+    const res = await axios.put(`${domain}/api/user/login`, {
+      email: userData.email,
+      password: userData.password
+    });
+    const user = res.data;
+    dispatch(updateUser(user));
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
-}
+};
 const userReducer = (userState = initialState, action) => {
   switch (action.type) {
     case LOGIN_ME:
@@ -73,12 +76,12 @@ const userReducer = (userState = initialState, action) => {
         ...userState,
         user: action.user
       };
-    
+
     case SET_USER:
       return {
         ...userState,
         user: action.user
-      }
+      };
     case UPDATE_USER:
       return {
         ...userState,
