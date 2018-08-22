@@ -594,7 +594,7 @@ export default class CameraView extends Component {
           <TouchableOpacity onPress={this.hideAllButtons}>
             <Image
               style={styles.optionButton}
-              source={require("../../public/menu.png")}
+              source={{uri: 'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/menu.png?alt=media&token=9b6a966a-2b51-4b35-9f88-0efed0f3dd56'}}
             />
           </TouchableOpacity>
         </View>
@@ -604,8 +604,8 @@ export default class CameraView extends Component {
             onPressOut={this.stopTimer}
           >
             <Image
-              style={styles.optionButton}
-              source={require("../../public/add.png")}
+              style={styles.optionButton}xw
+              source={{uri: 'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/add.png?alt=media&token=67842409-eecc-4caa-ad9e-02f1fcb2a6c1'}}
             />
           </TouchableOpacity>
         </View>
@@ -627,7 +627,7 @@ export default class CameraView extends Component {
       0.01,
       1000
     );
-
+    this.props.active = true;
     const renderer = ExpoTHREE.createRenderer({ gl });
     renderer.setSize(gl.drawingBufferWidth, gl.drawingBufferHeight);
 

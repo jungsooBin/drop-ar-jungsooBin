@@ -36,7 +36,6 @@ export const login = formData => async dispatch => {
     const user = res.data;
     dispatch(loginWithoutGoogle(user));
   } catch (error) {
-    console.log("do we get error?", error);
     dispatch(loginWithoutGoogle(error));
   }
 };
