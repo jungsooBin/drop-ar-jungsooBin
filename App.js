@@ -10,7 +10,6 @@ import CameraViewCollaboration from "./components/CameraViewCollaboration";
 import UserProfile from "./components/UserProfile";
 import EditUserProfile from "./components/EditUserProfile";
 import ArtFeed from "./components/ArtFeed";
-// import FriendProfile from "./components/FriendProfile";
 import ArtPostForm from "./components/ArtPostForm";
 import SingleArtView from "./components/SingleArtView";
 import SingleArtItem from "./components/SingleArtItem";
@@ -77,12 +76,6 @@ const RootNavigator = createStackNavigator({
       }
     })
   },
-  // FriendProfile: {
-  //   screen: FriendProfile,
-  //   navigationOptions: ({ navigation }) => ({
-  //     header: null
-  //   })
-  // },
   ArtPostForm: {
     screen: ArtPostForm,
     navigationOptions: ({ navigation }) => ({
