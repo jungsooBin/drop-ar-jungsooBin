@@ -28,6 +28,10 @@ class LoginForm extends React.Component {
         this.showFailAlert(this.props.user.response.data);
       } else if (this.props.user.id) {
         this.props.navigation.navigate("ArtFeed");
+        this.setState({
+          email: "",
+          password: ""
+        });
       } else {
         this.showFailAlert("Server error. check your domain");
       }
