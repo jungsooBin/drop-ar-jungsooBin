@@ -33,11 +33,11 @@ export default class CameraViewCollaboration extends Component {
       size: "small",
       texture: "color",
       hideButtons: true,
-      coverPhoto: null
+      coverPhoto: null,
+      objectKeys: []
     };
     this.model = null;
     this.graffitiObjects = [];
-    this.objectKeys = [];
     this.timer = null;
     this.findColor = this.findColor.bind(this);
     this.findShape = this.findShape.bind(this);
@@ -354,6 +354,16 @@ export default class CameraViewCollaboration extends Component {
     plight.position.set(50, 50, 50);
     this.scene.add(plight);
   }
+   
+  async addShapeWithSize() {
+
+    const sizeToUse = this.findSize();
+    const colorToUse = this.findColor();
+
+    const matrixWorld = this.camera.matrixWorld;
+    this.storeItems(sizeToUse, colorToUse, matrixWorld, this.state.shape);
+    // this.ItemElementsListener();
+  }
 
   storeItems(sizeToUse, colorToUse, matrixWorld, shape) {
     // console.log('sizeToUse',sizeToUse,
@@ -371,14 +381,17 @@ export default class CameraViewCollaboration extends Component {
   }
 
   ItemElementsListener() {
+    // console.log('this.scene?', this.scene)
     firebase
       .database()
       .ref("itemList/")
       .on("value", ItemListObj => {
+        // console.log('ItemListObj', ItemListObj)
+        // console.log('this.objectKeys', this.objectKeys)
         ItemListObj.forEach(item => {
-          if (!this.objectKeys.includes(item.key)) {
+          if (!this.state.objectKeys.includes(item.key)) {
             this.addItem(
-              item.key,
+              item.key, 
               item.child("sizeToUse").val(),
               item.child("colorToUse").val(),
               item.child("matrixWorld").val(),
@@ -386,53 +399,36 @@ export default class CameraViewCollaboration extends Component {
             );
           }
         });
+        // console.log('this.objectKeys', this.objectKeys)
+
       });
   }
 
-  async addShapeWithSize() {
-    const sizeToUse = this.findSize();
-    const colorToUse = this.findColor();
-
-    const matrixWorld = this.camera.matrixWorld;
-    // await this.ItemElementsListener();
-    this.storeItems(sizeToUse, colorToUse, matrixWorld, this.state.shape);
-  }
   async addItem(itemKey, sizeToUse, colorToUse, matrixWorld, shape) {
-    this.objectKeys.push(itemKey);
+    // this.objectKeys.push(itemKey);
+    this.setState(prevState => ({objectKeys: [...prevState.objectKeys, itemKey]}));
     const objectToRender = this.findShape(sizeToUse, shape);
 
-    let material = "";
     // if (this.state.texture === "color") {
-    material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshPhongMaterial({
       color: colorToUse,
       // transparent: true,
       specular: 0x555555,
       opacity: 1.0,
       shininess: 100
     });
-    // }
-    // else {
-    //   // material = await this.findCustomMaterial();
-    // }
+
     const mesh = new THREE.Mesh(objectToRender, material);
-    // const newItem = setModelPos(mesh, this.camera.position);
-    // this.camera.matrixWorldInverse.getInverse(this.camera.matrixWorld);
-    // newItem.position.z -= 0.2;
-    // newItem.position.x -= 0.01;
-    // newItem.position.y += 0.01;
-    // newItem.applyMatrix4(this.camera.matrixWorldInverse);
     const drawPoint = new THREE.Vector3(0, 0, -0.35);
     const targetPosition = drawPoint.applyMatrix4(matrixWorld);
     mesh.position.copy(targetPosition);
-    mesh.lookAt(this.camera.position);
     mesh.rotator = 0.025;
-    this.graffitiObjects.push(mesh);
+    this.graffitiObjects.push(mesh); 
     this.scene.add(mesh);
-    // this.timer = setTimeout(this.addShapeWithSize, 50);
   }
 
+
   render() {
-    this.ItemElementsListener();
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
@@ -622,7 +618,7 @@ export default class CameraViewCollaboration extends Component {
           <TouchableOpacity onPress={this.hideAllButtons}>
             <Image
               style={styles.optionButton}
-              source={require("../../public/menu.png")}
+              source={{uri: 'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/menu.png?alt=media&token=9b6a966a-2b51-4b35-9f88-0efed0f3dd56'}}
             />
           </TouchableOpacity>
         </View>
@@ -633,7 +629,7 @@ export default class CameraViewCollaboration extends Component {
           >
             <Image
               style={styles.optionButton}
-              source={require("../../public/add.png")}
+              source={{uri: 'https://firebasestorage.googleapis.com/v0/b/graftarfinal-6b59a.appspot.com/o/add.png?alt=media&token=67842409-eecc-4caa-ad9e-02f1fcb2a6c1'}}
             />
           </TouchableOpacity>
         </View>
@@ -684,13 +680,6 @@ export default class CameraViewCollaboration extends Component {
 
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
-        // Fire objects like a gun lol ==>
-        // setModelPos(art, this.camera.position);
-        // art.position.z -= 0.01;
-        // if (art.position.z === -1) {
-        //   this.scene.remove(art);
-        // }
-        // Animates items for live movement
         art.rotation.x += art.rotator;
         art.rotation.y += art.rotator;
       });
@@ -698,6 +687,7 @@ export default class CameraViewCollaboration extends Component {
       renderer.render(this.scene, this.camera);
       gl.endFrameEXP();
     };
+    this.ItemElementsListener();
 
     animate();
   };

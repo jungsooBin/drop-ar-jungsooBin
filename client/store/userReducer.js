@@ -9,6 +9,7 @@ const LOGIN_ME = "LOGIN_ME";
 const SIGN_UP_WITHOUT_GOOGLE = "SIGN_UP_WITHOUT_GOOGLE";
 const SET_USER = "SET_USER";
 const UPDATE_USER = "UPDATE_USER";
+const SIGN_OUT = "SIGN_OUT";
 
 const loginWithoutGoogle = user => ({
   type: LOGIN_ME,
@@ -28,6 +29,11 @@ export const setCurrentUser = user => ({
 const updateUser = user => ({
   type: UPDATE_USER,
   user: user
+});
+
+const signOutUser = () => ({
+  type: SIGN_OUT,
+  user: {}
 });
 
 export const login = formData => async dispatch => {
@@ -63,6 +69,16 @@ export const updatingUser = userData => async dispatch => {
     console.log(error);
   }
 };
+
+export const signout = () => async dispatch => {
+  try {
+    await axios.delete("/api/user/signout");
+    dispatch(signOutUser());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const userReducer = (userState = initialState, action) => {
   switch (action.type) {
     case LOGIN_ME:
@@ -75,7 +91,6 @@ const userReducer = (userState = initialState, action) => {
         ...userState,
         user: action.user
       };
-
     case SET_USER:
       return {
         ...userState,
@@ -86,7 +101,11 @@ const userReducer = (userState = initialState, action) => {
         ...userState,
         user: action.user
       };
-
+    case SIGN_OUT:
+      return {
+        ...userState,
+        user: action.user
+      };
     default:
       return userState;
   }
