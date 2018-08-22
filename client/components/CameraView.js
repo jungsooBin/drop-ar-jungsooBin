@@ -1,26 +1,22 @@
 import React, { Component } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   Image,
-  PanResponder,
-  Animated,
   Alert,
   TouchableOpacity,
   StatusBar
 } from "react-native";
-import axios from "axios";
-import Expo, { AR, takeSnapshotAsync } from "expo";
+import Expo, { takeSnapshotAsync } from "expo";
 import * as THREE from "three";
 import ExpoTHREE from "expo-three";
 import { Button } from "react-native-elements";
 import { ColorWheel } from "react-native-color-wheel";
 var hsl = require("hsl-to-hex");
-import Menu, { MenuItem, MenuDivider } from "react-native-material-menu";
+import Menu, { MenuItem } from "react-native-material-menu";
 import * as firebase from "firebase";
-import firebaseConfig from "../secrets";
+import firebaseConfig from "../../secrets";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -50,7 +46,7 @@ export default class CameraView extends Component {
     this.findSize = this.findSize.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addShapeWithSize = this.addShapeWithSize.bind(this);
-    this.findCustomMaterial = this.findCustomMaterial.bind(this);
+    // this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
     this.undo = this.undo.bind(this);
     // this.undoAll = this.undoAll.bind(this);
@@ -94,7 +90,6 @@ export default class CameraView extends Component {
   }
 
   async componentWillUnmount() {
-    console.log("COMPONENT DID UNMOUNT");
     cancelAnimationFrame(this.gameRequest);
     try {
       this.arSession = await this._glView.stopARSessionAsync();
@@ -264,96 +259,96 @@ export default class CameraView extends Component {
     }
   }
 
-  async findCustomMaterial() {
-    switch (this.state.texture) {
-      case "glass":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Glass.jpg")
-            )
-          }),
-          transparent: true,
-          opacity: 0.7
-        }));
-      case "water":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Water.jpg")
-            )
-          }),
-          transparent: true,
-          opacity: 0.7
-        }));
-      case "fire":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(require("../public/textures/Fire.jpg"))
-          }),
-          transparent: true
-        }));
-      case "leaves":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Leaves.jpg")
-            )
-          }),
-          transparent: true
-        }));
-      case "snow":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(require("../public/textures/Snow.jpg"))
-          }),
-          transparent: true
-        }));
-      case "wood":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(require("../public/textures/Wood.jpg"))
-          }),
-          transparent: true
-        }));
-      case "minecraft":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Minecraft.jpg")
-            )
-          }),
-          transparent: true
-        }));
-      case "bricks":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Bricks.jpg")
-            )
-          }),
-          transparent: true
-        }));
-      case "snow":
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(require("../public/textures/Snow.jpg"))
-          }),
-          transparent: true,
-          opacity: 0.7
-        }));
-      default:
-        return (material = new THREE.MeshBasicMaterial({
-          map: await ExpoTHREE.createTextureAsync({
-            asset: Expo.Asset.fromModule(
-              require("../public/textures/Glass.jpg")
-            )
-          }),
-          transparent: true,
-          opacity: 0.7
-        }));
-    }
-  }
+  // async findCustomMaterial() {
+  //   switch (this.state.texture) {
+  //     case "glass":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Glass.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     case "water":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Water.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     case "fire":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Fire.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "leaves":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Leaves.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "snow":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Snow.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "wood":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Wood.jpg"))
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "minecraft":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Minecraft.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "bricks":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Bricks.jpg")
+  //           )
+  //         }),
+  //         transparent: true
+  //       }));
+  //     case "snow":
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(require("../../public/textures/Snow.jpg"))
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //     default:
+  //       return (material = new THREE.MeshBasicMaterial({
+  //         map: await ExpoTHREE.createTextureAsync({
+  //           asset: Expo.Asset.fromModule(
+  //             require("../../public/textures/Glass.jpg")
+  //           )
+  //         }),
+  //         transparent: true,
+  //         opacity: 0.7
+  //       }));
+  //   }
+  // }
 
   hideAllButtons() {
     this.setState({ hideButtons: !this.state.hideButtons });
@@ -382,17 +377,17 @@ export default class CameraView extends Component {
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
     let material = "";
-    if (this.state.texture === "color") {
-      material = new THREE.MeshPhongMaterial({
-        color: colorToUse,
-        // transparent: true,
-        specular: 0x555555,
-        opacity: 1.0,
-        shininess: 100
-      });
-    } else {
-      material = await this.findCustomMaterial();
-    }
+    // if (this.state.texture === "color") {
+    material = new THREE.MeshPhongMaterial({
+      color: colorToUse,
+      // transparent: true,
+      specular: 0x555555,
+      opacity: 1.0,
+      shininess: 100
+    });
+    // } else {
+    //   material = await this.findCustomMaterial();
+    // }
     const mesh = new THREE.Mesh(objectToRender, material);
     // const newItem = setModelPos(mesh, this.camera.position);
     // this.camera.matrixWorldInverse.getInverse(this.camera.matrixWorld);
@@ -605,7 +600,7 @@ export default class CameraView extends Component {
           <TouchableOpacity onPress={this.hideAllButtons}>
             <Image
               style={styles.optionButton}
-              source={require("./../public/menu.png")}
+              source={require("../../public/menu.png")}
             />
           </TouchableOpacity>
         </View>
@@ -616,7 +611,7 @@ export default class CameraView extends Component {
           >
             <Image
               style={styles.optionButton}
-              source={require("./../public/add.png")}
+              source={require("../../public/add.png")}
             />
           </TouchableOpacity>
         </View>

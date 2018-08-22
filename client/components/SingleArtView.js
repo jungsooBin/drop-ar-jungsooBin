@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   StyleSheet,
   Text,
@@ -8,17 +8,16 @@ import {
   PanResponder,
   Animated,
   TouchableOpacity,
-  StatusBar,
-  
-} from 'react-native';
-import axios from 'axios';
-import { connect } from 'react-redux';
-import Expo from 'expo';
-import { AR } from 'expo';
-import * as THREE from 'three';
-import ExpoTHREE from 'expo-three';
-import { Button } from 'react-native-elements';
-import { saveLikeArt, saveDislikeArt, changeLike } from '../store/likesReducer';
+  StatusBar
+} from "react-native";
+import axios from "axios";
+import { connect } from "react-redux";
+import Expo from "expo";
+import { AR } from "expo";
+import * as THREE from "three";
+import ExpoTHREE from "expo-three";
+import { Button } from "react-native-elements";
+import { saveLikeArt, saveDislikeArt, changeLike } from "../store/likesReducer";
 
 console.disableYellowBox = true;
 
@@ -34,21 +33,20 @@ class SingleArtView extends React.Component {
     this.dislikeArt = this.dislikeArt.bind(this);
   }
 
- 
   componentDidMount() {
     const { navigation } = this.props;
-    const artObj = navigation.getParam('art');
+    const artObj = navigation.getParam("art");
     const usersWhoLikedThisArt = [];
     artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
     const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
-    console.log('youLikedThisArt: ', youLikedThisArt);
+    console.log("youLikedThisArt: ", youLikedThisArt);
     if (youLikedThisArt === true) {
       this.setState({ like: true });
     }
   }
 
   async componentWillUnmount() {
-    console.log('COMPONENT DID UNMOUNT');
+    console.log("COMPONENT DID UNMOUNT");
     try {
       this.arSession = await this._glView.stopARSessionAsync();
     } catch (err) {
@@ -58,14 +56,14 @@ class SingleArtView extends React.Component {
 
   async likeArt() {
     const { navigation } = this.props;
-    const art = navigation.getParam('art');
+    const art = navigation.getParam("art");
     this.props.saveLikeArt({ userId: this.props.user.id, artId: art.id });
     this.setState({ like: !this.state.like });
   }
 
   async dislikeArt() {
     const { navigation } = this.props;
-    const art = navigation.getParam('art');
+    const art = navigation.getParam("art");
     this.props.saveDislikeArt({ userId: this.props.user.id, artId: art.id });
     this.setState({ like: !this.state.like });
   }
@@ -73,7 +71,7 @@ class SingleArtView extends React.Component {
   async handleLoad() {
     const { navigation } = this.props;
     let loader = new THREE.ObjectLoader();
-    const artObj = navigation.getParam('art');
+    const artObj = navigation.getParam("art");
     const sceneJson = artObj.artPiece;
 
     const artToLoad = loader.parse(sceneJson);
@@ -81,8 +79,8 @@ class SingleArtView extends React.Component {
   }
 
   render() {
-    console.log('THIS IS PROPS', this.props.user)
-    console.log('TRYAGAIN', this.props.navigation)
+    console.log("THIS IS PROPS", this.props.user);
+    console.log("TRYAGAIN", this.props.navigation);
 
     const { navigation } = this.props;
     return (
@@ -100,10 +98,10 @@ class SingleArtView extends React.Component {
             title="Load Scene"
             onPress={this.handleLoad}
             buttonStyle={{
-              backgroundColor: 'green',
+              backgroundColor: "green",
               opacity: 0.5,
               width: 85,
-              height: 85,
+              height: 85
             }}
           />
           {this.state.like === false ? (
@@ -114,7 +112,7 @@ class SingleArtView extends React.Component {
               <Image
                 source={{
                   uri:
-                    'https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png',
+                    "https://cdn1.iconfinder.com/data/icons/valentine-s-day-simplicity/512/empty_heart-512.png"
                 }}
                 style={{ width: 80, height: 80, borderRadius: 40 }}
               />
@@ -128,7 +126,7 @@ class SingleArtView extends React.Component {
               <Image
                 source={{
                   uri:
-                    'https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg',
+                    "https://icon2.kisspng.com/20180320/xqq/kisspng-social-media-facebook-like-button-heart-emoticon-facebook-live-love-png-5ab1d16e4eb9f1.5813486915216029263225.jpg"
                 }}
                 style={{ width: 80, height: 80, borderRadius: 40 }}
               />
@@ -175,21 +173,21 @@ class SingleArtView extends React.Component {
   };
 }
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   drop: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
     top: height - 350,
-    left: width / 2 + 100,
+    left: width / 2 + 88
   },
   love: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-  },
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute"
+  }
 });
 
 function setModelPos(model, dropPos) {
@@ -205,7 +203,7 @@ const mapStateToProps = state => {
   return {
     likeArt: state.likes.likeArt,
     dislikeArt: state.likes.dislikeArt,
-    user: state.users.user,
+    user: state.users.user
   };
 };
 
@@ -216,7 +214,7 @@ const mapDispatchToProps = dispatch => ({
   saveDislikeArt: dislikeData => {
     dispatch(saveDislikeArt(dislikeData));
   },
-  likedArt: (liked) =>  dispatch(changeLike(liked))
+  likedArt: liked => dispatch(changeLike(liked))
 });
 
 export default connect(

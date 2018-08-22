@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import * as firebase from "firebase";
-import firebaseConfig from "../secrets.js";
+import firebaseConfig from "../../secrets.js";
 import processFBData from "../utilities/getDataFromFB";
 import { signup, setCurrentUser } from "../store/userReducer";
 import { connect } from "react-redux";
 import axios from "axios";
-import domain from "../domain.js";
-
+import domain from "../../domain.js";
 
 //Globals
 firebase.initializeApp(firebaseConfig);
@@ -23,16 +22,18 @@ class Home extends Component {
       if (user != null) {
         const newUser = processFBData(user);
         //Checks whether user exists
-        const doesUserExist = await axios.get(`${domain}/api/user/${newUser.email}`)
+        const doesUserExist = await axios.get(
+          `${domain}/api/user/${newUser.email}`
+        );
         //If user doesn't exist, sign them up and log them in, if they do exist, log in
-      if (!doesUserExist.data.length ){
-        //Adds id property to newUser 
-        await this.props.handleSignUp(newUser)  
-        this.props.navigation.navigate('ArtFeed') 
-      } else {
-        newUser.id = doesUserExist.data[0].id
-          await this.props.setCurrentUser(newUser)
-          this.props.navigation.navigate('ArtFeed') 
+        if (!doesUserExist.data.length) {
+          //Adds id property to newUser
+          await this.props.handleSignUp(newUser);
+          this.props.navigation.navigate("ArtFeed");
+        } else {
+          newUser.id = doesUserExist.data[0].id;
+          await this.props.setCurrentUser(newUser);
+          this.props.navigation.navigate("ArtFeed");
         }
       }
     });

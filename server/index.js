@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
-const { db } = require("./../database");
+const { db } = require("./database");
 const PORT = process.env.PORT || 8080;
 const app = express();
 const server = app.listen(PORT, () => console.log(`Welcome to DropAR ${PORT}`));
@@ -23,7 +23,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // 'API' routes
 app.use("/api", require("./api"));
-app.use("/auth", require("./auth"));
 
 // 404 middleware
 app.use(

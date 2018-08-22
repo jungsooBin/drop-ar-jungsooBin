@@ -1,32 +1,30 @@
-import axios from 'axios';
-import domain from '../domain.js';
+import axios from "axios";
+import domain from "../../domain.js";
 
 const initialState = {
   likeArt: [],
-  allLikes: [],
+  allLikes: []
 };
 
-const LIKE_ART = 'LIKE_ART';
-const DISLIKE_ART = 'DISLIKE_ART';
-const GET_LIKES = 'GET_LIKES';
-const CHANGE_LIKED = 'CHANGE_LIKED'
+const LIKE_ART = "LIKE_ART";
+const DISLIKE_ART = "DISLIKE_ART";
+const GET_LIKES = "GET_LIKES";
+const CHANGE_LIKED = "CHANGE_LIKED";
 
 export const likeArt = likeArt => ({
   type: LIKE_ART,
-  likeArt,
+  likeArt
 });
 
 export const dislikeArt = dislikeArt => ({
   type: DISLIKE_ART,
-  dislikeArt,
+  dislikeArt
 });
 
 export const getLikes = likes => ({
   type: GET_LIKES,
-  likes,
+  likes
 });
-
-
 
 export const fetchAllLikes = () => async dispatch => {
   try {
@@ -63,17 +61,17 @@ const likesReducer = (likesState = initialState, action) => {
     case DISLIKE_ART:
       return {
         ...likesState,
-        likeArt: action.likeArt,
+        likeArt: action.likeArt
       };
     case LIKE_ART:
       return {
         ...likesState,
-        likeArt: action.likeArt,
+        likeArt: action.likeArt
       };
     case GET_LIKES:
       return {
         ...likesState,
-        allLikes: action.likes,
+        allLikes: action.likes
       };
     default:
       return likesState;
