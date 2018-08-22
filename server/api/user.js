@@ -50,4 +50,9 @@ router.put("/update", async (req, res, next) => {
   }
 });
 
+router.delete("/signout", (req, res, next) => {
+  req.session.destroy();
+  res.status(204).end();
+});
+
 module.exports = router;

@@ -2,11 +2,27 @@ import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import UserFeed from "./UserFeed";
+import { signout } from "../store/userReducer";
 
 class UserProfile extends Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event) {
+    try {
+      await this.props.handleSignout();
+      this.props.navigation.navigate("LoginForm");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   render() {
     const { navigation } = this.props;
     const { email, firstName, lastName, picture } = this.props.user;
+
     return (
       <View style={styles.container}>
         <View style={styles.userContainer}>
@@ -24,7 +40,7 @@ class UserProfile extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => navigation.navigate(`LoginForm`)}
+              onPress={event => this.handleSubmit(event)}
             >
               <Text style={styles.buttonText}>Sign Out</Text>
             </TouchableOpacity>
@@ -92,7 +108,15 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    handleSignout: () => {
+      return dispatch(signout());
+    }
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(UserProfile);
