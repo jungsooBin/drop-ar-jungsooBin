@@ -141,13 +141,6 @@ export default class CameraViewCollaboration extends Component {
     }
   }
 
-  undo() {
-    if (this.scene.children.length > 3) {
-      this.scene.remove(this.scene.children[this.scene.children.length - 1]);
-      this.timer = setTimeout(this.undo, 100);
-    }
-  }
-
   // undoAll() {
   //   while (this.scene.children.length > 0) {
   //     this.undo();
@@ -354,7 +347,14 @@ export default class CameraViewCollaboration extends Component {
     plight.position.set(50, 50, 50);
     this.scene.add(plight);
   }
-   
+
+  undo() {
+    if (this.scene.children.length > 3) {
+      this.scene.remove(this.scene.children[this.scene.children.length - 1]);
+      this.timer = setTimeout(this.undo, 100);
+    }
+  }
+  
   async addShapeWithSize() {
 
     const sizeToUse = this.findSize();
