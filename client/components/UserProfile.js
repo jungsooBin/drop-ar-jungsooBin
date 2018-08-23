@@ -78,19 +78,19 @@ const styles = {
     marginBottom: 10
   },
   buttonContainer: {
-    top: "10%",
+    top: "15%",
     width: "50%"
   },
   button: {
     backgroundColor: "#ff5858",
-    padding: 10,
-    margin: 5,
+    padding: 5,
+    margin: 3,
     borderRadius: 5,
     width: 125
   },
   buttonText: {
     color: "#FFF",
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "800",
     textAlign: "center"
   },
