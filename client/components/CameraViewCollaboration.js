@@ -515,51 +515,7 @@ export default class CameraViewCollaboration extends Component {
                 Large
               </MenuItem>
             </Menu>
-            <Menu
-              ref={ref => this.setMenuRef(ref, "texture")}
-              button={
-                <Button
-                  raised
-                  rounded
-                  title="Texture"
-                  onPress={() => this.showMenu("texture")}
-                  buttonStyle={{
-                    backgroundColor: "green",
-                    opacity: 0.5,
-                    width: "auto",
-                    height: 50
-                  }}
-                />
-              }
-            >
-              <MenuItem onPress={() => this.setState({ texture: "glass" })}>
-                Glass
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "fire" })}>
-                Fire
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "snow" })}>
-                Snow
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "leaves" })}>
-                Leaves
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "wood" })}>
-                Wood
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "minecraft" })}>
-                Minecraft
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "water" })}>
-                Water
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "bricks" })}>
-                Brick
-              </MenuItem>
-              <MenuItem onPress={() => this.setState({ texture: "color" })}>
-                Color
-              </MenuItem>
-            </Menu>
+            
             <TouchableOpacity
               onPressIn={this.undo}
               onPressOut={this.stopTimer}
