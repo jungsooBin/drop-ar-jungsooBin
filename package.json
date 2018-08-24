@@ -13,9 +13,10 @@
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "react-native-scripts start",
+    "start": "node server",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
+    "deploy": "script/deploy",
     "ios": "react-native-scripts ios",
     "test": "node_modules/.bin/jest",
     "test-mocha": "NODE_ENV='test' mocha \"./server/**/**/*.spec.js\" \"./client/utilities/*.spec.js\" ",
