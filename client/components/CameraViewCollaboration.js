@@ -390,6 +390,8 @@ export default class CameraViewCollaboration extends Component {
         // console.log('this.objectKeys', this.objectKeys)
         ItemListObj.forEach(item => {
           if (!this.state.objectKeys.includes(item.key)) {
+            console.log(              item.child("matrixWorld").val(),
+          )
             this.addItem(
               item.key, 
               item.child("sizeToUse").val(),
@@ -667,7 +669,6 @@ export default class CameraViewCollaboration extends Component {
       this.arSession,
       renderer
     );
-    const cameraPosition = this.camera.position;
     this.generateLighting(this.scene);
     var helper = new THREE.CameraHelper(this.camera);
     this.scene.add(helper);
@@ -783,11 +784,4 @@ const styles = StyleSheet.create({
   }
 });
 
-function setModelPos(model, dropPos) {
-  const item = model.clone();
-  item.position.x = dropPos.x;
-  item.position.y = dropPos.y;
-  item.position.z = dropPos.z;
-  item.rotator = 0.2;
-  return item;
-}
+

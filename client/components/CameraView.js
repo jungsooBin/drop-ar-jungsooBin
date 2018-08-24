@@ -1,3 +1,4 @@
+
 import React, { Component } from "react";
 import {
   StyleSheet,
@@ -23,6 +24,7 @@ if (!firebase.apps.length) {
 }
 console.disableYellowBox = true;
 
+const singleArtArr = []
 export default class CameraView extends Component {
   constructor() {
     super();
@@ -115,7 +117,7 @@ export default class CameraView extends Component {
     // } else {
     //   const locationToSave = [this.state.latitude, this.state.longitude];
     try {
-      const artPiece = this.scene.toJSON();
+      const artPiece = singleArtArr;
       const coverPhoto = this.state.coverPhoto;
       const artObj = {
         // location: locationToSave,
@@ -376,9 +378,12 @@ export default class CameraView extends Component {
     const sizeToUse = this.findSize();
     const objectToRender = this.findShape(sizeToUse);
     const colorToUse = this.findColor();
-    let material = "";
+    const shape = this.state.shape;
+    
+      // console.log(singleArtArr)
+
     // if (this.state.texture === "color") {
-    material = new THREE.MeshPhongMaterial({
+    const material = new THREE.MeshPhongMaterial({
       color: colorToUse,
       // transparent: true,
       specular: 0x555555,
@@ -397,6 +402,14 @@ export default class CameraView extends Component {
     // newItem.applyMatrix4(this.camera.matrixWorldInverse);
     const drawPoint = new THREE.Vector3(0, 0, -0.35);
     const targetPosition = drawPoint.applyMatrix4(this.camera.matrixWorld);
+
+    singleArtArr.push({
+      sizeToUse: sizeToUse,
+      colorToUse: colorToUse,
+      targetPosition: targetPosition,
+      shape: shape
+    });
+    console.log(singleArtArr)
     mesh.position.copy(targetPosition);
     mesh.lookAt(this.camera.position);
     mesh.rotator = 0.025;
@@ -766,11 +779,3 @@ const styles = StyleSheet.create({
   }
 });
 
-function setModelPos(model, dropPos) {
-  const item = model.clone();
-  item.position.x = dropPos.x;
-  item.position.y = dropPos.y;
-  item.position.z = dropPos.z;
-  item.rotator = 0.2;
-  return item;
-}
