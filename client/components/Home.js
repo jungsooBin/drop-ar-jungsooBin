@@ -81,10 +81,10 @@ class Home extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.button}
+            style={styles.fbButton}
             onPress={() => this.loginWithFacebook()}
           >
-            <Text style={styles.buttonText}>Sign Up w/ FB</Text>
+            <Text style={styles.fbButtonText}>Continue with FB</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -116,6 +116,19 @@ const styles = {
   },
   buttonText: {
     color: "#ff5858",
+    fontSize: 24,
+    fontWeight: "800",
+    textAlign: "center"
+  },
+  fbButton: {
+    backgroundColor: "#4267B2",
+    padding: 10,
+    margin: 5,
+    borderRadius: 5,
+    width: 250
+  },
+  fbButtonText: {
+    color: "#FFF",
     fontSize: 24,
     fontWeight: "800",
     textAlign: "center"

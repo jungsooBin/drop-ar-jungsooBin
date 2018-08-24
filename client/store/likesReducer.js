@@ -39,7 +39,6 @@ export const fetchAllLikes = () => async dispatch => {
 
 export const saveDislikeArt = dislikeArtData => async dispatch => {
   try {
-    console.log(dislikeArtData);
     const response = await axios.put(`${domain}/api/likes`, dislikeArtData);
     return dispatch(dislikeArt(response.data));
   } catch (error) {

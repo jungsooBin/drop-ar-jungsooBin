@@ -37,7 +37,7 @@
     "expo-three": "^2.2.2-alpha.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "firebase": "^4.13.1",
+    "firebase": "^5.4.0",
     "hsl-to-hex": "^1.0.0",
     "ip": "^1.1.5",
     "lodash": "^4.17.10",

@@ -40,7 +40,8 @@ class ArtPostFormPresentational extends Component {
 
   async handleSubmit(event, artData) {
     try {
-      await this.props.addArt(artData);
+    await this.props.addArt(artData);
+    console.log(this.props.singleArt)
     await this.uploadImage(artData.coverPhoto, `${this.props.singleArt.id}`);
     const ref = await firebase.storage().ref(`images/${this.props.singleArt.id}`);
     const url = await ref.getDownloadURL()

@@ -21,7 +21,6 @@ router.post("/", async (req, res, next) => {
     const likedArt = await currentArt.addLikedBy(currentUser, {
       through: "likes"
     });
-    console.log(likedArt);
     res.status(201).json(currentUser);
   } catch (err) {
     next(err);

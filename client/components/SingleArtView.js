@@ -28,9 +28,14 @@ class SingleArtView extends React.Component {
       singleArt: {},
       like: false
     };
+    this.graffitiObjects = [];
     this.handleLoad = this.handleLoad.bind(this);
     this.likeArt = this.likeArt.bind(this);
     this.dislikeArt = this.dislikeArt.bind(this);
+    this.findShape = this.findShape.bind(this)
+    this.addItem = this.addItem.bind(this);
+    this.generateLighting.bind(this);
+
   }
 
   componentDidMount() {
@@ -39,21 +44,38 @@ class SingleArtView extends React.Component {
     const usersWhoLikedThisArt = [];
     artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
     const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
-    console.log("youLikedThisArt: ", youLikedThisArt);
+    // console.log("youLikedThisArt: ", youLikedThisArt);
     if (youLikedThisArt === true) {
       this.setState({ like: true });
     }
   }
 
   async componentWillUnmount() {
-    console.log("COMPONENT DID UNMOUNT");
+    cancelAnimationFrame(this.gameRequest);
     try {
       this.arSession = await this._glView.stopARSessionAsync();
     } catch (err) {
       console.log(err);
     }
   }
-
+  generateLighting(scene) {
+    const leftLight = new THREE.DirectionalLight(0xffffff);
+    const rightLight = new THREE.DirectionalLight(0xffffff);
+    // const frontLight = new THREE.DirectionalLight(0xffffff);
+    // leftLight.position.set(-3, 5, 0).normalize();
+    // rightLight.position.set(3, 5, 0).normalize();
+    // frontLight.position.set(0, 0, 0).normalize();
+    this.scene.add(leftLight);
+    this.scene.add(rightLight);
+    // this.scene.add(frontLight);
+    const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+    this.scene.add(new THREE.AmbientLight(0x404040));
+    this.scene.add(light);
+    var plight = new THREE.PointLight(0x000000, 1, 100);
+    plight.position.set(50, 50, 50);
+    this.scene.add(plight);
+  }
+  
   async likeArt() {
     const { navigation } = this.props;
     const art = navigation.getParam("art");
@@ -68,19 +90,52 @@ class SingleArtView extends React.Component {
     this.setState({ like: !this.state.like });
   }
 
-  async handleLoad() {
-    const { navigation } = this.props;
-    let loader = new THREE.ObjectLoader();
-    const artObj = navigation.getParam("art");
-    const sceneJson = artObj.artPiece;
-
-    const artToLoad = loader.parse(sceneJson);
-    this.scene.add(artToLoad);
+  findShape(sizeToUse, shape) {
+    if (shape === "sphere") {
+      return new THREE.SphereGeometry(sizeToUse, 32, 32);
+    } else if (shape === "pyramid") {
+      return new THREE.TetrahedronBufferGeometry(sizeToUse, 0);
+    } else {
+      return new THREE.BoxGeometry(sizeToUse, sizeToUse, sizeToUse);
+    }
   }
 
+  async handleLoad() {
+    const { navigation } = this.props;
+    const artObj = navigation.getParam("art");
+    const artPieceArr = artObj.artPiece
+    for(let i = 0; i < artPieceArr.length; i++) {
+        this.addItem(
+          artPieceArr[i].sizeToUse,
+          artPieceArr[i].colorToUse,
+          artPieceArr[i].targetPosition,
+          artPieceArr[i].shape)
+      }
+    }   
+    
+  
+  async addItem(sizeToUse, colorToUse, targetPosition, shape) {
+    // this.objectKeys.push(itemKey);
+    const objectToRender = await this.findShape(sizeToUse, shape);
+    // if (this.state.texture === "color") {
+    const material = new THREE.MeshPhongMaterial({
+      color: colorToUse,
+      // transparent: true,
+      specular: 0x555555,
+      opacity: 1.0,
+      shininess: 100
+    });
+
+    const mesh = new THREE.Mesh(objectToRender, material);
+
+    mesh.position.copy(targetPosition);
+    mesh.rotator = 0.025;
+    this.graffitiObjects.push(mesh); 
+    this.scene.add(mesh);
+  }
   render() {
-    console.log("THIS IS PROPS", this.props.user);
-    console.log("TRYAGAIN", this.props.navigation);
+    // console.log("THIS IS PROPS", this.props.user);
+    // console.log("TRYAGAIN", this.props.navigation);
 
     const { navigation } = this.props;
     return (
@@ -160,15 +215,26 @@ class SingleArtView extends React.Component {
       renderer
     );
 
+    this.generateLighting(this.scene);
+    var helper = new THREE.CameraHelper(this.camera);
+    this.scene.add(helper);
+
     const animate = () => {
-      requestAnimationFrame(animate);
+      this.gameRequest = requestAnimationFrame(animate);
       this.camera.position.setFromMatrixPosition(this.camera.matrixWorld);
       const cameraPos = new THREE.Vector3(0, 0, 0);
       cameraPos.applyMatrix4(this.camera.matrixWorld);
 
+      this.graffitiObjects.forEach(art => {
+        art.castShadow = true;
+        art.rotation.x += art.rotator;
+        art.rotation.y += art.rotator;
+      });
+
       renderer.render(this.scene, this.camera);
       gl.endFrameEXP();
     };
+    // this.handleLoad();
     animate();
   };
 }
