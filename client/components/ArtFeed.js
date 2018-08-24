@@ -33,6 +33,10 @@ class ArtFeed extends Component {
 
   render() {
     const { navigation } = this.props;
+    
+    this.props.allArt.sort(function(a,b){
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
     return (
       <View style={styles.container}>
         <View style={styles.scrollContainer}>
