@@ -45,10 +45,8 @@ export default class CameraViewCollaboration extends Component {
     this.findSize = this.findSize.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addShapeWithSize = this.addShapeWithSize.bind(this);
-    // this.findCustomMaterial = this.findCustomMaterial.bind(this);
     this.hideAllButtons = this.hideAllButtons.bind(this);
     this.undo = this.undo.bind(this);
-    // this.undoAll = this.undoAll.bind(this);
     this.takeScreenshot = this.takeScreenshot.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.storeItems = this.storeItems.bind(this);
@@ -102,21 +100,6 @@ export default class CameraViewCollaboration extends Component {
   }
 
   async handleSubmit(evt) {
-    // navigator.geolocation.getCurrentPosition(
-    //   position => {
-    //     this.setState({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude,
-    //       error: null,
-    //     });
-    //   },
-    //   error => this.setState({ error: error.message }),
-    //   { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    // );
-    // if (this.state.latitude === null || this.state.longitude === null) {
-    //   this.showFailAlert();
-    // } else {
-    //   const locationToSave = [this.state.latitude, this.state.longitude];
     try {
       const artPiece = this.scene.toJSON();
       const coverPhoto = this.state.coverPhoto;
@@ -140,12 +123,6 @@ export default class CameraViewCollaboration extends Component {
       this.showFailAlert();
     }
   }
-
-  // undoAll() {
-  //   while (this.scene.children.length > 0) {
-  //     this.undo();
-  //   }
-  // }
 
   showImageSave = () => {
     Alert.alert(
@@ -333,13 +310,8 @@ export default class CameraViewCollaboration extends Component {
   generateLighting(scene) {
     const leftLight = new THREE.DirectionalLight(0xffffff);
     const rightLight = new THREE.DirectionalLight(0xffffff);
-    // const frontLight = new THREE.DirectionalLight(0xffffff);
-    // leftLight.position.set(-3, 5, 0).normalize();
-    // rightLight.position.set(3, 5, 0).normalize();
-    // frontLight.position.set(0, 0, 0).normalize();
     this.scene.add(leftLight);
     this.scene.add(rightLight);
-    // this.scene.add(frontLight);
     const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     this.scene.add(new THREE.AmbientLight(0x404040));
     this.scene.add(light);
@@ -362,13 +334,9 @@ export default class CameraViewCollaboration extends Component {
 
     const matrixWorld = this.camera.matrixWorld;
     this.storeItems(sizeToUse, colorToUse, matrixWorld, this.state.shape);
-    // this.ItemElementsListener();
   }
 
   storeItems(sizeToUse, colorToUse, matrixWorld, shape) {
-    // console.log('sizeToUse',sizeToUse,
-    //   'matrixWorld', matrixWorld,
-    //   'colorToUse', colorToUse)
     firebase
       .database()
       .ref("itemList/")
@@ -381,13 +349,10 @@ export default class CameraViewCollaboration extends Component {
   }
 
   ItemElementsListener() {
-    // console.log('this.scene?', this.scene)
     firebase
       .database()
       .ref("itemList/")
       .on("value", ItemListObj => {
-        // console.log('ItemListObj', ItemListObj)
-        // console.log('this.objectKeys', this.objectKeys)
         ItemListObj.forEach(item => {
           if (!this.state.objectKeys.includes(item.key)) {
             console.log(              item.child("matrixWorld").val(),
@@ -401,17 +366,12 @@ export default class CameraViewCollaboration extends Component {
             );
           }
         });
-        // console.log('this.objectKeys', this.objectKeys)
-
       });
   }
 
   async addItem(itemKey, sizeToUse, colorToUse, matrixWorld, shape) {
-    // this.objectKeys.push(itemKey);
     this.setState(prevState => ({objectKeys: [...prevState.objectKeys, itemKey]}));
     const objectToRender = this.findShape(sizeToUse, shape);
-
-    // if (this.state.texture === "color") {
     const material = new THREE.MeshPhongMaterial({
       color: colorToUse,
       // transparent: true,
@@ -529,19 +489,6 @@ export default class CameraViewCollaboration extends Component {
                 }}
               />
             </TouchableOpacity>
-
-            {/* <Button
-              raised
-              rounded
-              title="Clear"
-              onPress={this.undoAll}
-              buttonStyle={{
-                backgroundColor: 'purple',
-                opacity: 0.5,
-                width: 85,
-                height: 50,
-              }}
-            /> */}
           </View>
         )}
         <View style={styles.takePhoto}>

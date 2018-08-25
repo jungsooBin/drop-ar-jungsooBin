@@ -359,13 +359,8 @@ export default class CameraView extends Component {
   generateLighting(scene) {
     const leftLight = new THREE.DirectionalLight(0xffffff);
     const rightLight = new THREE.DirectionalLight(0xffffff);
-    // const frontLight = new THREE.DirectionalLight(0xffffff);
-    // leftLight.position.set(-3, 5, 0).normalize();
-    // rightLight.position.set(3, 5, 0).normalize();
-    // frontLight.position.set(0, 0, 0).normalize();
     this.scene.add(leftLight);
     this.scene.add(rightLight);
-    // this.scene.add(frontLight);
     const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     this.scene.add(new THREE.AmbientLight(0x404040));
     this.scene.add(light);
@@ -380,9 +375,7 @@ export default class CameraView extends Component {
     const colorToUse = this.findColor();
     const shape = this.state.shape;
     
-      // console.log(singleArtArr)
 
-    // if (this.state.texture === "color") {
     const material = new THREE.MeshPhongMaterial({
       color: colorToUse,
       // transparent: true,
@@ -390,16 +383,7 @@ export default class CameraView extends Component {
       opacity: 1.0,
       shininess: 100
     });
-    // } else {
-    //   material = await this.findCustomMaterial();
-    // }
     const mesh = new THREE.Mesh(objectToRender, material);
-    // const newItem = setModelPos(mesh, this.camera.position);
-    // this.camera.matrixWorldInverse.getInverse(this.camera.matrixWorld);
-    // newItem.position.z -= 0.2;
-    // newItem.position.x -= 0.01;
-    // newItem.position.y += 0.01;
-    // newItem.applyMatrix4(this.camera.matrixWorldInverse);
     const drawPoint = new THREE.Vector3(0, 0, -0.35);
     const targetPosition = drawPoint.applyMatrix4(this.camera.matrixWorld);
 
@@ -670,13 +654,6 @@ export default class CameraView extends Component {
 
       this.graffitiObjects.forEach(art => {
         art.castShadow = true;
-        // Fire objects like a gun lol ==>
-        // setModelPos(art, this.camera.position);
-        // art.position.z -= 0.01;
-        // if (art.position.z === -1) {
-        //   this.scene.remove(art);
-        // }
-        // Animates items for live movement
         art.rotation.x += art.rotator;
         art.rotation.y += art.rotator;
       });

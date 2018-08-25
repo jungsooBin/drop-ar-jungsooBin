@@ -1,3 +1,4 @@
+
 {
   "name": "DropAR",
   "version": "0.1.0",
@@ -13,11 +14,9 @@
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
-    "start": "node server",
-    "start-ios": "react-native-scripts start",
+    "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
-    "deploy": "script/deploy",
     "ios": "react-native-scripts ios",
     "test": "node_modules/.bin/jest",
     "test-mocha": "NODE_ENV='test' mocha \"./server/**/**/*.spec.js\" \"./client/utilities/*.spec.js\" ",
