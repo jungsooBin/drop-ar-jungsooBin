@@ -44,7 +44,6 @@ class SingleArtView extends React.Component {
     const usersWhoLikedThisArt = [];
     artObj.likedBy.map(user => usersWhoLikedThisArt.push(user.id));
     const youLikedThisArt = usersWhoLikedThisArt.includes(this.props.user.id);
-    // console.log("youLikedThisArt: ", youLikedThisArt);
     if (youLikedThisArt === true) {
       this.setState({ like: true });
     }
@@ -61,13 +60,8 @@ class SingleArtView extends React.Component {
   generateLighting(scene) {
     const leftLight = new THREE.DirectionalLight(0xffffff);
     const rightLight = new THREE.DirectionalLight(0xffffff);
-    // const frontLight = new THREE.DirectionalLight(0xffffff);
-    // leftLight.position.set(-3, 5, 0).normalize();
-    // rightLight.position.set(3, 5, 0).normalize();
-    // frontLight.position.set(0, 0, 0).normalize();
     this.scene.add(leftLight);
     this.scene.add(rightLight);
-    // this.scene.add(frontLight);
     const light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
     this.scene.add(new THREE.AmbientLight(0x404040));
     this.scene.add(light);
@@ -134,9 +128,6 @@ class SingleArtView extends React.Component {
     this.scene.add(mesh);
   }
   render() {
-    // console.log("THIS IS PROPS", this.props.user);
-    // console.log("TRYAGAIN", this.props.navigation);
-
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>

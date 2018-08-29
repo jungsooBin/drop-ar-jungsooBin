@@ -11,8 +11,6 @@ import {
 import SingleArtItem from './SingleArtItem';
 import { fetchAllArt } from '../store/artReducer';
 
-let count = 0;
-
 class ArtFeed extends Component {
   constructor() {
     super();
@@ -22,7 +20,6 @@ class ArtFeed extends Component {
   }
   componentDidMount() {
     this.props.fetchAllArt();
-    count++;
   }
 
   _onRefresh = async () => {
@@ -69,7 +66,6 @@ class ArtFeed extends Component {
                     'https://www.musohealth.org/wp-content/uploads/2015/09/icons-04.png',
                 }}
               />
-              {/* <Text style={styles.buttonText}>Camera</Text> */}
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -85,7 +81,6 @@ class ArtFeed extends Component {
                     'https://www.peace.edu/wp-content/uploads/Camera-icon-White-SMALL.png',
                 }}
               />
-              {/* <Text style={styles.buttonText}>Camera</Text> */}
             </View>
           </TouchableHighlight>
           <TouchableHighlight
@@ -101,7 +96,6 @@ class ArtFeed extends Component {
                     'https://flaticons.net/gd/makefg.php?i=icons/Application/User-Profile.png&r=255&g=255&b=255',
                 }}
               />
-              {/* <Text style={styles.buttonText}>Profile</Text> */}
             </View>
           </TouchableHighlight>
         </View>
