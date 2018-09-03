@@ -1,25 +1,12 @@
-const router = require('express').Router();
-// const session = require('express-session');
-// const express = require('express');
-// const path = require('path');
-// const morgan = require('morgan');
+const router = require("express").Router();
 
-// // Static middleware
-// router.use(express.static(path.join(__dirname, '..', 'public')));
-
-router.use('/art', require('./art'));
-router.use('/user', require('./user'));
-router.use('/likes', require('./likes'));
-
-// // For all GET requests that aren't to an API route,
-// // we will send the index.html!
-// router.get('/*', (req, res, next) => {
-//   res.sendFile(path.join(__dirname, '..', 'index.html'));
-// });
+router.use("/art", require("./art"));
+router.use("/user", require("./user"));
+router.use("/likes", require("./likes"));
 
 // Handle 404s
 router.use((req, res, next) => {
-  const err = new Error('Not Found');
+  const err = new Error("Not Found");
   err.status = 404;
   next(err);
 });
@@ -27,7 +14,7 @@ router.use((req, res, next) => {
 // Error handling endware
 router.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.send(err.message || 'Internal server error');
+  res.send(err.message || "Internal server error");
 });
 
 module.exports = router;

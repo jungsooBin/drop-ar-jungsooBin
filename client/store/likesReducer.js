@@ -29,7 +29,6 @@ export const getLikes = likes => ({
 export const fetchAllLikes = () => async dispatch => {
   try {
     const res = await axios.get(`${domain}/api/likes/`);
-    // console.log(res);
     const allLikes = res.data;
     dispatch(getLikes(allLikes));
   } catch (error) {
