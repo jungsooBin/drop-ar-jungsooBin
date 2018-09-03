@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
-  Text,
   View,
   ScrollView,
   TouchableHighlight,
   Image,
-  RefreshControl,
-} from 'react-native';
-import SingleArtItem from './SingleArtItem';
-import { fetchAllArt } from '../store/artReducer';
+  RefreshControl
+} from "react-native";
+import SingleArtItem from "./SingleArtItem";
+import { fetchAllArt } from "../store/artReducer";
 
 class ArtFeed extends Component {
   constructor() {
     super();
     this.state = {
-      refreshing: false,
+      refreshing: false
     };
   }
   componentDidMount() {
@@ -30,8 +29,8 @@ class ArtFeed extends Component {
 
   render() {
     const { navigation } = this.props;
-    
-    this.props.allArt.sort(function(a,b){
+
+    this.props.allArt.sort(function(a, b) {
       return new Date(b.createdAt) - new Date(a.createdAt);
     });
     return (
@@ -55,7 +54,7 @@ class ArtFeed extends Component {
         <View style={styles.buttonContainer}>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={'#ff5858'}
+            underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`CameraViewCollaboration`)}
           >
             <View style={styles.textButtonContainer}>
@@ -63,14 +62,14 @@ class ArtFeed extends Component {
                 style={{ width: 30, height: 30, marginBottom: 4 }}
                 source={{
                   uri:
-                    'https://www.musohealth.org/wp-content/uploads/2015/09/icons-04.png',
+                    "https://www.musohealth.org/wp-content/uploads/2015/09/icons-04.png"
                 }}
               />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={'#ff5858'}
+            underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`CameraView`)}
           >
             <View style={styles.textButtonContainer}>
@@ -78,14 +77,14 @@ class ArtFeed extends Component {
                 style={{ width: 30, height: 30, marginBottom: 4 }}
                 source={{
                   uri:
-                    'https://www.peace.edu/wp-content/uploads/Camera-icon-White-SMALL.png',
+                    "https://www.peace.edu/wp-content/uploads/Camera-icon-White-SMALL.png"
                 }}
               />
             </View>
           </TouchableHighlight>
           <TouchableHighlight
             style={styles.button}
-            underlayColor={'#ff5858'}
+            underlayColor={"#ff5858"}
             onPress={() => navigation.navigate(`UserProfile`)}
           >
             <View style={styles.textButtonContainer}>
@@ -93,7 +92,7 @@ class ArtFeed extends Component {
                 style={{ width: 25, height: 25, marginBottom: 4 }}
                 source={{
                   uri:
-                    'https://flaticons.net/gd/makefg.php?i=icons/Application/User-Profile.png&r=255&g=255&b=255',
+                    "https://flaticons.net/gd/makefg.php?i=icons/Application/User-Profile.png&r=255&g=255&b=255"
                 }}
               />
             </View>
@@ -107,49 +106,49 @@ class ArtFeed extends Component {
 const styles = {
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#EEE',
+    alignItems: "center",
+    backgroundColor: "#EEE"
   },
   scrollContainer: {
-    flex: 0.92,
+    flex: 0.92
   },
   scrollView: {
-    flexGrow: 5,
+    flexGrow: 5
   },
   buttonContainer: {
-    position: 'absolute',
-    flexDirection: 'row',
-    height: '7.5%',
-    bottom: '0%',
-    backgroundColor: '#FF5858',
+    position: "absolute",
+    flexDirection: "row",
+    height: "7.5%",
+    bottom: "0%",
+    backgroundColor: "#FF5858"
   },
   textButtonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center"
   },
   button: {
     padding: 10,
-    width: '33.3%',
+    width: "33.3%"
   },
   buttonText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 14,
-    fontWeight: '700',
-    textAlign: 'center',
-  },
+    fontWeight: "700",
+    textAlign: "center"
+  }
 };
 
 const mapStateToProps = state => {
   return {
-    allArt: state.arts.allArt,
+    allArt: state.arts.allArt
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   fetchAllArt: () => {
     dispatch(fetchAllArt());
-  },
+  }
 });
 
 export default connect(

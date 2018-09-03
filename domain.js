@@ -1,4 +1,2 @@
-const domain = "https://drop-ar.herokuapp.com/";
-// const domain = "http://192.168.1.6:8080";
-//172.16.21.108
+const domain = "http://172.16.22.255:8080";
 export default domain;
