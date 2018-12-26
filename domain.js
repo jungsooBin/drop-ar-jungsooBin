@@ -1,2 +1,3 @@
-const domain = "http://172.16.22.255:8080";
+
+const domain = "http://192.168.5.24:8080";
 export default domain;
