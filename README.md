@@ -19,7 +19,7 @@ To use this app, you'll need to take the following steps:
 * Run the following commands:
 
 ```
-git clone https://github.com/drop-ar/drop-ar
+git clone https://github.com/jungsooBin/drop-ar-jungsooBin
 ```
 
 ## Customize
