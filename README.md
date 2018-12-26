@@ -57,9 +57,9 @@ You'd better download Expo App first. It can be downloaded from Apple’s App St
 
 ## Usage
 
-![home](https://github.com/jungsooBin/safe-cal/blob/master/screenshots/Screen%20Shot%202018-12-18%20at%202.56.59%20PM.png "Home")
-![journal](https://github.com/jungsooBin/safe-cal/blob/master/screenshots/Screen%20Shot%202018-12-18%20at%202.59.13%20PM.png "Journal")
-![contacts](https://github.com/jungsooBin/safe-cal/blob/master/screenshots/Screen%20Shot%202018-12-18%20at%202.59.23%20PM.png "Journal")
+![home](https://github.com/jungsooBin/drop-ar-jungsooBin/blob/master/screenshots/Screen%20Shot%202018-12-26%20at%205.51.51%20PM.png "Home")
+![journal](https://github.com/jungsooBin/drop-ar-jungsooBin/blob/master/screenshots/Screen%20Shot%202018-12-26%20at%205.52.15%20PM.png "Feed")
+![contacts](https://github.com/jungsooBin/drop-ar-jungsooBin/blob/master/screenshots/Screen%20Shot%202018-12-26%20at%205.52.39%20PM.png "Load Scene")
 
 ## Credits
 
