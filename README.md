@@ -28,7 +28,7 @@ Now that you've got the code, follow these steps to get acclimated:
 
 * Update project name and description in `package.json`
 * `npm install`
-* `go domain.js and change the Ip Address what you're using`
+* `go domain.js and change the Ip Address you're using`
 * This file is `.gitignore`'d, and will *only* be required in your *development* environment
 
 Follow firebase instructions and add your own information into your config object in secrets.js: 
