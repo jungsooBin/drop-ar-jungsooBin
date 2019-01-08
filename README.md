@@ -1,5 +1,7 @@
 # drop-ar
 
+## [demo Video Link](https://www.youtube.com/watch?v=AEFKYCpou0k)
+
 A React Native iOS app that lets users create 3D art in augmented reality
 
 ## features
@@ -10,7 +12,6 @@ A React Native iOS app that lets users create 3D art in augmented reality
 - Create an art and save it to the feed
 - Collaborate with others in real-time
 
-## [demo](https://www.youtube.com/watch?v=AEFKYCpou0k)
 
 ## Setup
 
