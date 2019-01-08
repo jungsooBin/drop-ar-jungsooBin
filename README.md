@@ -1,6 +1,6 @@
 # drop-ar
 
-## [demo Video Link](https://www.youtube.com/watch?v=AEFKYCpou0k)
+## [Demo Video Link](https://www.youtube.com/watch?v=AEFKYCpou0k)
 
 A React Native iOS app that lets users create 3D art in augmented reality
 
